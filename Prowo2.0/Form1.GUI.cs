@@ -102,8 +102,12 @@ namespace Prowo
                         for (int i = 1; i < klasse.Length; ++i)
                             acKlasse = new KlasseDecorator(acKlasse, klasse[i].Trim(' '));
 
-                        schüler.Add(new Objekt(s.Split('/', ',')[0].Remove(0, 1), s.Split('/', ',')[1],
-                            acKlasse, Wünsche, s.StartsWith("@")));
+                        if (s.StartsWith("@"))
+                            schüler.Add(new Objekt(s.Split('/', ',')[0].Remove(0, 1), s.Split('/', ',')[1],
+                                acKlasse, Wünsche, true));
+                        else
+                            schüler.Add(new Objekt(s.Split('/', ',')[0], s.Split('/', ',')[1],
+                                acKlasse, Wünsche));
                     }
                 int cnt = 0;
                 foreach (var s in schüler)
@@ -927,7 +931,7 @@ namespace Prowo
             var txt = textBox6.Text.Split('-');
             for (int i = 1; i < txt.Length; ++i)
                 acKlasse = new KlasseDecorator(acKlasse, txt[i].Trim(' '));
-            
+
             schüler[SelectedSchüler] = new Objekt(textBox7.Text, textBox8.Text, acKlasse, inds);
             listView2.Items[listView2.SelectedIndices[0]] = schüler[SelectedSchüler].AsItem(button7.BackColor, SelectedSchüler);
 
@@ -980,6 +984,11 @@ namespace Prowo
                 numericUpDown4.Value = Projekte[SelectedProj].MinAnz;
                 numericUpDown5.Value = Projekte[SelectedProj].MaxAnz;
 
+                checkedListBox1.Items.Clear();
+                for (int i = 0; i < Klasse.ID_rev.Count; ++i)
+                {
+                    checkedListBox1.Items.Add((string)Klasse.ID_rev[i].GetName());
+                }
                 for (int i = 0; i < Projekte[SelectedProj].AllowedKlassen.Length; i++)
                     checkedListBox1.SetItemChecked(i, Projekte[SelectedProj].AllowedKlassen[i]);
 
@@ -1177,7 +1186,7 @@ namespace Prowo
                 num = null;
             else if (((ListView)sender).Columns[e.Column].Text.Contains("#")
                 || ((ListView)sender).Columns[e.Column].Text.Contains("AS")
-                || ((ListView)sender).Columns[e.Column].Text.Contains("WERT"))
+                || ((ListView)sender).Columns[e.Column].Text.Contains("ALWAYS"))
                 num = true;
 
             bool PatternFilter = false;
@@ -1369,7 +1378,7 @@ namespace Prowo
             string s = "";
             for (int i = 0; i < Klasse.ID_rev.Count; i++)
                 if (P.AllowedKlassen[i])
-                    s += i + " ";
+                    s += Klasse.ID_rev[i] + " ";
             data.Add(s.TrimEnd(' '));
             data.Add("" + index);
             return new ListViewItem(data.ToArray());

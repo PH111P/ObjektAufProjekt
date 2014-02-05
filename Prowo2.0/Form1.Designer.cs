@@ -71,6 +71,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.textBox6 = new System.Windows.Forms.TextBox();
             this.button13 = new System.Windows.Forms.Button();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -125,7 +126,6 @@
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.textBox6 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -456,6 +456,9 @@
             this.checkedListBox1.CheckOnClick = true;
             this.checkedListBox1.ColumnWidth = 35;
             this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.HorizontalScrollbar = true;
+            this.checkedListBox1.Items.AddRange(new object[] {
+            "7"});
             this.checkedListBox1.Location = new System.Drawing.Point(135, 78);
             this.checkedListBox1.MultiColumn = true;
             this.checkedListBox1.Name = "checkedListBox1";
@@ -620,6 +623,14 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(346, 112);
             this.panel2.TabIndex = 24;
+            // 
+            // textBox6
+            // 
+            this.textBox6.BackColor = System.Drawing.Color.GhostWhite;
+            this.textBox6.Location = new System.Drawing.Point(59, 54);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(170, 20);
+            this.textBox6.TabIndex = 26;
             // 
             // button13
             // 
@@ -1261,14 +1272,6 @@
             // 
             this.colorDialog1.AnyColor = true;
             this.colorDialog1.Color = System.Drawing.Color.Red;
-            // 
-            // textBox6
-            // 
-            this.textBox6.BackColor = System.Drawing.Color.GhostWhite;
-            this.textBox6.Location = new System.Drawing.Point(59, 54);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(170, 20);
-            this.textBox6.TabIndex = 26;
             // 
             // Form1
             // 

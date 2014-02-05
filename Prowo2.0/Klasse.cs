@@ -50,15 +50,15 @@ namespace Prowo
 
         public override bool Equals(object obj)
         {
-            return obj.Equals(null) ? false : this.Name.Equals(((Klasse)obj).Name);
+            return obj == null ? false : this.Name.Data == ((Klasse)obj).Name.Data;
         }
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return this.Name.Data.GetHashCode();
         }
         public override string ToString()
         {
-            return base.ToString();
+            return GetName();
         }
 
         public static void Reset()
