@@ -24,7 +24,7 @@ Features
 --------
 * Specify a certain minimum score (as a percentage from the maximum score) for solutions to have at least.
 * Pause the process at any time, modify the solutione, and resume with the modified solution.
-* "Objekte" may have from 2 to 10.
+* "Objekte" may have from 2 to 10 wishes.
 * Specify how to score a realised matching of a "Objekt" with his _n_th wish.
 * Categorise "Objekte" in classes ("Klassen")
 * Specify a minimum and a maximum amount of participants for "Projekte"
