@@ -10,18 +10,18 @@ namespace DataStructures
     /// </summary>
     public class const_type<T>
     {
-        public T data { get; private set; }
+        public T Data { get; private set; }
 
-        public const_type(T data) { this.data = data; }
+        public const_type(T data) { this.Data = data; }
 
         public static implicit operator const_type<T>(T data) { return new const_type<T>(data); }
-        public static implicit operator T(const_type<T> data) { return data.data; }
+        public static implicit operator T(const_type<T> data) { return data.Data; }
 
-        public override bool Equals(object obj) { return data.Equals(obj); }
-        public override int GetHashCode() { return data.GetHashCode(); }
-        public override string ToString() { return data.ToString(); }
+        public override bool Equals(object obj) { return Data.Equals(obj); }
+        public override int GetHashCode() { return Data.GetHashCode(); }
+        public override string ToString() { return Data.ToString(); }
 
-        public static bool operator ==(const_type<T> A, const_type<T> B) { return A.data.Equals(B.data); }
+        public static bool operator ==(const_type<T> A, const_type<T> B) { return A.Data.Equals(B.Data); }
         public static bool operator !=(const_type<T> A, const_type<T> B) { return !(A==B); }
     }
 }

@@ -27,9 +27,9 @@ namespace Prowo
             private set { _AnzLeiter = value; }
         }
 
-        public BitString KlassenStufen { get; private set; }
+        public BitString AllowedKlassen { get; private set; }
 
-        private List<Schüler> Teilnehmer = new List<Schüler>();
+        private List<Objekt> Teilnehmer = new List<Objekt>();
         public readonly bool editable;
         public readonly bool erhaltenswert;
 
@@ -39,16 +39,16 @@ namespace Prowo
             this.Projektname = Projektname;
             this.MinAnz = MinAnz;
             this.MaxAnz = MaxAnz;
-            this.KlassenStufen = KlStufen;
+            this.AllowedKlassen = KlStufen;
             this.editable = editable;
             this.Description = Desc;
             this.erhaltenswert = E_Wert;
         }
         public Projekt(const_type<Projekt> P)
-            : this(P.data.Projektname, P.data.MinAnz, P.data.MaxAnz, P.data.KlassenStufen, P.data.editable, P.data.Description,P.data.erhaltenswert)
+            : this(P.Data.Projektname, P.Data.MinAnz, P.Data.MaxAnz, P.Data.AllowedKlassen, P.Data.editable, P.Data.Description,P.Data.erhaltenswert)
         {
-            this.Teilnehmer = new List<Schüler>();
-            foreach (var S in P.data.Teilnehmer)
+            this.Teilnehmer = new List<Objekt>();
+            foreach (var S in P.Data.Teilnehmer)
                 this.Add(S);
         }
 
@@ -57,13 +57,13 @@ namespace Prowo
             return this.Projektname;// +" " + TeilnehmerCount;
         }
 
-        public IEnumerable<Schüler> GetList()
+        public IEnumerable<Objekt> GetList()
         {
             foreach (var t in this.Teilnehmer)
                 if (!t.isLeiter)
                     yield return t;
         }
-        public IEnumerable<Schüler> GetLeiterList()
+        public IEnumerable<Objekt> GetLeiterList()
         {
             foreach (var t in this.Teilnehmer)
                 if (t.isLeiter)
@@ -77,32 +77,32 @@ namespace Prowo
             this.AnzLeiter = 0;
         }
 
-        public void Add(const_type<Schüler> Item)
+        public void Add(const_type<Objekt> Item)
         {
             this.Teilnehmer.Add(Item);
-            if (Item.data.isLeiter)
+            if (Item.Data.isLeiter)
                 ++this.AnzLeiter;
         }
-        public void Remove(const_type<Schüler> Item)
+        public void Remove(const_type<Objekt> Item)
         {
             this.Teilnehmer.Remove(Item);
-            if (Item.data.isLeiter)
+            if (Item.Data.isLeiter)
                 --this.AnzLeiter;
         }
 
-        public Schüler this[const_type<int> index]
+        public Objekt this[const_type<int> index]
         {
             get { return this.Teilnehmer.ElementAt(index); }
         }
 
-        public List<Schüler> kill()
+        public List<Objekt> kill()
         {
             if (this.erhaltenswert)
                 throw new InvalidOperationException();
             this.MinAnz = 0;
             this.MaxAnz = 0;
             this.AnzLeiter = 0;
-            var ret = new List<Schüler>(this.Teilnehmer);
+            var ret = new List<Objekt>(this.Teilnehmer);
             for (int i = 0; i < ret.Count; ++i)
                 if (ret[i].isLeiter)
                     ret[i].isLeiter = false;

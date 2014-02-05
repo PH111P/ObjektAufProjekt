@@ -12,7 +12,7 @@ namespace Prowo
 {
     public partial class Form1 : Form
     {
-        public static List<Schüler> schüler = new List<Schüler>();
+        public static List<Objekt> schüler = new List<Objekt>();
         public static List<Projekt> Projekte = new List<Projekt>(0);
 
         public static List<Projekt> Solution;
@@ -23,7 +23,7 @@ namespace Prowo
         public int CountWisch(const_type<int> Wish, const_type<int> ProjektIndex)
         {
             int cnt = 0;
-            foreach (Schüler S in schüler)
+            foreach (Objekt S in schüler)
                 if (S.Wünsche.Count <= Wish)
                     continue;
                 else if (Wish == 0 && S.isLeiter)
@@ -35,9 +35,9 @@ namespace Prowo
             return cnt;
         }
 
-        public List<Schüler> calc()
+        public List<Objekt> calc()
         {
-            List<Schüler> Rest = new List<Schüler>();//Students who cannot get one of their wishs
+            List<Objekt> Rest = new List<Objekt>();//Students who cannot get one of their wishs
 
             foreach (var s in schüler)
             {
@@ -49,21 +49,21 @@ namespace Prowo
 
                     if (Start[s.Wünsche[i]].TeilnehmerCount < Start[s.Wünsche[i]].MaxAnz || s.isLeiter)
                     {
-                        Start[s.Wünsche[i]].Add(new Schüler(s));
+                        Start[s.Wünsche[i]].Add(new Objekt(s));
                         aBool = false;
                         break;
                     }
                 }
                 if (aBool)
-                    Rest.Add(new Schüler(s));
+                    Rest.Add(new Objekt(s));
             }
             return Rest;
         }
-        public List<Schüler> calcBlind()
+        public List<Objekt> calcBlind()
         {
             for (int i = 0; i < Start.Count; i++)
                 Start[i].reset();
-            List<Schüler> Rest = new List<Schüler>();
+            List<Objekt> Rest = new List<Objekt>();
             foreach (var s in schüler)
             {
                 bool aBool = true;
@@ -73,18 +73,18 @@ namespace Prowo
 
                 if (s.isLeiter || Start[s.Wünsche[0]].editable)
                 {
-                    Start[s.Wünsche[0]].Add(new Schüler(s));
+                    Start[s.Wünsche[0]].Add(new Objekt(s));
                     aBool = false;
                     break;
                 }
                 if (aBool)
-                    Rest.Add(new Schüler(s));
+                    Rest.Add(new Objekt(s));
             }
             return Rest;
         }
         public void init(const_type<bool> blind,const_type<bool> remUseLess)
         {
-            List<Schüler> Rest;
+            List<Objekt> Rest;
             Start = Projekte;
             if (blind)
                 Rest = calcBlind();
@@ -99,9 +99,9 @@ namespace Prowo
             {
                 bool aB = true;
                 for (int i = 0; i < Projekte.Count; i++)
-                    if (Start[i].editable && Start[i].KlassenStufen[(int)Rest[0].Klassenstufe - 5] && Start[i].TeilnehmerCount < Projekte[i].MinAnz)
+                    if (Start[i].editable && Start[i].AllowedKlassen[Rest[0].Klasse] && Start[i].TeilnehmerCount < Projekte[i].MinAnz)
                     {
-                        Start[i].Add(new Schüler(Rest[0]));
+                        Start[i].Add(new Objekt(Rest[0]));
                         Rest.RemoveAt(0);
                         aB = false;
                         break;
@@ -114,9 +114,9 @@ namespace Prowo
             {
                 bool aB = true;
                 for (int i = 0; i < Start.Count; i++)
-                    if (Start[i].editable && Start[i].KlassenStufen[(int)Rest[0].Klassenstufe - 5] && Start[i].TeilnehmerCount < Projekte[i].MaxAnz)
+                    if (Start[i].editable && Start[i].AllowedKlassen[Rest[0].Klasse] && Start[i].TeilnehmerCount < Projekte[i].MaxAnz)
                     {
-                        Start[i].Add(new Schüler(Rest[0]));
+                        Start[i].Add(new Objekt(Rest[0]));
                         Rest.RemoveAt(0);
                         aB = false;
                         break;
@@ -127,9 +127,9 @@ namespace Prowo
 
         }
 
-        public List<Schüler> remUselessProj(List<Projekt> Projekte)
+        public List<Objekt> remUselessProj(List<Projekt> Projekte)
         {
-            List<Schüler> ret = new List<Schüler>();
+            List<Objekt> ret = new List<Objekt>();
             for (int i = 0; i < Projekte.Count; ++i)
                 if (!Projekte[i].erhaltenswert && getE_Wert(i,Projekte) < numericUpDown6.Value)
                     ret.AddRange(Projekte[i].kill());
@@ -157,7 +157,7 @@ namespace Prowo
                             break;
                         }
                         else ++cnt;
-                    if (!(Projekte[i].KlassenStufen[(int)S.Klassenstufe - 5]))
+                    if (!(Projekte[i].AllowedKlassen[S.Klasse]))
                         ++AnzCMiss;
                 }
                 if (Projekte[i].TeilnehmerCount < Projekte[i].MinAnz)
@@ -184,7 +184,7 @@ namespace Prowo
                         }
                         else
                             ++cnt;
-                    if (!(Solution[i].KlassenStufen[(int)S.Klassenstufe - 5]))
+                    if (!(Solution[i].AllowedKlassen[S.Klasse]))
                         ++AnzCMiss;
                 }
                 if (Solution[i].TeilnehmerCount < Solution[i].MinAnz)
@@ -256,9 +256,9 @@ namespace Prowo
                     while (Projekte[ZufProj2][ZufSchüler2].isLeiter)
                         ZufSchüler2 = rnd.Next(0, Projekte[ZufProj2].Length);
 
-                    Schüler Z1 = null, Z2 = new Schüler(Projekte[ZufProj2][ZufSchüler2]);
+                    Objekt Z1 = null, Z2 = new Objekt(Projekte[ZufProj2][ZufSchüler2]);
                     if (!isMax)
-                        Z1 = new Schüler(Projekte[ZufProj1][ZufSchüler1]);
+                        Z1 = new Objekt(Projekte[ZufProj1][ZufSchüler1]);
 
                     if (!isMax)
                         Projekte[ZufProj2].Add(Z1);
@@ -273,11 +273,11 @@ namespace Prowo
 
                     if (BewertungNew <= BewertungOld && (rnd.Next(1, schüler.Count * (int)SchHWunsch[0].Value) < Temperaturfolge.Last()))
                     {
-                        Projekte[ZufProj2].Add(new Schüler(Z2));
+                        Projekte[ZufProj2].Add(new Objekt(Z2));
                         Projekte[ZufProj1].Remove(Z2);
                         if (!isMax)
                         {
-                            Projekte[ZufProj1].Add(new Schüler(Z1));
+                            Projekte[ZufProj1].Add(new Objekt(Z1));
                             Projekte[ZufProj2].Remove(Z1);
                         }
                         SchrittCounter++;
@@ -301,8 +301,8 @@ namespace Prowo
                         aktBestSolValue = B2;
                         numericUpDown1.Value = ((aktBestSolValue * 100) / (SchHWunsch[0].Value * schüler.Count));
 
-                        label1.Text = "Die aktuelle Lösung hat eine Güte von " + (int)((B2 * 100) / (schüler.Count * SchHWunsch[0].Value))
-                            + "%. (Bewertung: " + B2 + ")";
+                        label1.Text = "Current solution's score is " + (int)((B2 * 100) / (schüler.Count * SchHWunsch[0].Value))
+                            + "%. (Score: " + B2 + ")";
                         label1.Visible = true;
 
                         Solution = new List<Projekt>();
@@ -316,7 +316,7 @@ namespace Prowo
                             {
                                 var Item = item.AsItem(button7.BackColor, cnt, i, cnt2++);
                                 Item.Group = listView3.Groups[i];
-                                if (!Projekte[i].KlassenStufen[(int)item.Klassenstufe - 5])
+                                if (!Projekte[i].AllowedKlassen[item.Klasse])
                                     Item.ForeColor = Color.Red;
                                 for (int W = 0; W < item.Wünsche.Count; ++W)
                                     if (item.Wünsche[W] == i)

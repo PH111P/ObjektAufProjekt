@@ -106,6 +106,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
@@ -124,8 +126,6 @@
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
-            this.label10 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -150,13 +150,13 @@
             this.groupBox9.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -199,7 +199,7 @@
             this.listView3.FullRowSelect = true;
             this.listView3.Location = new System.Drawing.Point(0, 0);
             this.listView3.Name = "listView3";
-            this.listView3.Size = new System.Drawing.Size(460, 347);
+            this.listView3.Size = new System.Drawing.Size(460, 411);
             this.listView3.TabIndex = 16;
             this.listView3.UseCompatibleStateImageBehavior = false;
             this.listView3.View = System.Windows.Forms.View.Details;
@@ -254,7 +254,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 22);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(754, 455);
+            this.tabControl1.Size = new System.Drawing.Size(754, 519);
             this.tabControl1.TabIndex = 5;
             // 
             // tabPage2
@@ -267,7 +267,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(746, 429);
+            this.tabPage2.Size = new System.Drawing.Size(746, 493);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "PROJEKTE";
             // 
@@ -286,7 +286,7 @@
             this.listView1.Location = new System.Drawing.Point(3, 152);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(740, 274);
+            this.listView1.Size = new System.Drawing.Size(740, 338);
             this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -296,24 +296,24 @@
             // 
             // Projektname
             // 
-            this.Projektname.Text = "PROJEKTNAME";
+            this.Projektname.Text = "PROJEKT\'s NAME";
             this.Projektname.Width = 160;
             // 
             // minSchüleranz
             // 
-            this.minSchüleranz.Text = "MIN. TEILNEHMERANZAHL";
+            this.minSchüleranz.Text = "MIN. #PARTICIPANTS";
             this.minSchüleranz.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.minSchüleranz.Width = 200;
             // 
             // maxSchüleranz
             // 
-            this.maxSchüleranz.Text = "MAX. TEILNEHMERANZAHL";
+            this.maxSchüleranz.Text = "MAX. #PARTICIPANTS";
             this.maxSchüleranz.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.maxSchüleranz.Width = 200;
             // 
             // KlStufen
             // 
-            this.KlStufen.Text = "KLASSENSTUFEN";
+            this.KlStufen.Text = "ALLOWED KLASSEN";
             this.KlStufen.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.KlStufen.Width = 120;
             // 
@@ -329,7 +329,7 @@
             this.groupBox6.Size = new System.Drawing.Size(740, 129);
             this.groupBox6.TabIndex = 2;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "PROJEKT ANPASSEN / HINZUFÜGEN";
+            this.groupBox6.Text = "ADD / MODIFY PROJEKT";
             // 
             // panel3
             // 
@@ -353,7 +353,7 @@
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(112, 25);
             this.button10.TabIndex = 21;
-            this.button10.Text = "Projekt entfernen";
+            this.button10.Text = "Remove Projekt";
             this.button10.UseVisualStyleBackColor = true;
             // 
             // textBox5
@@ -364,7 +364,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(351, 72);
             this.textBox5.TabIndex = 19;
-            this.textBox5.Text = "Projektbeschreibung hier.";
+            this.textBox5.Text = "A description of this Projekt goes here.";
             // 
             // button5
             // 
@@ -374,7 +374,7 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(115, 25);
             this.button5.TabIndex = 14;
-            this.button5.Text = "Projekt hinzufügen";
+            this.button5.Text = "Add Projekt";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.AddProjekt);
             // 
@@ -387,7 +387,7 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(112, 25);
             this.button4.TabIndex = 20;
-            this.button4.Text = "Projekt abändern";
+            this.button4.Text = "Change Projekt";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.ChangeProjekt);
             // 
@@ -414,9 +414,9 @@
             this.checkBox4.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.checkBox4.Location = new System.Drawing.Point(48, 76);
             this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(75, 31);
+            this.checkBox4.Size = new System.Drawing.Size(76, 31);
             this.checkBox4.TabIndex = 22;
-            this.checkBox4.Text = "Erhaltenswert";
+            this.checkBox4.Text = "Alw. surviving";
             this.checkBox4.UseVisualStyleBackColor = true;
             // 
             // textBox4
@@ -437,7 +437,7 @@
             this.Offen.Name = "Offen";
             this.Offen.Size = new System.Drawing.Size(37, 31);
             this.Offen.TabIndex = 21;
-            this.Offen.Text = "Offen";
+            this.Offen.Text = "Open";
             this.Offen.UseVisualStyleBackColor = true;
             // 
             // label17
@@ -445,9 +445,9 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(2, 3);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(69, 13);
+            this.label17.Size = new System.Drawing.Size(86, 13);
             this.label17.TabIndex = 0;
-            this.label17.Text = "Projektname:";
+            this.label17.Text = "Name of Projekt:";
             // 
             // checkedListBox1
             // 
@@ -456,14 +456,6 @@
             this.checkedListBox1.CheckOnClick = true;
             this.checkedListBox1.ColumnWidth = 35;
             this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Items.AddRange(new object[] {
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11"});
             this.checkedListBox1.Location = new System.Drawing.Point(135, 78);
             this.checkedListBox1.MultiColumn = true;
             this.checkedListBox1.Name = "checkedListBox1";
@@ -475,9 +467,9 @@
             this.label18.AutoSize = true;
             this.label18.Location = new System.Drawing.Point(1, 29);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(121, 13);
+            this.label18.Size = new System.Drawing.Size(94, 13);
             this.label18.TabIndex = 1;
-            this.label18.Text = "Minimale Schüleranzahl:";
+            this.label18.Text = "Min. #participants:";
             // 
             // numericUpDown5
             // 
@@ -503,9 +495,9 @@
             this.label19.AutoSize = true;
             this.label19.Location = new System.Drawing.Point(2, 54);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(124, 13);
+            this.label19.Size = new System.Drawing.Size(94, 13);
             this.label19.TabIndex = 4;
-            this.label19.Text = "Maximale Schüleranzahl:";
+            this.label19.Text = "Max #participants:";
             // 
             // numericUpDown4
             // 
@@ -536,9 +528,9 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(746, 429);
+            this.tabPage3.Size = new System.Drawing.Size(746, 493);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "SCHÜLER";
+            this.tabPage3.Text = "OBJEKTE";
             // 
             // listView2
             // 
@@ -553,7 +545,7 @@
             this.listView2.Location = new System.Drawing.Point(3, 154);
             this.listView2.MultiSelect = false;
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(740, 272);
+            this.listView2.Size = new System.Drawing.Size(740, 336);
             this.listView2.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView2.TabIndex = 0;
             this.listView2.UseCompatibleStateImageBehavior = false;
@@ -588,7 +580,7 @@
             this.groupBox8.Size = new System.Drawing.Size(740, 131);
             this.groupBox8.TabIndex = 1;
             this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "SCHÜLER ANPASSEN / HINZUFÜGEN";
+            this.groupBox8.Text = "ADD / MODIFY OBJEKT";
             // 
             // groupBox1
             // 
@@ -600,7 +592,7 @@
             this.groupBox1.Size = new System.Drawing.Size(388, 112);
             this.groupBox1.TabIndex = 20;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "PROJEKTWÜNSCHE";
+            this.groupBox1.Text = "WISHLIST";
             // 
             // tabControl2
             // 
@@ -637,7 +629,7 @@
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(103, 23);
             this.button13.TabIndex = 25;
-            this.button13.Text = "Schüler entfernen";
+            this.button13.Text = "Remove Objekt";
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.remSchueler);
             // 
@@ -681,11 +673,11 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.CheckAlign = System.Drawing.ContentAlignment.TopRight;
-            this.checkBox1.Location = new System.Drawing.Point(257, 56);
+            this.checkBox1.Location = new System.Drawing.Point(231, 56);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(81, 17);
+            this.checkBox1.Size = new System.Drawing.Size(107, 17);
             this.checkBox1.TabIndex = 23;
-            this.checkBox1.Text = "Projektleiter";
+            this.checkBox1.Text = "Leader of Projekt";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // label15
@@ -705,7 +697,7 @@
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(103, 23);
             this.button8.TabIndex = 22;
-            this.button8.Text = "Schüler abändern";
+            this.button8.Text = "Change Objekt";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.ChangeSchüler);
             // 
@@ -733,7 +725,7 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(116, 23);
             this.button6.TabIndex = 12;
-            this.button6.Text = "Schüler hinzufügen";
+            this.button6.Text = "Add Objekt";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.AddSchüler);
             // 
@@ -766,9 +758,9 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(746, 429);
+            this.tabPage1.Size = new System.Drawing.Size(746, 493);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "AUSGABE";
+            this.tabPage1.Text = "OUTPUT";
             // 
             // splitContainer1
             // 
@@ -784,7 +776,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.listView4);
-            this.splitContainer1.Size = new System.Drawing.Size(740, 347);
+            this.splitContainer1.Size = new System.Drawing.Size(740, 411);
             this.splitContainer1.SplitterDistance = 460;
             this.splitContainer1.TabIndex = 19;
             // 
@@ -794,7 +786,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(460, 347);
+            this.panel1.Size = new System.Drawing.Size(460, 411);
             this.panel1.TabIndex = 17;
             // 
             // listView4
@@ -807,7 +799,7 @@
             this.listView4.FullRowSelect = true;
             this.listView4.Location = new System.Drawing.Point(0, 0);
             this.listView4.Name = "listView4";
-            this.listView4.Size = new System.Drawing.Size(276, 347);
+            this.listView4.Size = new System.Drawing.Size(276, 411);
             this.listView4.TabIndex = 0;
             this.listView4.UseCompatibleStateImageBehavior = false;
             this.listView4.View = System.Windows.Forms.View.Details;
@@ -815,7 +807,7 @@
             // 
             // Projekt
             // 
-            this.Projekt.Text = "PROJEKTNAME";
+            this.Projekt.Text = "PROJEKT\'s NAME";
             this.Projekt.Width = 120;
             // 
             // groupBox5
@@ -831,7 +823,7 @@
             this.groupBox5.Size = new System.Drawing.Size(740, 63);
             this.groupBox5.TabIndex = 18;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "AKTIONEN";
+            this.groupBox5.Text = "ACTIONS";
             // 
             // button12
             // 
@@ -839,11 +831,11 @@
             this.button12.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button12.Enabled = false;
             this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button12.Location = new System.Drawing.Point(282, 19);
+            this.button12.Location = new System.Drawing.Point(260, 19);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(127, 25);
+            this.button12.Size = new System.Drawing.Size(173, 25);
             this.button12.TabIndex = 1;
-            this.button12.Text = "Exportiere Wunschliste";
+            this.button12.Text = "Export list of Objekte with wishes";
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.wishList_Click);
             // 
@@ -853,11 +845,11 @@
             this.button11.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button11.Enabled = false;
             this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button11.Location = new System.Drawing.Point(156, 19);
+            this.button11.Location = new System.Drawing.Point(136, 19);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(120, 25);
+            this.button11.Size = new System.Drawing.Size(118, 25);
             this.button11.TabIndex = 0;
-            this.button11.Text = "Exportiere Projektliste";
+            this.button11.Text = "Export list of Projekte";
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.projList_Click);
             // 
@@ -869,9 +861,9 @@
             this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button9.Location = new System.Drawing.Point(6, 19);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(144, 25);
+            this.button9.Size = new System.Drawing.Size(124, 25);
             this.button9.TabIndex = 0;
-            this.button9.Text = "Exportiere aktuelle Lösung";
+            this.button9.Text = "Export current solution";
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
@@ -897,9 +889,9 @@
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(746, 429);
+            this.tabPage8.Size = new System.Drawing.Size(746, 493);
             this.tabPage8.TabIndex = 3;
-            this.tabPage8.Text = "EINSTELLUNGEN";
+            this.tabPage8.Text = "SETTINGS";
             // 
             // groupBox9
             // 
@@ -907,13 +899,13 @@
             this.groupBox9.Controls.Add(this.textBox3);
             this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox9.Enabled = false;
-            this.groupBox9.Location = new System.Drawing.Point(3, 308);
+            this.groupBox9.Location = new System.Drawing.Point(3, 299);
             this.groupBox9.MinimumSize = new System.Drawing.Size(740, 132);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(740, 132);
+            this.groupBox9.Size = new System.Drawing.Size(740, 191);
             this.groupBox9.TabIndex = 4;
             this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "ZUSÄTZLICHE BEWERTUNGSREGELN";
+            this.groupBox9.Text = "ADDITIONAL SCORING RULES";
             this.groupBox9.Visible = false;
             // 
             // checkedListBox2
@@ -922,7 +914,7 @@
             this.checkedListBox2.FormattingEnabled = true;
             this.checkedListBox2.Location = new System.Drawing.Point(3, 36);
             this.checkedListBox2.Name = "checkedListBox2";
-            this.checkedListBox2.Size = new System.Drawing.Size(734, 93);
+            this.checkedListBox2.Size = new System.Drawing.Size(734, 152);
             this.checkedListBox2.TabIndex = 0;
             // 
             // textBox3
@@ -946,12 +938,12 @@
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox3.Location = new System.Drawing.Point(3, 196);
+            this.groupBox3.Location = new System.Drawing.Point(3, 187);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(740, 112);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "FARBEINSTELLUNGEN";
+            this.groupBox3.Text = "COLOR SETTINGS";
             // 
             // button7
             // 
@@ -970,9 +962,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(448, 75);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(162, 13);
+            this.label8.Size = new System.Drawing.Size(123, 13);
             this.label8.TabIndex = 6;
-            this.label8.Text = "Hintergrundfarbe der Projektleiter";
+            this.label8.Text = "BG for leader of Projekte";
             // 
             // button3
             // 
@@ -1003,18 +995,18 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(448, 46);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(187, 13);
+            this.label7.Size = new System.Drawing.Size(124, 13);
             this.label7.TabIndex = 3;
-            this.label7.Text = "Hintergrundfarbe für überbes. Projekte";
+            this.label7.Text = "BG for overfilled Projekte";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(448, 16);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(190, 13);
+            this.label6.Size = new System.Drawing.Size(130, 13);
             this.label6.TabIndex = 2;
-            this.label6.Text = "Hintergrundfarbe für unterbes. Projekte";
+            this.label6.Text = "BG for underfilled Projekte";
             // 
             // button1
             // 
@@ -1033,9 +1025,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(6, 16);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(356, 13);
+            this.label5.Size = new System.Drawing.Size(165, 13);
             this.label5.TabIndex = 0;
-            this.label5.Text = "Farbe für Schüler, die einem Projekt falscher Klassenstufe zugeordnet sind";
+            this.label5.Text = "Class-Mismatched Objekte\'s color";
             // 
             // groupBox7
             // 
@@ -1047,12 +1039,40 @@
             this.groupBox7.Controls.Add(this.numericUpDown7);
             this.groupBox7.Controls.Add(this.checkBox2);
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox7.Location = new System.Drawing.Point(3, 117);
+            this.groupBox7.Location = new System.Drawing.Point(3, 108);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(740, 79);
             this.groupBox7.TabIndex = 3;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "WEITERE EINSTELLUNGEN";
+            this.groupBox7.Text = "OTHER SETTINGS";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(448, 42);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(177, 13);
+            this.label10.TabIndex = 11;
+            this.label10.Text = "Min #particip. for Projekte to survive";
+            // 
+            // numericUpDown6
+            // 
+            this.numericUpDown6.BackColor = System.Drawing.Color.GhostWhite;
+            this.numericUpDown6.Location = new System.Drawing.Point(641, 40);
+            this.numericUpDown6.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDown6.Minimum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown6.Name = "numericUpDown6";
+            this.numericUpDown6.Size = new System.Drawing.Size(64, 20);
+            this.numericUpDown6.TabIndex = 10;
+            this.numericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // checkBox3
             // 
@@ -1061,9 +1081,9 @@
             this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox3.Location = new System.Drawing.Point(129, 19);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(303, 17);
+            this.checkBox3.Size = new System.Drawing.Size(249, 17);
             this.checkBox3.TabIndex = 9;
-            this.checkBox3.Text = "Zerstöre nicht nachgefrragte, nicht erhaltenswerte Projekte";
+            this.checkBox3.Text = "Destroy underfilled Projekte that mustn\'t survive";
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
             // label9
@@ -1071,9 +1091,9 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(6, 42);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(178, 13);
+            this.label9.Size = new System.Drawing.Size(143, 13);
             this.label9.TabIndex = 8;
-            this.label9.Text = "Anzahl der Wünsche eines Schülers";
+            this.label9.Text = "Number of wishes per Objekt";
             // 
             // numericUpDown7
             // 
@@ -1105,21 +1125,21 @@
             this.checkBox2.AutoSize = true;
             this.checkBox2.Location = new System.Drawing.Point(6, 19);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(80, 17);
+            this.checkBox2.Size = new System.Drawing.Size(73, 17);
             this.checkBox2.TabIndex = 7;
-            this.checkBox2.Text = "Starte Blind";
+            this.checkBox2.Text = "Start blind";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
             this.groupBox4.AutoSize = true;
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox4.Location = new System.Drawing.Point(3, 98);
+            this.groupBox4.Location = new System.Drawing.Point(3, 103);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(740, 19);
+            this.groupBox4.Size = new System.Drawing.Size(740, 5);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "GÜTEERMITTLUNG";
+            this.groupBox4.Text = "SCORE DETERMINATION";
             // 
             // groupBox2
             // 
@@ -1132,10 +1152,10 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox2.Location = new System.Drawing.Point(3, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(740, 95);
+            this.groupBox2.Size = new System.Drawing.Size(740, 100);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "ANFORDERUNGEN AN DIE QUALITÄT EINER LÖSUNG";
+            this.groupBox2.Text = "QUALITY OF SOLUTION";
             // 
             // numericUpDown3
             // 
@@ -1179,18 +1199,18 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 68);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(340, 13);
+            this.label4.Size = new System.Drawing.Size(156, 13);
             this.label4.TabIndex = 2;
-            this.label4.Text = "Multiplikator bei der Güte einer Lösung bei überbesetzten Projekten [%]";
+            this.label4.Text = "Factor for overfilled Projekte [%]";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(6, 42);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(343, 13);
+            this.label3.Size = new System.Drawing.Size(162, 13);
             this.label3.TabIndex = 1;
-            this.label3.Text = "Multiplikator bei der Güte einer Lösung bei unterbesetzten Projekten [%]";
+            this.label3.Text = "Factor for underfilled Projekte [%]";
             // 
             // label2
             // 
@@ -1198,9 +1218,9 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(6, 16);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(155, 13);
+            this.label2.Size = new System.Drawing.Size(88, 13);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Minimale Güte einer Lösung [%]";
+            this.label2.Text = "Minimal score [%]";
             // 
             // toolStrip1
             // 
@@ -1224,8 +1244,8 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(141, 19);
-            this.toolStripButton1.Text = "BERECHNUNG STARTEN";
+            this.toolStripButton1.Size = new System.Drawing.Size(129, 19);
+            this.toolStripButton1.Text = "START CALCULATION";
             this.toolStripButton1.ToolTipText = "Berechnung starten";
             this.toolStripButton1.Click += new System.EventHandler(this.berechnungStarten);
             // 
@@ -1235,8 +1255,8 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(151, 19);
-            this.toolStripButton2.Text = "BERECHNUNG PAUSIEREN";
+            this.toolStripButton2.Size = new System.Drawing.Size(129, 19);
+            this.toolStripButton2.Text = "PAUSE CALCULATION";
             this.toolStripButton2.ToolTipText = "Berechnung anhalten";
             this.toolStripButton2.Visible = false;
             this.toolStripButton2.Click += new System.EventHandler(this.button7_Click);
@@ -1247,8 +1267,8 @@
             this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(308, 19);
-            this.toolStripButton4.Text = "BERECHNUNG MIT VERÄNDERTER LÖSUNG FORTSETEN";
+            this.toolStripButton4.Size = new System.Drawing.Size(288, 19);
+            this.toolStripButton4.Text = "RESUME CALCULATION WITH MODIFIED SOLUTION";
             this.toolStripButton4.ToolTipText = "Berechnung mit den manuell vorgenommenen Vertauschungen fortsetzen";
             this.toolStripButton4.Visible = false;
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
@@ -1259,8 +1279,8 @@
             this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(142, 19);
-            this.toolStripButton3.Text = "BERECHNUNG BEENDEN";
+            this.toolStripButton3.Size = new System.Drawing.Size(123, 19);
+            this.toolStripButton3.Text = "STOP CALCULATION";
             this.toolStripButton3.ToolTipText = "Berechnung beenden";
             this.toolStripButton3.Visible = false;
             this.toolStripButton3.Click += new System.EventHandler(this.button8_Click);
@@ -1270,40 +1290,12 @@
             this.colorDialog1.AnyColor = true;
             this.colorDialog1.Color = System.Drawing.Color.Red;
             // 
-            // numericUpDown6
-            // 
-            this.numericUpDown6.BackColor = System.Drawing.Color.GhostWhite;
-            this.numericUpDown6.Location = new System.Drawing.Point(641, 40);
-            this.numericUpDown6.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.numericUpDown6.Minimum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown6.Name = "numericUpDown6";
-            this.numericUpDown6.Size = new System.Drawing.Size(64, 20);
-            this.numericUpDown6.TabIndex = 10;
-            this.numericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(448, 42);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(175, 13);
-            this.label10.TabIndex = 11;
-            this.label10.Text = "Minimaler Erhaltenswert für Projekte";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.GhostWhite;
-            this.ClientSize = new System.Drawing.Size(754, 477);
+            this.ClientSize = new System.Drawing.Size(754, 541);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -1311,7 +1303,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Prowo-Berechnungstool \"Objekt auf Projekt\"";
+            this.Text = "Objekt auf Projekt";
             this.TransparencyKey = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_Closed);
             this.menuStrip1.ResumeLayout(false);
@@ -1351,6 +1343,7 @@
             this.groupBox3.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -1359,7 +1352,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -124,6 +124,7 @@
     <Compile Include="Form1.GUI.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Klasse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projekt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

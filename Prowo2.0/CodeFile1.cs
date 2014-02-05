@@ -33,8 +33,8 @@ public class ListViewComparer : IComparer
             }
             else if (IsNumeric == null)
             {
-                Tuple<Schüler.klassenstufe, Schüler.klasse> i1 = Schüler.getKlasse(item1.SubItems[col].Text),
-                    i2 = Schüler.getKlasse(item2.SubItems[col].Text);
+                Tuple<Objekt.klassenstufe, Objekt.klasse> i1 = Objekt.getKlasse(item1.SubItems[col].Text),
+                    i2 = Objekt.getKlasse(item2.SubItems[col].Text);
                 int mul = ((SortOrder.Ascending == order) ? 1 : -1);
                 if ((int)i1.Item1 == (int)i2.Item1)
                     return mul * ((int)i1.Item2).CompareTo((int)i2.Item2);

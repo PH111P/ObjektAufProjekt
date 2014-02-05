@@ -11,22 +11,12 @@ namespace Prowo
 {
     public static class SCH_ERW
     {
-        public static ListViewItem AsItem(this Schüler S, const_type<Color> PRColor, const_type<int> index, int index2 = (-1), int index3 = -1)
+        public static ListViewItem AsItem(this Objekt S, const_type<Color> PRColor, const_type<int> index, int index2 = (-1), int index3 = -1)
         {
             List<string> data = new List<string>();
             data.Add(S.Name);
             data.Add(S.Vorname);
-            string kl = "";
-            if (S.Klassenstufe == Schüler.klassenstufe.LEHRER)
-                kl = "Lehrer";
-            else
-            {
-                kl += (int)S.Klassenstufe;
-                if (S.Klassenstufe != Schüler.klassenstufe._11 && S.Klassenstufe != Schüler.klassenstufe.NONE)
-                    if (S.Klasse != Schüler.klasse.NONE)
-                        kl += "-" + (int)S.Klasse;
-            }
-            data.Add(kl);
+            data.Add(Klasse.ID_rev[S.Klasse].Name);
             data.Add("" + index);
             data.Add("" + index2);
             data.Add("" + index3);
@@ -46,13 +36,10 @@ namespace Prowo
             data.Add("" + P.MaxAnz);
 
             string s = "";
-            for (int i = 5; i < 11; i++)
-                if (P.KlassenStufen[i - 5])
+            for (int i = 0; i < Klasse.ID_rev.Count; i++)
+                if (P.AllowedKlassen[i])
                     s += i + " ";
-            if (P.KlassenStufen[6])
-                s += "11";
-
-            data.Add(s);
+            data.Add(s.TrimEnd(' '));
             data.Add("" + index);
             return new ListViewItem(data.ToArray());
         }
@@ -69,6 +56,31 @@ namespace Prowo
         public List<Button> ColorButtons = new List<Button>();
 
         #region Data I/O
+        public bool openKlassen(const_type<string> Path)
+        {
+            Klasse.Reset();
+            try
+            {
+                using (StreamReader sr = new StreamReader(Path))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        string s = sr.ReadLine();
+                        if (s.StartsWith("*")) continue;
+                        if (s.Length == 0) continue;
+
+                        new Klasse(s);
+                    }
+                }
+            }
+            catch (Exception o)
+            {
+                MessageBox.Show(o.Message + " - Could not load file containing Klassen.", "ERROR");
+                Klasse.Reset();
+                return false;
+            }
+            return true;
+        }
         public bool openProject(const_type<string> Path)
         {
             Projekte.Clear();
@@ -117,7 +129,7 @@ namespace Prowo
             }
             catch (Exception o)
             {
-                MessageBox.Show(o.Message + " - Datei konnte nicht geladen werden.", "FEHLER");
+                MessageBox.Show(o.Message + " - Could not load file.", "ERROR");
                 textBox1.Text = "";
                 button11.Enabled = false;
                 listView1.Items.Clear();
@@ -142,13 +154,13 @@ namespace Prowo
                         {
                             for (int i = 2; i < s.Split('/', ',').Length - 1; ++i)
                                 Wünsche.Add(Convert.ToInt32(s.Split('/', ',')[i]));
-                            schüler.Add(new Schüler(s.Split('/', ',')[0].Remove(0, 1), s.Split('/', ',')[1],
+                            schüler.Add(new Objekt(s.Split('/', ',')[0].Remove(0, 1), s.Split('/', ',')[1],
                                 s.Split('/', ',')[s.Split('/', ',').Length - 1], Wünsche, true));
                             continue;
                         }
                         for (int i = 2; i < s.Split('/', ',').Length - 1; ++i)
                             Wünsche.Add(Convert.ToInt32(s.Split('/', ',')[i]));
-                        schüler.Add(new Schüler(s.Split('/', ',')[0], s.Split('/', ',')[1],
+                        schüler.Add(new Objekt(s.Split('/', ',')[0], s.Split('/', ',')[1],
                             s.Split('/', ',')[s.Split('/', ',').Length - 1], Wünsche));
                     }
                 int cnt = 0;
@@ -157,7 +169,7 @@ namespace Prowo
             }
             catch (Exception o)
             {
-                MessageBox.Show(o.Message + " - Datei konnte nicht geladen werden.", "FEHLER");
+                MessageBox.Show(o.Message + " - Could not load file.", "ERROR");
                 textBox2.Text = "";
                 listView2.Items.Clear();
                 listView4.Items.Clear();
@@ -174,7 +186,7 @@ namespace Prowo
                 {
 
                     sw.WriteLine(@"\documentclass[a4paper,12pt]{article}");
-                    sw.WriteLine(@"\usepackage[ngerman]{babel}");
+                    sw.WriteLine(@"\usepackage{babel}");
                     sw.WriteLine(@"\usepackage[utf8]{inputenc}");
                     sw.WriteLine(@"\usepackage{fancyhdr}");
                     sw.WriteLine(@"\usepackage{longtable}");
@@ -187,16 +199,16 @@ namespace Prowo
                     sw.WriteLine(@"\parindent0pt");
                     sw.WriteLine(@"\pagestyle{fancy}");
 
-                    sw.WriteLine(@"\lhead{Projektwoche}");
+                    sw.WriteLine(@"\lhead{ObjektAufProjekt}");
                     sw.WriteLine(@"\chead{}");
-                    sw.WriteLine(@"\rhead{Zuteilungen}");
+                    sw.WriteLine(@"\rhead{Matchings}");
                     sw.WriteLine(@"\lfoot{}");
                     sw.WriteLine(@"\cfoot{}");
                     sw.WriteLine(@"\rfoot{}");
 
                     sw.WriteLine(@"\begin{document}");
 
-                    List<Tuple<Schüler, string>> schler = new List<Tuple<Schüler, string>>();
+                    List<Tuple<Objekt, string>> schler = new List<Tuple<Objekt, string>>();
                     foreach (Projekt P in Solution)
                     {
                         if (P.TeilnehmerCount == 0)
@@ -205,30 +217,30 @@ namespace Prowo
                         sw.WriteLine(P.Description);
                         if (P.AnzLeiter > 0)
                         {
-                            List<Schüler> cpy = new List<Schüler>(P.GetLeiterList());
+                            List<Objekt> cpy = new List<Objekt>(P.GetLeiterList());
                             cpy.Sort();
 
-                            sw.WriteLine(@"\subsubsection*{Projektleiter}");
+                            sw.WriteLine(@"\subsubsection*{Projekt's leader}");
                             // sw.WriteLine(@"\begin{center}");
                             sw.WriteLine(@"\begin{tabular}{l|c}");
                             sw.WriteLine(@"\textbf{Name} & \textbf{Klasse} \\ \hline \hline");
-                            foreach (Schüler S in cpy)
+                            foreach (Objekt S in cpy)
                                 sw.WriteLine(S.Name + ", " + S.Vorname + " & " + S.getKlasse() + @"\\");
                             sw.WriteLine(@"\end{tabular}");
                             // sw.WriteLine(@"\end{center}");
                         }
                         {
-                            List<Schüler> cpy = new List<Schüler>(P.GetList());
+                            List<Objekt> cpy = new List<Objekt>(P.GetList());
                             cpy.Sort();
 
-                            sw.WriteLine(@"\subsubsection*{Teilnehmer}");
+                            sw.WriteLine(@"\subsubsection*{Participants}");
                             //   sw.WriteLine(@"\begin{center}");
                             sw.WriteLine(@"\begin{tabular}{l|c}");
                             sw.WriteLine(@"\textbf{Name} & \textbf{Klasse} \\ \hline \hline");
-                            foreach (Schüler S in cpy)
+                            foreach (Objekt S in cpy)
                             {
                                 sw.WriteLine(S.Name + ", " + S.Vorname + " & " + S.getKlasse() + @"\\");
-                                schler.Add(new Tuple<Schüler, string>(new Schüler(S), P.Projektname));
+                                schler.Add(new Tuple<Objekt, string>(new Objekt(S), P.Projektname));
                             }
                             sw.WriteLine(@"\end{tabular}");
                             // sw.WriteLine(@"\end{center}");
@@ -237,14 +249,14 @@ namespace Prowo
 
                         if (Anwesenheit)
                         {
-                            List<Schüler> cpy = new List<Schüler>(P.GetList());
+                            List<Objekt> cpy = new List<Objekt>(P.GetList());
                             cpy.Sort();
 
                             sw.WriteLine(@"\subsubsection*{Anwesenheit}");
                             //   sw.WriteLine(@"\begin{center}");
                             sw.WriteLine(@"\begin{tabular}{l||c|c|c|c|c|}");
                             sw.WriteLine(@"\textbf{Name} & Tag 1 & Tag 2 & Tag 3 & Tag 4 & Tag 5 \\ \hline \hline");
-                            foreach (Schüler S in cpy)
+                            foreach (Objekt S in cpy)
                                 sw.WriteLine(S.Name + ", " + S.Vorname + @"& \mbox{} & \mbox{} & \mbox{} & \mbox{} & \mbox{}\\ \hline");
                             sw.WriteLine(@"\end{tabular}");
                             // sw.WriteLine(@"\end{center}");
@@ -252,11 +264,9 @@ namespace Prowo
                         }
                     }
 
-                    schler.Sort(new TupleCmp<Schüler, string>());
+                    schler.Sort(new TupleCmp<Objekt, string>());
                     foreach (string s in comboBox1.Items)
                     {
-                        if (s == "Lehrer")
-                            continue;
                         int cnt = 0;
                         for (int i = 0; i < schler.Count; i++)
                             if (schler[i].Item1.getKlasse() == s)
@@ -265,12 +275,12 @@ namespace Prowo
                             continue;
                         sw.WriteLine(@"\subsection*{Klasse " + s + "}");
                         sw.WriteLine(@"\begin{longtable}{l|l}");
-                        sw.WriteLine(@"\textbf{Name} (Forts.) & \textbf{Projekt} (Forts.) \\ \hline \hline");
+                        sw.WriteLine(@"\textbf{Name} (cont.) & \textbf{Projekt} (cont.) \\ \hline \hline");
                         sw.WriteLine(@"\endhead");
 
                         sw.WriteLine(@"\textbf{Name} & \textbf{Projekt} \\ \hline \hline");
                         sw.WriteLine(@"\endfirsthead");
-                        sw.WriteLine(@"\multicolumn{2}{r}{Fortsetzung auf der nächsten Seite.}");
+                        sw.WriteLine(@"\multicolumn{2}{r}{To be continued on the following page.}");
                         sw.WriteLine(@"\endfoot");
                         sw.WriteLine(@"\multicolumn{2}{l}{\mbox{}}");
                         sw.WriteLine(@"\endlastfoot");
@@ -314,7 +324,7 @@ namespace Prowo
                         {
                             var Item = item.AsItem(button7.BackColor, cnt, i, cnt2++);
                             Item.Group = listView3.Groups[i];
-                            if (!Solution[i].KlassenStufen[(int)item.Klassenstufe - 5])
+                            if (!Solution[i].AllowedKlassen[(int)item.Klassenstufe - 5])
                                 Item.ForeColor = Color.Red;
                             for (int W = 0; W < item.Wünsche.Count; ++W)
                                 if (item.Wünsche[W] == i)
@@ -337,7 +347,7 @@ namespace Prowo
             }
             catch (Exception eg)
             {
-                MessageBox.Show(eg.Message + " - Lösung nicht gespeichert.", "FEHLER");
+                MessageBox.Show(eg.Message + " - Solution not saved.", "ERROR");
                 while (listView3.Items.Count > 0)
                     listView3.Items.RemoveAt(0);
                 return false;
@@ -351,7 +361,7 @@ namespace Prowo
                 using (var sw = new StreamWriter(Path))
                 {
                     sw.WriteLine(@"\documentclass[a4paper,12pt]{article}");
-                    sw.WriteLine(@"\usepackage[ngerman]{babel}");
+                    sw.WriteLine(@"\usepackage{babel}");
                     sw.WriteLine(@"\usepackage[utf8]{inputenc}");
                     sw.WriteLine(@"\usepackage{fancyhdr}");
                     sw.WriteLine(@"\usepackage{longtable}");
@@ -364,7 +374,7 @@ namespace Prowo
                     sw.WriteLine(@"\parindent0pt");
                     sw.WriteLine(@"\pagestyle{fancy}");
 
-                    sw.WriteLine(@"\lhead{Projektwoche}");
+                    sw.WriteLine(@"\lhead{ObjektAufProjekt}");
                     sw.WriteLine(@"\chead{}");
                     sw.WriteLine(@"\rhead{Projekte}");
                     sw.WriteLine(@"\lfoot{}");
@@ -375,11 +385,11 @@ namespace Prowo
                     sw.WriteLine(@"\subsection*{Projekte}");
 
                     sw.WriteLine(@"\begin{longtable}{p{3cm}|p{5cm}|*{7}{|p{0.25cm}|}|p{3cm}}");
-                    sw.WriteLine(@"\textbf{Name} (Forts.) & \textbf{Projektleiter} (Forts.) & 5 & 6 & 7 & 8 & 9 & 10 & 11 & \textbf{Beschreibung/ Bemerkungen}  \\ \hline \hline");
+                    sw.WriteLine(@"\textbf{Name} (Forts.) & \textbf{Projekt's leader} (cont.) & 5 & 6 & 7 & 8 & 9 & 10 & 11 & \textbf{Description}  \\ \hline \hline");
                     sw.WriteLine(@"\endhead");
-                    sw.WriteLine(@"\textbf{Name} & \textbf{Projektleiter} & 5 & 6 & 7 & 8 & 9 & 10 & 11 & \textbf{Beschreibung/ Bemerkungen} \\ \hline \hline");
+                    sw.WriteLine(@"\textbf{Name} & \textbf{Projekt's leader} & 5 & 6 & 7 & 8 & 9 & 10 & 11 & \textbf{Description} \\ \hline \hline");
                     sw.WriteLine(@"\endfirsthead");
-                    sw.WriteLine(@"\multicolumn{10}{r}{Fortsetzung auf der nächsten Seite.}");
+                    sw.WriteLine(@"\multicolumn{10}{r}{To be continued on the following page.}");
                     sw.WriteLine(@"\endfoot");
                     sw.WriteLine(@"\multicolumn{10}{l}{\mbox{}}");
                     sw.WriteLine(@"\endlastfoot");
@@ -389,21 +399,21 @@ namespace Prowo
                         if (P.MaxAnz == 0)
                             continue;
 
-                        for (int i = 0; i < P.KlassenStufen.Length; i++)
-                            if (P.KlassenStufen[i])
+                        for (int i = 0; i < P.AllowedKlassen.Length; i++)
+                            if (P.AllowedKlassen[i])
                                 goto CONT;
                         continue;
                     CONT:
                         string s = P.Projektname + " & ";
-                        foreach (Schüler S in P.GetLeiterList())
+                        foreach (Objekt S in P.GetLeiterList())
                         {
                             s += S.Name + ", " + S.Vorname + " (" + S.getKlasse() + ")";
                             s += "; ";
                         }
                         s.Remove(s.Length - 2);
                         s += " & ";
-                        for (int i = 0; i < P.KlassenStufen.Length; i++)
-                            if (P.KlassenStufen[i])
+                        for (int i = 0; i < P.AllowedKlassen.Length; i++)
+                            if (P.AllowedKlassen[i])
                                 s += @"\textsf{X} & ";
                             else
                                 s += @"\mbox{} & ";
@@ -433,7 +443,7 @@ namespace Prowo
                 using (var sw = new StreamWriter(Path))
                 {
                     sw.WriteLine(@"\documentclass[a4paper,10pt,landscape]{article}");
-                    sw.WriteLine(@"\usepackage[ngerman]{babel}");
+                    sw.WriteLine(@"\usepackage{babel}");
                     sw.WriteLine(@"\usepackage[utf8]{inputenc}");
                     sw.WriteLine(@"\usepackage{fancyhdr}");
                     sw.WriteLine(@"\usepackage{longtable}");
@@ -450,24 +460,24 @@ namespace Prowo
                     sw.WriteLine(@"\parindent0pt");
                     sw.WriteLine(@"\pagestyle{fancy}");
 
-                    sw.WriteLine(@"\lhead{Projektwoche}");
+                    sw.WriteLine(@"\lhead{ObjektAufProjekt}");
                     sw.WriteLine(@"\chead{}");
-                    sw.WriteLine(@"\rhead{Wunschtabelle}");
+                    sw.WriteLine(@"\rhead{Wishlist}");
                     sw.WriteLine(@"\lfoot{}");
                     sw.WriteLine(@"\cfoot{}");
                     sw.WriteLine(@"\rfoot{}");
 
                     sw.WriteLine(@"\begin{document}");
 
-                    List<Tuple<Schüler, string>> schler = new List<Tuple<Schüler, string>>();
+                    List<Tuple<Objekt, string>> schler = new List<Tuple<Objekt, string>>();
                     foreach (Projekt P in Solution)
                     {
-                        foreach (Schüler S in P.GetLeiterList())
-                            schler.Add(new Tuple<Schüler, string>(new Schüler(S), P.Projektname + "@"));
-                        foreach (Schüler S in P.GetList())
-                            schler.Add(new Tuple<Schüler, string>(new Schüler(S), P.Projektname));
+                        foreach (Objekt S in P.GetLeiterList())
+                            schler.Add(new Tuple<Objekt, string>(new Objekt(S), P.Projektname + "@"));
+                        foreach (Objekt S in P.GetList())
+                            schler.Add(new Tuple<Objekt, string>(new Objekt(S), P.Projektname));
                     }
-                    schler.Sort(new TupleCmp<Schüler, string>());
+                    schler.Sort(new TupleCmp<Objekt, string>());
 
                     List<Tuple<Projekt, int>> projekte = new List<Tuple<Projekt, int>>();
                     for (int i = 0; i < Projekte.Count; ++i)
@@ -483,7 +493,7 @@ namespace Prowo
                             ++jhrgng;
                         int cnt = 0;
                         foreach (var P in projekte)
-                            if (P.Item1.KlassenStufen[jhrgng - 5])
+                            if (P.Item1.AllowedKlassen[jhrgng - 5])
                                 cnt++;
                         if (cnt == 0)
                             continue;
@@ -498,7 +508,7 @@ namespace Prowo
                         string S = @"\textbf{Name} ";
                         cnt = 0;
                         foreach (var P in projekte)
-                            if (P.Item1.KlassenStufen[jhrgng - 5])
+                            if (P.Item1.AllowedKlassen[jhrgng - 5])
                             {
                                 S += @" & \begin{sideways}" + P.Item1.Projektname + @" \end{sideways} ";
                                 inds[P.Item2] = cnt++;
@@ -509,7 +519,7 @@ namespace Prowo
                         sw.WriteLine(@"\endhead");
                         sw.WriteLine(S);
                         sw.WriteLine(@"\endfirsthead");
-                        sw.WriteLine(@"\multicolumn{" + cnt + @"}{r}{Fortsetzung auf der nächsten Seite.}");
+                        sw.WriteLine(@"\multicolumn{" + cnt + @"}{r}{To be continued on the following page.}");
                         sw.WriteLine(@"\endfoot");
                         sw.WriteLine(@"\multicolumn{" + cnt + @"}{l}{\mbox{}}");
                         sw.WriteLine(@"\endlastfoot");
@@ -566,7 +576,7 @@ namespace Prowo
                 using (var sw = new StreamWriter(Path))
                 {
                     sw.WriteLine(@"\documentclass[a4paper,10pt,landscape]{article}");
-                    sw.WriteLine(@"\usepackage[ngerman]{babel}");
+                    sw.WriteLine(@"\usepackage{babel}");
                     sw.WriteLine(@"\usepackage[utf8]{inputenc}");
                     sw.WriteLine(@"\usepackage{fancyhdr}");
                     sw.WriteLine(@"\usepackage{longtable}");
@@ -591,13 +601,13 @@ namespace Prowo
 
                     sw.WriteLine(@"\begin{document}");
 
-                    List<Tuple<Schüler, bool>> schler = new List<Tuple<Schüler, bool>>();
-                    foreach (Schüler S in schüler)
-                        schler.Add(new Tuple<Schüler, bool>(new Schüler(S), false));
+                    List<Tuple<Objekt, bool>> schler = new List<Tuple<Objekt, bool>>();
+                    foreach (Objekt S in schüler)
+                        schler.Add(new Tuple<Objekt, bool>(new Objekt(S), false));
                     foreach (Projekt P in Projekte)
-                        foreach (Schüler S in P.GetLeiterList())
-                            schler.Add(new Tuple<Schüler, bool>(new Schüler(S), true));
-                    schler.Sort(new TupleCmp<Schüler, bool>());
+                        foreach (Objekt S in P.GetLeiterList())
+                            schler.Add(new Tuple<Objekt, bool>(new Objekt(S), true));
+                    schler.Sort(new TupleCmp<Objekt, bool>());
 
                     List<Tuple<Projekt, int>> projekte = new List<Tuple<Projekt, int>>();
                     for (int i = 0; i < Projekte.Count; ++i)
@@ -613,7 +623,7 @@ namespace Prowo
                             ++jhrgng;
                         int cnt = 0;
                         foreach (var P in projekte)
-                            if (P.Item1.KlassenStufen[jhrgng - 5])
+                            if (P.Item1.AllowedKlassen[jhrgng - 5])
                                 cnt++;
                         if (cnt == 0)
                             continue;
@@ -628,7 +638,7 @@ namespace Prowo
                         string S = @"\textbf{Name} ";
                         cnt = 0;
                         foreach (var P in projekte)
-                            if (P.Item1.KlassenStufen[jhrgng - 5])
+                            if (P.Item1.AllowedKlassen[jhrgng - 5])
                             {
                                 S += @" & \begin{sideways}" + P.Item1.Projektname + @" \end{sideways} ";
                                 inds[P.Item2] = cnt++;
@@ -639,7 +649,7 @@ namespace Prowo
                         sw.WriteLine(@"\endhead");
                         sw.WriteLine(S);
                         sw.WriteLine(@"\endfirsthead");
-                        sw.WriteLine(@"\multicolumn{" + cnt + @"}{r}{Fortsetzung auf der nächsten Seite.}");
+                        sw.WriteLine(@"\multicolumn{" + cnt + @"}{r}{To be continued on the following page.}");
                         sw.WriteLine(@"\endfoot");
                         sw.WriteLine(@"\multicolumn{" + cnt + @"}{l}{\mbox{}}");
                         sw.WriteLine(@"\endlastfoot");
@@ -691,7 +701,7 @@ namespace Prowo
             while (listView3.Groups.Count > 0)
                 listView3.Groups.RemoveAt(0);
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Textdatei mit Projekten|*.prd;*.txt";
+            dlg.Filter = "File containing Projekte's data|*.prd;*.txt";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -701,7 +711,7 @@ namespace Prowo
                 }
                 catch (Exception ed)
                 {
-                    MessageBox.Show(ed.Message + " - Datei konnte nicht geladen werden.", "FEHLER");
+                    MessageBox.Show(ed.Message + " - Could not load file.", "ERROR");
                     return;
                 }
             }
@@ -721,12 +731,12 @@ namespace Prowo
         {
             if (!button11.Enabled)
             {
-                MessageBox.Show("Legen Sie zunächst eine Datei mit Projekten fest!", "FEHLER");
+                MessageBox.Show("Specify a file with Projekte first!", "ERROR");
                 return;
             }
             listView2.Items.Clear();
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Textdatei mit Schülern und deren Projektwünschen|*.scd;*.txt";
+            dlg.Filter = "File containing Objekte and their wishes|*.scd;*.txt";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -736,7 +746,7 @@ namespace Prowo
                 }
                 catch (Exception ed)
                 {
-                    MessageBox.Show(ed.Message + " - Datei konnte nicht geladen werden.", "FEHLER");
+                    MessageBox.Show(ed.Message + " - Could not load file.", "ERROR");
                     return;
                 }
             }
@@ -747,7 +757,7 @@ namespace Prowo
         private void button9_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "Roher Text (*.txt)|*.txt|TeX-Dokument (*.tex)|*.tex|TeX-Dokument (ohne Anwesenheitstabellen) (*.tex)|*.tex";
+            sfd.Filter = "Raw text (*.txt)|*.txt|TeX file (*.tex)|*.tex|TeX file (without Anwesenheitstabellen) (*.tex)|*.tex";
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 if (sfd.FilterIndex == 1)
                     writeFile(sfd.FileName);
@@ -757,7 +767,7 @@ namespace Prowo
                     writeTEXFile(sfd.FileName, false);
                 else
                 {
-                    MessageBox.Show("Es gab einen Fehler. Lösung nicht gespeichert.", "FEHLER");
+                    MessageBox.Show("An error occured. Could not save file.", "ERROR");
                     return;
                 }
         }
@@ -765,7 +775,7 @@ namespace Prowo
         private void projList_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "TeX-Dokument (*.tex)|*.tex";
+            sfd.Filter = "TeX file (*.tex)|*.tex";
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 writeTEXProjList(sfd.FileName);
         }
@@ -773,9 +783,9 @@ namespace Prowo
         private void wishList_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "TeX-Dokument (*.tex)|*.tex|TeX-Dokument (mit Wünschen) (*.tex)|*.tex";
+            sfd.Filter = "TeX file (*.tex)|*.tex|TeX file (including wishes) (*.tex)|*.tex";
             if (Solution != null)
-                sfd.Filter += "|TeX-Dokument (mit Wünschen und Lösungen) (*.tex)|*.tex";
+                sfd.Filter += "|TeX file (including wishes and solution) (*.tex)|*.tex";
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 if (sfd.FilterIndex == 1)
                     writeTEXWishList(sfd.FileName, false);
@@ -785,7 +795,7 @@ namespace Prowo
                     writeTEXWishList(sfd.FileName, true, true);
                 else
                 {
-                    MessageBox.Show("Es gab einen Fehler. Lösung nicht gespeichert.", "FEHLER");
+                    MessageBox.Show("An error occured. Could not save file.", "ERROR");
                     return;
                 }
         }
@@ -796,7 +806,7 @@ namespace Prowo
         {
             if (!button12.Enabled || !button11.Enabled)
             {
-                MessageBox.Show("Legen Sie beide Ausgangsdateien fest!", "FEHLER");
+                MessageBox.Show("Specify both input files first!", "ERROR");
                 return;
             }
             aktBestSolValue = -1;
@@ -819,12 +829,12 @@ namespace Prowo
         {
             if (!button11.Enabled)
             {
-                MessageBox.Show("Definieren Sie eine Projektdatei!", "FEHLER");
+                MessageBox.Show("Specify a file with Projekte first!", "ERROR");
                 return;
             }
             if (textBox4.Text.Length == 0)
             {
-                MessageBox.Show("Namenlose Projekte sind unschön!", "FEHLER");
+                MessageBox.Show("Nameless Projekte are somewhat strange!", "ERROR");
                 return;
             }
             StreamWriter sw = null;
@@ -832,7 +842,7 @@ namespace Prowo
             { sw = new StreamWriter(textBox1.Text, true); }
             catch (Exception w)
             {
-                MessageBox.Show(w.Message + " - Projekt konnte nicht hinzugefügt werden.", "FEHLER");
+                MessageBox.Show(w.Message + " - Could not add Projekt.", "ERROR");
                 sw.Close();
                 return;
             }
@@ -848,7 +858,7 @@ namespace Prowo
             }
             if (numericUpDown4.Value > numericUpDown5.Value)
             {
-                MessageBox.Show("Fehlerhafte Eingabe!", "FEHLER");
+                MessageBox.Show("Wrong input!", "ERROR");
                 sw.Close();
                 return;
             }
@@ -873,12 +883,12 @@ namespace Prowo
         {
             if (textBox7.Text.Length == 0 || textBox8.Text.Length == 0)
             {
-                MessageBox.Show("Füllen Sie alle Felder aus!", "FEHLER");
+                MessageBox.Show("Fill in all the fields!", "ERROR");
                 return;
             }
             if (!button11.Enabled)
             {
-                MessageBox.Show("Definieren Sie eine Zieldatei für das Projekt!", "FEHLER");
+                MessageBox.Show("Specify a file with Projekte first!", "ERROR");
                 return;
             }
             List<int> inds = new List<int>();
@@ -889,7 +899,7 @@ namespace Prowo
                         inds.Add(((ComboBox)TabPages[i].Controls[0]).SelectedIndex);
                     else if (i == 0)
                     {
-                        MessageBox.Show("Füllen Sie alle Felder aus!\n(Geben Sie Projektwünsche an!)", "FEHLER");
+                        MessageBox.Show("Fill in all the fields!\n(Specify wishes!)", "ERROR");
                         return;
                     }
                     else
@@ -897,7 +907,7 @@ namespace Prowo
             }
             catch (Exception eg)
             {
-                MessageBox.Show(eg.Message + " - Schüler konnte nicht hinzugefügt werden.", "FEHLER");
+                MessageBox.Show(eg.Message + " - Could not add Objekt.", "ERROR");
                 return;
             }
 
@@ -906,11 +916,11 @@ namespace Prowo
             { sw = new StreamWriter(textBox2.Text, true); }
             catch (Exception es)
             {
-                MessageBox.Show(es.Message + " - Schüler konnte nicht hinzugefügt werden.", "FEHLER");
+                MessageBox.Show(es.Message + " - Could not add Objekt.", "ERROR");
                 sw.Close();
             }
 
-            Schüler S = new Schüler(textBox7.Text, textBox8.Text, comboBox1.Text, inds, !checkBox1.Checked);
+            Objekt S = new Objekt(textBox7.Text, textBox8.Text, comboBox1.Text, inds, !checkBox1.Checked);
             string out_ = "";
 
             schüler.Add(S);
@@ -965,17 +975,17 @@ namespace Prowo
                         inds.Add(((ComboBox)TabPages[i].Controls[0]).SelectedIndex);
                     else
                     {
-                        MessageBox.Show("Füllen Sie alle Felder aus!", "FEHLER");
+                        MessageBox.Show("Fill in all the fields!", "ERROR");
                         return;
                     }
                 fill_LV4(Projekte);
             }
             catch (Exception eg)
             {
-                MessageBox.Show(eg.Message + " - Schüler konnte nicht angepasst werden.", "FEHLER");
+                MessageBox.Show(eg.Message + " - Could not modify Objekt.", "ERROR");
                 return;
             }
-            schüler[SelectedSchüler] = new Schüler(textBox7.Text, textBox8.Text, comboBox1.Text, inds);
+            schüler[SelectedSchüler] = new Objekt(textBox7.Text, textBox8.Text, comboBox1.Text, inds);
             listView2.Items[listView2.SelectedIndices[0]] = schüler[SelectedSchüler].AsItem(button7.BackColor, SelectedSchüler);
 
             int selLine = SelectedSchüler;
@@ -1027,8 +1037,8 @@ namespace Prowo
                 numericUpDown4.Value = Projekte[SelectedProj].MinAnz;
                 numericUpDown5.Value = Projekte[SelectedProj].MaxAnz;
 
-                for (int i = 0; i < Projekte[SelectedProj].KlassenStufen.Length; i++)
-                    checkedListBox1.SetItemChecked(i, Projekte[SelectedProj].KlassenStufen[i]);
+                for (int i = 0; i < Projekte[SelectedProj].AllowedKlassen.Length; i++)
+                    checkedListBox1.SetItemChecked(i, Projekte[SelectedProj].AllowedKlassen[i]);
 
                 Offen.Checked = Projekte[SelectedProj].editable;
                 checkBox4.Checked = Projekte[SelectedProj].erhaltenswert;
@@ -1045,7 +1055,7 @@ namespace Prowo
         {
             if (textBox4.Text.Length == 0)
             {
-                MessageBox.Show("Namenlose Projekte sind unschön!", "FEHLER");
+                MessageBox.Show("Nameless Projekte are somewhat strange!", "ERROR");
                 return;
             }
             int selLine = SelectedProj;
@@ -1063,7 +1073,7 @@ namespace Prowo
             }
             if (numericUpDown4.Value > numericUpDown5.Value)
             {
-                MessageBox.Show("Fehlerhafte Eingabe!", "FEHLER");
+                MessageBox.Show("Wrong input!", "ERROR");
                 return;
             }
 
@@ -1127,7 +1137,7 @@ namespace Prowo
         {
             toolStripButton4.Visible = true;
 
-            Solution[toolStripComboBox1.SelectedIndex].Add(new Schüler(Solution[SelectedSolPro][SelectedSolSch]));
+            Solution[toolStripComboBox1.SelectedIndex].Add(new Objekt(Solution[SelectedSolPro][SelectedSolSch]));
             Solution[SelectedSolPro].Remove(Solution[SelectedSolPro][SelectedSolSch]);
             int cnt = 0;
             listView3.Items.Clear();
@@ -1148,7 +1158,7 @@ namespace Prowo
                 {
                     var Item = item.AsItem(button7.BackColor, cnt, i, cnt2++);
                     Item.Group = listView3.Groups[i];
-                    if (!Solution[i].KlassenStufen[(int)item.Klassenstufe - 5])
+                    if (!Solution[i].AllowedKlassen[(int)item.Klassenstufe - 5])
                         Item.ForeColor = Color.Red;
                     for (int W = 0; W < item.Wünsche.Count; ++W)
                         if (item.Wünsche[W] == i)
@@ -1210,8 +1220,8 @@ namespace Prowo
         {
             this.beenden = true;
             this.flag = false;
-            toolStripButton2.ToolTipText = "Berechnung pausieren";
-            toolStripButton2.Text = "BERECHNUNG PAUSIEREN";
+            toolStripButton2.ToolTipText = "Pause calculation.";
+            toolStripButton2.Text = "PAUSE CALCULATION";
             setSettings(true);
 
             setSave(true, Solution != null);
@@ -1222,8 +1232,8 @@ namespace Prowo
             bool? num = false;
             if (((ListView)sender).Columns[e.Column].Text == "KLASSE")
                 num = null;
-            else if (((ListView)sender).Columns[e.Column].Text.Contains("ANZAHL")
-                || ((ListView)sender).Columns[e.Column].Text.Contains("ALS")
+            else if (((ListView)sender).Columns[e.Column].Text.Contains("#")
+                || ((ListView)sender).Columns[e.Column].Text.Contains("AS")
                 || ((ListView)sender).Columns[e.Column].Text.Contains("WERT"))
                 num = true;
 
@@ -1300,12 +1310,12 @@ namespace Prowo
             groupBox3.Controls.AddRange(cpy.ToArray());
             tabControl2.TabPages.Clear();
             listView4.Columns.Clear();
-            listView4.Columns.Add("PROJEKTNAME");
+            listView4.Columns.Add("PROJEKT's NAME");
             listView4.Columns[0].Width = 120;
 
             for (int i = 0; i < (int)numericUpDown7.Value; i++)
             {
-                TabPage T = new TabPage((i + 1) + ".-Wunsch");
+                TabPage T = new TabPage("wish #" + (i + 1));
                 tabControl2.TabPages.Add(T);
                 TabPages.Add(T);
 
@@ -1321,7 +1331,7 @@ namespace Prowo
                 L.Dock = DockStyle.Bottom;
                 TabPages[i].Controls.Add(L);
 
-                M.Text = "Farbe für Schüler, die ihrem " + (i + 1) + ".-Wunsch zugeordnet sind.";
+                M.Text = "Objekte's color that got matched to their wish #" + (i + 1) + ".";
                 M.Location = new Point(label5.Location.X, label5.Location.Y + (i + 1) * 30);
                 M.AutoSize = true;
                 M.Tag = 42;
@@ -1329,7 +1339,7 @@ namespace Prowo
                 groupBox3.Controls.Add(B);
                 groupBox3.Controls.Add(M);
                 B.FlatStyle = FlatStyle.Flat;
-                B.Text = "Anpassen";
+                B.Text = "Adjust";
                 B.Size = button1.Size;
                 B.Location = new Point(button1.Location.X, button1.Location.Y + (i + 1) * 30);
                 B.BackColor = Color.FromArgb(255, 0, (4003 - (i * 40)) % 256, 0);
@@ -1337,7 +1347,7 @@ namespace Prowo
                 B.Tag = 42;
                 ColorButtons.Add(B);
 
-                N.Text = "Wert eines erfüllten " + (i + 1) + ".-Wunsches";
+                N.Text = "Score of a fulfilled wish #" + (i + 1) + ".";
                 N.Location = new Point(label2.Location.X, label2.Location.Y + (30 * i));
                 N.AutoSize = true;
                 groupBox4.Controls.Add(N);
@@ -1353,10 +1363,10 @@ namespace Prowo
                 SchHWunsch.Add(NUD);
                 groupBox4.Controls.Add(NUD);
 
-                listView4.Columns.Add("ALS " + (i + 1) + ".-WUNSCH", 60, HorizontalAlignment.Center);
+                listView4.Columns.Add("AS WISH #" + (i + 1) , 60, HorizontalAlignment.Center);
 
             }
-            listView4.Columns.Add("ERHALTENSWERT",60,HorizontalAlignment.Center);
+            listView4.Columns.Add("ALWAYS SURVIVING",60,HorizontalAlignment.Center);
         }
 
         void CB_SelectedIndexChanged(object sender, EventArgs e)
