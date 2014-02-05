@@ -72,7 +72,6 @@
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button13 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -126,6 +125,7 @@
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.textBox6 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -605,8 +605,8 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.textBox6);
             this.panel2.Controls.Add(this.button13);
-            this.panel2.Controls.Add(this.comboBox1);
             this.panel2.Controls.Add(this.textBox7);
             this.panel2.Controls.Add(this.checkBox1);
             this.panel2.Controls.Add(this.label15);
@@ -632,34 +632,6 @@
             this.button13.Text = "Remove Objekt";
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.remSchueler);
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "5-1",
-            "5-2",
-            "6-1",
-            "6-2",
-            "7-1",
-            "7-2",
-            "7-3",
-            "8-1",
-            "8-2",
-            "8-3",
-            "9-1",
-            "9-2",
-            "9-3",
-            "10-1",
-            "10-2",
-            "10-3",
-            "11",
-            "Lehrer"});
-            this.comboBox1.Location = new System.Drawing.Point(59, 54);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(61, 21);
-            this.comboBox1.TabIndex = 24;
             // 
             // textBox7
             // 
@@ -1290,6 +1262,14 @@
             this.colorDialog1.AnyColor = true;
             this.colorDialog1.Color = System.Drawing.Color.Red;
             // 
+            // textBox6
+            // 
+            this.textBox6.BackColor = System.Drawing.Color.GhostWhite;
+            this.textBox6.Location = new System.Drawing.Point(59, 54);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(170, 20);
+            this.textBox6.TabIndex = 26;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1442,7 +1422,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown numericUpDown7;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button10;
@@ -1457,5 +1436,6 @@
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.NumericUpDown numericUpDown6;
+        private System.Windows.Forms.TextBox textBox6;
     }
 }

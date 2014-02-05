@@ -7,14 +7,14 @@ public class ListViewComparer : IComparer
 {
     private int col;
     private SortOrder order;
-    private bool? IsNumeric;
+    private bool IsNumeric;
     private bool PatternFilter;
 
     public ListViewComparer(int col, bool? IsNumeric, SortOrder order, bool PatternFilter = false)
     {
         this.col = col;
         this.order = order;
-        this.IsNumeric = IsNumeric;
+        this.IsNumeric = IsNumeric == null ? false : (bool)IsNumeric;
         this.PatternFilter = PatternFilter;
     }
 
@@ -23,22 +23,13 @@ public class ListViewComparer : IComparer
         ListViewItem item1 = (ListViewItem)x, item2 = (ListViewItem)y;
         try
         {
-            if (IsNumeric == true)
+            if (IsNumeric)
             {
                 if (Convert.ToInt32(item1.SubItems[col].Text) < Convert.ToInt32(item2.SubItems[col].Text))
                     return SortOrder.Ascending == order ? -1 : 1;
                 else if (Convert.ToInt32(item1.SubItems[col].Text) == Convert.ToInt32(item2.SubItems[col].Text))
                     return 0;
                 else return SortOrder.Ascending == order ? 1 : -1;
-            }
-            else if (IsNumeric == null)
-            {
-                Tuple<Objekt.klassenstufe, Objekt.klasse> i1 = Objekt.getKlasse(item1.SubItems[col].Text),
-                    i2 = Objekt.getKlasse(item2.SubItems[col].Text);
-                int mul = ((SortOrder.Ascending == order) ? 1 : -1);
-                if ((int)i1.Item1 == (int)i2.Item1)
-                    return mul * ((int)i1.Item2).CompareTo((int)i2.Item2);
-                return mul * ((int)i1.Item1).CompareTo((int)i2.Item1);
             }
         }
         catch (Exception) { }

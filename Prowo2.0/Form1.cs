@@ -99,7 +99,7 @@ namespace Prowo
             {
                 bool aB = true;
                 for (int i = 0; i < Projekte.Count; i++)
-                    if (Start[i].editable && Start[i].AllowedKlassen[Rest[0].Klasse] && Start[i].TeilnehmerCount < Projekte[i].MinAnz)
+                    if (Start[i].editable && Start[i].AllowedKlassen[Rest[0].GetKlasse()] && Start[i].TeilnehmerCount < Projekte[i].MinAnz)
                     {
                         Start[i].Add(new Objekt(Rest[0]));
                         Rest.RemoveAt(0);
@@ -114,7 +114,7 @@ namespace Prowo
             {
                 bool aB = true;
                 for (int i = 0; i < Start.Count; i++)
-                    if (Start[i].editable && Start[i].AllowedKlassen[Rest[0].Klasse] && Start[i].TeilnehmerCount < Projekte[i].MaxAnz)
+                    if (Start[i].editable && Start[i].AllowedKlassen[Rest[0].GetKlasse()] && Start[i].TeilnehmerCount < Projekte[i].MaxAnz)
                     {
                         Start[i].Add(new Objekt(Rest[0]));
                         Rest.RemoveAt(0);
@@ -157,7 +157,7 @@ namespace Prowo
                             break;
                         }
                         else ++cnt;
-                    if (!(Projekte[i].AllowedKlassen[S.Klasse]))
+                    if (!(Projekte[i].AllowedKlassen[S.GetKlasse()]))
                         ++AnzCMiss;
                 }
                 if (Projekte[i].TeilnehmerCount < Projekte[i].MinAnz)
@@ -184,7 +184,7 @@ namespace Prowo
                         }
                         else
                             ++cnt;
-                    if (!(Solution[i].AllowedKlassen[S.Klasse]))
+                    if (!(Solution[i].AllowedKlassen[S.GetKlasse()]))
                         ++AnzCMiss;
                 }
                 if (Solution[i].TeilnehmerCount < Solution[i].MinAnz)
@@ -316,7 +316,7 @@ namespace Prowo
                             {
                                 var Item = item.AsItem(button7.BackColor, cnt, i, cnt2++);
                                 Item.Group = listView3.Groups[i];
-                                if (!Projekte[i].AllowedKlassen[item.Klasse])
+                                if (!Projekte[i].AllowedKlassen[item.GetKlasse()])
                                     Item.ForeColor = Color.Red;
                                 for (int W = 0; W < item.Wünsche.Count; ++W)
                                     if (item.Wünsche[W] == i)

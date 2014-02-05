@@ -36,9 +36,9 @@ namespace Prowo
         public bool isLeiter;
         public readonly const_type<string> Name, Vorname;
         public readonly List<int> Wünsche;
-        public readonly int Klasse;
+        public readonly const_type<aKlasse> Klasse;
 
-        public Objekt(const_type<string> name, const_type<string> vorname, const_type<Klasse> klasse, const_type<List<int>> wishes, bool leiter = false)
+        public Objekt(const_type<string> name, const_type<string> vorname, const_type<aKlasse> klasse, const_type<List<int>> wishes, bool leiter = false)
         {
             this.Name = name;
             this.Vorname = vorname;
@@ -49,7 +49,7 @@ namespace Prowo
             this.wasLeiter = this.isLeiter = leiter;
 
             //Unsafe programming looks like this:
-            this.Klasse = Prowo.Klasse.ID[klasse];
+            this.Klasse = klasse;
         }
         public Objekt(const_type<Objekt> val)
         {
@@ -81,9 +81,9 @@ namespace Prowo
             else return this.Name.Data.Substring(st1).CompareTo(S.Name.Data.Substring(st2));
         }
 
-        public int getKlasse()
+        public int GetKlasse()
         {
-            return this.Klasse;
+            return Prowo.Klasse.ID[(Prowo.Klasse)(this.Klasse.Data.Base())];
         }
 
         public int this[int index] { get { return Wünsche[index]; } }

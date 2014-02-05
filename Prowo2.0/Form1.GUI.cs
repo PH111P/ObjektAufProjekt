@@ -9,41 +9,6 @@ using System.Drawing;
 
 namespace Prowo
 {
-    public static class SCH_ERW
-    {
-        public static ListViewItem AsItem(this Objekt S, const_type<Color> PRColor, const_type<int> index, int index2 = (-1), int index3 = -1)
-        {
-            List<string> data = new List<string>();
-            data.Add(S.Name);
-            data.Add(S.Vorname);
-            data.Add(Klasse.ID_rev[S.Klasse].Name);
-            data.Add("" + index);
-            data.Add("" + index2);
-            data.Add("" + index3);
-
-            ListViewItem _ret = new ListViewItem(data.ToArray());
-            if (S.isLeiter)
-                _ret.BackColor = PRColor;
-
-            return _ret;
-        }
-
-        public static ListViewItem AsItem(this Projekt P, const_type<int> index)
-        {
-            List<string> data = new List<string>();
-            data.Add(P.Projektname);
-            data.Add("" + P.MinAnz);
-            data.Add("" + P.MaxAnz);
-
-            string s = "";
-            for (int i = 0; i < Klasse.ID_rev.Count; i++)
-                if (P.AllowedKlassen[i])
-                    s += i + " ";
-            data.Add(s.TrimEnd(' '));
-            data.Add("" + index);
-            return new ListViewItem(data.ToArray());
-        }
-    }
     /// <summary>
     /// Diese Datei enthält die Methoden, die mit dem User interagieren
     /// </summary>
@@ -56,37 +21,22 @@ namespace Prowo
         public List<Button> ColorButtons = new List<Button>();
 
         #region Data I/O
-        public bool openKlassen(const_type<string> Path)
-        {
-            Klasse.Reset();
-            try
-            {
-                using (StreamReader sr = new StreamReader(Path))
-                {
-                    while (!sr.EndOfStream)
-                    {
-                        string s = sr.ReadLine();
-                        if (s.StartsWith("*")) continue;
-                        if (s.Length == 0) continue;
-
-                        new Klasse(s);
-                    }
-                }
-            }
-            catch (Exception o)
-            {
-                MessageBox.Show(o.Message + " - Could not load file containing Klassen.", "ERROR");
-                Klasse.Reset();
-                return false;
-            }
-            return true;
-        }
         public bool openProject(const_type<string> Path)
         {
             Projekte.Clear();
             try
             {
                 using (StreamReader sr = new StreamReader(Path))
+                    while (!sr.EndOfStream)
+                    {
+                        string s = sr.ReadLine();
+                        if (s.StartsWith("*")) continue;
+                        if (s.Length == 0) continue;
+
+                        foreach (string s2 in s.Split('/')[3].Split(','))
+                            new Klasse(s2);
+                    }
+                using (StreamReader sr = new StreamReader(Path))
                 {
                     while (!sr.EndOfStream)
                     {
@@ -94,21 +44,14 @@ namespace Prowo
                         if (s.StartsWith("*")) continue;
                         if (s.Length == 0) continue;
 
-                        BitString HilfsString = new BitString(0, 7);
-                        string hilfsString = "";
+                        BitString HilfsString = new BitString(0, Klasse.ID_rev.Count);
 
                         var Line = s.Split('/');
 
-                        for (int i = 0; i < 7; i++)
-                            if (Line[3][i] == '1')
-                            {
-                                HilfsString[i] = true;
+                        foreach (string s2 in s.Split('/')[3].Split(','))
+                            HilfsString[Klasse.ID[new Klasse(s2)]] = true;
 
-                                hilfsString += (i + 5);
-                                if (i < 6) hilfsString += " ";
-                            }
-
-                        bool edit = true,imp = false;
+                        bool edit = true, imp = false;
                         int L = Line.Length;
                         if (L > 4)
                             edit = Convert.ToBoolean(Line[4]);
@@ -120,7 +63,7 @@ namespace Prowo
 
                         Projekt P =
                             new Projekt(Line[0], Convert.ToInt32(Line[1]),
-                                Convert.ToInt32(Line[2]), HilfsString, edit, Descr,imp);
+                                Convert.ToInt32(Line[2]), HilfsString, edit, Descr, imp);
                         listView1.Items.Add(P.AsItem(Projekte.Count));
                         Projekte.Add(P);
                         listView3.Groups.Add(new ListViewGroup(Line[0]));
@@ -150,18 +93,17 @@ namespace Prowo
                         if (s.StartsWith("*")) continue;
                         if (s.Length == 0) continue;
                         List<int> Wünsche = new List<int>();
-                        if (s.StartsWith("@"))
-                        {
-                            for (int i = 2; i < s.Split('/', ',').Length - 1; ++i)
-                                Wünsche.Add(Convert.ToInt32(s.Split('/', ',')[i]));
-                            schüler.Add(new Objekt(s.Split('/', ',')[0].Remove(0, 1), s.Split('/', ',')[1],
-                                s.Split('/', ',')[s.Split('/', ',').Length - 1], Wünsche, true));
-                            continue;
-                        }
+
                         for (int i = 2; i < s.Split('/', ',').Length - 1; ++i)
                             Wünsche.Add(Convert.ToInt32(s.Split('/', ',')[i]));
-                        schüler.Add(new Objekt(s.Split('/', ',')[0], s.Split('/', ',')[1],
-                            s.Split('/', ',')[s.Split('/', ',').Length - 1], Wünsche));
+
+                        string[] klasse = (s.Split('/', ',')[s.Split('/', ',').Length - 1]).Split('-');
+                        aKlasse acKlasse = new Klasse(klasse[0].Trim(' '));
+                        for (int i = 1; i < klasse.Length; ++i)
+                            acKlasse = new KlasseDecorator(acKlasse, klasse[i].Trim(' '));
+
+                        schüler.Add(new Objekt(s.Split('/', ',')[0].Remove(0, 1), s.Split('/', ',')[1],
+                            acKlasse, Wünsche, s.StartsWith("@")));
                     }
                 int cnt = 0;
                 foreach (var s in schüler)
@@ -225,7 +167,7 @@ namespace Prowo
                             sw.WriteLine(@"\begin{tabular}{l|c}");
                             sw.WriteLine(@"\textbf{Name} & \textbf{Klasse} \\ \hline \hline");
                             foreach (Objekt S in cpy)
-                                sw.WriteLine(S.Name + ", " + S.Vorname + " & " + S.getKlasse() + @"\\");
+                                sw.WriteLine(S.Name + ", " + S.Vorname + " & " + S.GetKlasse() + @"\\");
                             sw.WriteLine(@"\end{tabular}");
                             // sw.WriteLine(@"\end{center}");
                         }
@@ -239,7 +181,7 @@ namespace Prowo
                             sw.WriteLine(@"\textbf{Name} & \textbf{Klasse} \\ \hline \hline");
                             foreach (Objekt S in cpy)
                             {
-                                sw.WriteLine(S.Name + ", " + S.Vorname + " & " + S.getKlasse() + @"\\");
+                                sw.WriteLine(S.Name + ", " + S.Vorname + " & " + S.GetKlasse() + @"\\");
                                 schler.Add(new Tuple<Objekt, string>(new Objekt(S), P.Projektname));
                             }
                             sw.WriteLine(@"\end{tabular}");
@@ -265,11 +207,11 @@ namespace Prowo
                     }
 
                     schler.Sort(new TupleCmp<Objekt, string>());
-                    foreach (string s in comboBox1.Items)
+                    foreach (var s in Klasse.ID_rev)
                     {
                         int cnt = 0;
                         for (int i = 0; i < schler.Count; i++)
-                            if (schler[i].Item1.getKlasse() == s)
+                            if (Klasse.ID_rev[schler[i].Item1.GetKlasse()] == s)
                                 ++cnt;
                         if (cnt == 0)
                             continue;
@@ -285,7 +227,7 @@ namespace Prowo
                         sw.WriteLine(@"\multicolumn{2}{l}{\mbox{}}");
                         sw.WriteLine(@"\endlastfoot");
                         for (int i = 0; i < schler.Count; i++)
-                            if (schler[i].Item1.getKlasse() == s)
+                            if (Klasse.ID_rev[schler[i].Item1.GetKlasse()] == s)
                                 sw.WriteLine(schler[i].Item1.Name + ", " + schler[i].Item1.Vorname + " & " + schler[i].Item2 + @"\\");
                         sw.WriteLine(@"\end{longtable}");
                         sw.WriteLine(@"\newpage");
@@ -324,7 +266,7 @@ namespace Prowo
                         {
                             var Item = item.AsItem(button7.BackColor, cnt, i, cnt2++);
                             Item.Group = listView3.Groups[i];
-                            if (!Solution[i].AllowedKlassen[(int)item.Klassenstufe - 5])
+                            if (!Solution[i].AllowedKlassen[item.GetKlasse()])
                                 Item.ForeColor = Color.Red;
                             for (int W = 0; W < item.Wünsche.Count; ++W)
                                 if (item.Wünsche[W] == i)
@@ -407,7 +349,7 @@ namespace Prowo
                         string s = P.Projektname + " & ";
                         foreach (Objekt S in P.GetLeiterList())
                         {
-                            s += S.Name + ", " + S.Vorname + " (" + S.getKlasse() + ")";
+                            s += S.Name + ", " + S.Vorname + " (" + S.GetKlasse() + ")";
                             s += "; ";
                         }
                         s.Remove(s.Length - 2);
@@ -417,7 +359,7 @@ namespace Prowo
                                 s += @"\textsf{X} & ";
                             else
                                 s += @"\mbox{} & ";
-                        s += P.Description.Replace("$","\\") + @"\\ \hline";
+                        s += P.Description.Replace("$", "\\") + @"\\ \hline";
                         sw.WriteLine(s);
                     }
                     sw.WriteLine(@"\end{longtable}");
@@ -484,16 +426,11 @@ namespace Prowo
                         projekte.Add(new Tuple<Projekt, int>(new Projekt(Projekte[i]), i));
                     projekte.Sort(new TupleCmp<Projekt, int>());
 
-                    int jhrgng = 5;
-                    foreach (string s in comboBox1.Items)
+                    foreach (var s in Klasse.ID_rev)
                     {
-                        if (s == "Lehrer")
-                            continue;
-                        if (!s.StartsWith("" + jhrgng))
-                            ++jhrgng;
                         int cnt = 0;
                         foreach (var P in projekte)
-                            if (P.Item1.AllowedKlassen[jhrgng - 5])
+                            if (P.Item1.AllowedKlassen[Klasse.ID[s]])
                                 cnt++;
                         if (cnt == 0)
                             continue;
@@ -508,7 +445,7 @@ namespace Prowo
                         string S = @"\textbf{Name} ";
                         cnt = 0;
                         foreach (var P in projekte)
-                            if (P.Item1.AllowedKlassen[jhrgng - 5])
+                            if (P.Item1.AllowedKlassen[Klasse.ID[s]])
                             {
                                 S += @" & \begin{sideways}" + P.Item1.Projektname + @" \end{sideways} ";
                                 inds[P.Item2] = cnt++;
@@ -525,7 +462,7 @@ namespace Prowo
                         sw.WriteLine(@"\endlastfoot");
                         foreach (var Sch in schler)
                         {
-                            if (Sch.Item1.getKlasse() != s)
+                            if (Klasse.ID_rev[Sch.Item1.GetKlasse()] != s)
                                 continue;
                             int[] indices = new int[cnt];
                             if (Sch.Item2.EndsWith("@"))
@@ -614,16 +551,11 @@ namespace Prowo
                         projekte.Add(new Tuple<Projekt, int>(new Projekt(Projekte[i]), i));
                     projekte.Sort(new TupleCmp<Projekt, int>());
 
-                    int jhrgng = 5;
-                    foreach (string s in comboBox1.Items)
+                    foreach (var s in Klasse.ID_rev)
                     {
-                        if (s == "Lehrer")
-                            continue;
-                        if (!s.StartsWith("" + jhrgng))
-                            ++jhrgng;
                         int cnt = 0;
                         foreach (var P in projekte)
-                            if (P.Item1.AllowedKlassen[jhrgng - 5])
+                            if (P.Item1.AllowedKlassen[Klasse.ID[s]])
                                 cnt++;
                         if (cnt == 0)
                             continue;
@@ -638,7 +570,7 @@ namespace Prowo
                         string S = @"\textbf{Name} ";
                         cnt = 0;
                         foreach (var P in projekte)
-                            if (P.Item1.AllowedKlassen[jhrgng - 5])
+                            if (P.Item1.AllowedKlassen[Klasse.ID[s]])
                             {
                                 S += @" & \begin{sideways}" + P.Item1.Projektname + @" \end{sideways} ";
                                 inds[P.Item2] = cnt++;
@@ -655,7 +587,7 @@ namespace Prowo
                         sw.WriteLine(@"\endlastfoot");
                         foreach (var Sch in schler)
                         {
-                            if (Sch.Item1.getKlasse() != s)
+                            if (Klasse.ID_rev[Sch.Item1.GetKlasse()] != s)
                                 continue;
                             int[] indices = new int[cnt];
                             if (Sch.Item2)
@@ -869,7 +801,7 @@ namespace Prowo
                 + "/" + (int)numericUpDown5.Value + "/" + KlStufe + "/" + Offen.Checked + "/" + Descr);
             sw.Close();
             listView3.Groups.Add(new ListViewGroup(textBox4.Text));
-            Projekt P = new Projekt(textBox4.Text, (int)numericUpDown4.Value, (int)numericUpDown5.Value, KlStufen, Offen.Checked, Descr,checkBox4.Checked);
+            Projekt P = new Projekt(textBox4.Text, (int)numericUpDown4.Value, (int)numericUpDown5.Value, KlStufen, Offen.Checked, Descr, checkBox4.Checked);
             foreach (var item in TabPages)
                 ((ComboBox)item.Controls[0]).Items.Add(P);
             listView1.Items.Add(P.AsItem(Projekte.Count));
@@ -920,7 +852,12 @@ namespace Prowo
                 sw.Close();
             }
 
-            Objekt S = new Objekt(textBox7.Text, textBox8.Text, comboBox1.Text, inds, !checkBox1.Checked);
+            aKlasse acKlasse = new Klasse(textBox6.Text.Split('-')[0].Trim(' '));
+            var txt = textBox6.Text.Split('-');
+            for (int i = 1; i < txt.Length; ++i)
+                acKlasse = new KlasseDecorator(acKlasse, txt[i].Trim(' '));
+
+            Objekt S = new Objekt(textBox7.Text, textBox8.Text, acKlasse, inds, !checkBox1.Checked);
             string out_ = "";
 
             schüler.Add(S);
@@ -932,7 +869,7 @@ namespace Prowo
             out_ += textBox7.Text + "/" + textBox8.Text;
             foreach (var ind in inds)
                 out_ += "/" + ind;
-            out_ += "/" + comboBox1.Text;
+            out_ += "/" + acKlasse.GetName();
             sw.WriteLine(out_);
             sw.Close();
 
@@ -956,7 +893,7 @@ namespace Prowo
                 }
                 textBox7.Text = schüler[SelectedSchüler].Name;
                 textBox8.Text = schüler[SelectedSchüler].Vorname;
-                comboBox1.Text = schüler[SelectedSchüler].getKlasse();
+                textBox6.Text = schüler[SelectedSchüler].Klasse.Data.GetName();
                 checkBox1.Checked = false;
                 button13.Enabled = button8.Enabled = true;
             }
@@ -985,7 +922,13 @@ namespace Prowo
                 MessageBox.Show(eg.Message + " - Could not modify Objekt.", "ERROR");
                 return;
             }
-            schüler[SelectedSchüler] = new Objekt(textBox7.Text, textBox8.Text, comboBox1.Text, inds);
+
+            aKlasse acKlasse = new Klasse(textBox6.Text.Split('-')[0].Trim(' '));
+            var txt = textBox6.Text.Split('-');
+            for (int i = 1; i < txt.Length; ++i)
+                acKlasse = new KlasseDecorator(acKlasse, txt[i].Trim(' '));
+            
+            schüler[SelectedSchüler] = new Objekt(textBox7.Text, textBox8.Text, acKlasse, inds);
             listView2.Items[listView2.SelectedIndices[0]] = schüler[SelectedSchüler].AsItem(button7.BackColor, SelectedSchüler);
 
             int selLine = SelectedSchüler;
@@ -999,7 +942,7 @@ namespace Prowo
             out_ += textBox7.Text + "/" + textBox8.Text;
             foreach (var ind in inds)
                 out_ += "/" + ind;
-            out_ += "/" + comboBox1.Text;
+            out_ += "/" + acKlasse.GetName();
             Lines[selLine] = out_;
             File.WriteAllLines(textBox2.Text, Lines);
             if (checkBox1.Checked)
@@ -1158,7 +1101,7 @@ namespace Prowo
                 {
                     var Item = item.AsItem(button7.BackColor, cnt, i, cnt2++);
                     Item.Group = listView3.Groups[i];
-                    if (!Solution[i].AllowedKlassen[(int)item.Klassenstufe - 5])
+                    if (!Solution[i].AllowedKlassen[item.GetKlasse()])
                         Item.ForeColor = Color.Red;
                     for (int W = 0; W < item.Wünsche.Count; ++W)
                         if (item.Wünsche[W] == i)
@@ -1284,7 +1227,7 @@ namespace Prowo
                     val += (a / (j + 1));
                     dat.Add("" + a);
                 }
-                dat.Add("" + (val - Projekte[i].MinAnz ));
+                dat.Add("" + (val - Projekte[i].MinAnz));
                 var LVI = new ListViewItem(dat.ToArray());
                 if (val < Projekte[i].MinAnz)
                     LVI.BackColor = button2.BackColor;
@@ -1363,10 +1306,10 @@ namespace Prowo
                 SchHWunsch.Add(NUD);
                 groupBox4.Controls.Add(NUD);
 
-                listView4.Columns.Add("AS WISH #" + (i + 1) , 60, HorizontalAlignment.Center);
+                listView4.Columns.Add("AS WISH #" + (i + 1), 60, HorizontalAlignment.Center);
 
             }
-            listView4.Columns.Add("ALWAYS SURVIVING",60,HorizontalAlignment.Center);
+            listView4.Columns.Add("ALWAYS SURVIVING", 60, HorizontalAlignment.Center);
         }
 
         void CB_SelectedIndexChanged(object sender, EventArgs e)
@@ -1393,6 +1336,43 @@ namespace Prowo
 
             initGUI((int)numericUpDown7.Value);
 
+        }
+    }
+
+
+    public static class SCH_ERW
+    {
+        public static ListViewItem AsItem(this Objekt S, const_type<Color> PRColor, const_type<int> index, int index2 = (-1), int index3 = -1)
+        {
+            List<string> data = new List<string>();
+            data.Add(S.Name);
+            data.Add(S.Vorname);
+            data.Add(S.Klasse.Data.GetName());
+            data.Add("" + index);
+            data.Add("" + index2);
+            data.Add("" + index3);
+
+            ListViewItem _ret = new ListViewItem(data.ToArray());
+            if (S.isLeiter)
+                _ret.BackColor = PRColor;
+
+            return _ret;
+        }
+
+        public static ListViewItem AsItem(this Projekt P, const_type<int> index)
+        {
+            List<string> data = new List<string>();
+            data.Add(P.Projektname);
+            data.Add("" + P.MinAnz);
+            data.Add("" + P.MaxAnz);
+
+            string s = "";
+            for (int i = 0; i < Klasse.ID_rev.Count; i++)
+                if (P.AllowedKlassen[i])
+                    s += i + " ";
+            data.Add(s.TrimEnd(' '));
+            data.Add("" + index);
+            return new ListViewItem(data.ToArray());
         }
     }
 }

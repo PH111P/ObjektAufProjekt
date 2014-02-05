@@ -1,0 +1,13 @@
+C:\Users\Philip\Desktop\Prowo2.0\Prowo2.0\bin\x86\Debug\Prowo.exe.config
+C:\Users\Philip\Desktop\Prowo2.0\Prowo2.0\bin\x86\Debug\Prowo.exe.manifest
+C:\Users\Philip\Desktop\Prowo2.0\Prowo2.0\bin\x86\Debug\Prowo.application
+C:\Users\Philip\Desktop\Prowo2.0\Prowo2.0\bin\x86\Debug\Prowo.exe
+C:\Users\Philip\Desktop\Prowo2.0\Prowo2.0\bin\x86\Debug\Prowo.pdb
+C:\Users\Philip\Desktop\Prowo2.0\Prowo2.0\obj\x86\Debug\Prowo.csprojResolveAssemblyReference.cache
+C:\Users\Philip\Desktop\Prowo2.0\Prowo2.0\obj\x86\Debug\Prowo.Form1.resources
+C:\Users\Philip\Desktop\Prowo2.0\Prowo2.0\obj\x86\Debug\Prowo.Properties.Resources.resources
+C:\Users\Philip\Desktop\Prowo2.0\Prowo2.0\obj\x86\Debug\Prowo.csproj.GenerateResource.Cache
+C:\Users\Philip\Desktop\Prowo2.0\Prowo2.0\obj\x86\Debug\Prowo.exe.manifest
+C:\Users\Philip\Desktop\Prowo2.0\Prowo2.0\obj\x86\Debug\Prowo.application
+C:\Users\Philip\Desktop\Prowo2.0\Prowo2.0\obj\x86\Debug\Prowo.exe
+C:\Users\Philip\Desktop\Prowo2.0\Prowo2.0\obj\x86\Debug\Prowo.pdb
