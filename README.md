@@ -32,7 +32,7 @@ Name_of_Projekt/Min_no_of_Participants/Max_no_of_Participants/Allowed_Klassen/Pa
 Second, create a file containing the Objekte. You may use the file extension ".scd" for those kind of files.
 A such file may contain any number of Objekte, one per line, where a Objekt is specified by:
 ```
-Last_name/First_name/Klasse/[No. or Name]_of_wish_1/[...]/[No. or Name]_of_wish_MAXWISHES
+Last_name/First_name/[No. or Name]_of_wish_1/[...]/[No. or Name]_of_wish_MAXWISHES/Klasse
 ```
 
 Let the program read those files and start calculating.
