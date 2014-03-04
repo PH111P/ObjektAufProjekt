@@ -26,7 +26,7 @@ Usage
 First, create a file containing the Projekte. You may use the file extension ".prd" for those kind of files.
 A such file may contain any number of Projekte, one per line, where a Projekt is specified by:
 ```
-Name_of_Projekt/Min_no_of_Participants/Max_no_of_Participants/Allowed_Klassen/Participants_not_set/Projekt_description
+Name_of_Projekt/Min_no_of_Participants/Max_no_of_Participants/Allowed_Klassen/Participants_not_constant/Projekt_description
 ```
 
 Second, create a file containing the Objekte. You may use the file extension ".scd" for those kind of files.
