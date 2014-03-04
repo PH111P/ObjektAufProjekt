@@ -55,7 +55,7 @@ namespace Prowo
                         int L = Line.Length;
                         if (L > 4)
                             edit = Convert.ToBoolean(Line[4]);
-                        string Descr = null;
+                        string Descr = "";
                         if (L > 5)
                             Descr = (Line[5]);
                         if (L > 6)
@@ -101,7 +101,7 @@ namespace Prowo
                             }
                             catch(FormatException){
                                 for(int j = 0; j < Projekte.Count; ++j)
-                                    if(Projekte[j].Name == ac){
+                                    if(Projekte[j].Projektname == ac){
                                         Wünsche.Add(j);
                                         break;
                                     }
@@ -793,15 +793,19 @@ namespace Prowo
                 sw.Close();
                 return;
             }
+            bool b = false;
             string KlStufe = "";
             BitString KlStufen = new BitString(new bool[] { });
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < Projekte[SelectedProj].AllowedKlassen.Length; i++)
             {
                 KlStufen.AddBit(checkedListBox1.CheckedIndices.Contains(i));
                 if (checkedListBox1.CheckedIndices.Contains(i))
-                    KlStufe += "1";
-                else
-                    KlStufe += "2";
+                {
+                    if (b)
+                        KlStufe += ",";
+                    b = true;
+                    KlStufe += (string)Klasse.ID_rev[i].GetName();
+                }
             }
             if (numericUpDown4.Value > numericUpDown5.Value)
             {
@@ -1011,6 +1015,14 @@ namespace Prowo
             catch (Exception)
             {
                 button4.Enabled = false;
+                textBox4.Text = "";
+                numericUpDown4.Value = numericUpDown4.Minimum;
+                numericUpDown5.Value = numericUpDown5.Minimum;
+                for (int i = 0; i < Projekte[SelectedProj].AllowedKlassen.Length; i++)
+                    checkedListBox1.SetItemChecked(i, false);
+                Offen.Checked = true;
+                checkBox4.Checked = false;
+                textBox5.Lines = new string[]{"A description of this Projekt goes here."};
             }
         }
 
@@ -1024,15 +1036,19 @@ namespace Prowo
             int selLine = SelectedProj;
             var Lines = File.ReadAllLines(textBox1.Text);
 
+            bool b = false;
             string KlStufe = "";
             BitString KlStufen = new BitString(new bool[] { });
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < Projekte[SelectedProj].AllowedKlassen.Length; i++)
             {
                 KlStufen.AddBit(checkedListBox1.CheckedIndices.Contains(i));
                 if (checkedListBox1.CheckedIndices.Contains(i))
-                    KlStufe += "1";
-                else
-                    KlStufe += "2";
+                {
+                    if (b)
+                        KlStufe += ",";
+                    b = true;
+                    KlStufe += (string)Klasse.ID_rev[i].GetName();
+                }
             }
             if (numericUpDown4.Value > numericUpDown5.Value)
             {
