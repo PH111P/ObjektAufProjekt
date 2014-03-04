@@ -94,8 +94,19 @@ namespace Prowo
                         if (s.Length == 0) continue;
                         List<int> Wünsche = new List<int>();
 
-                        for (int i = 2; i < s.Split('/', ',').Length - 1; ++i)
-                            Wünsche.Add(Convert.ToInt32(s.Split('/', ',')[i]));
+                        for (int i = 2; i < s.Split('/', ',').Length - 1; ++i){
+                            var ac = s.Split('/', ',')[i];
+                            try{
+                                Wünsche.Add(Convert.ToInt32(ac));
+                            }
+                            catch(FormatException){
+                                for(int j = 0; j < Projekte.Count; ++j)
+                                    if(Projekte[j].Name == ac){
+                                        Wünsche.Add(j);
+                                        break;
+                                    }
+                            }
+                        }
 
                         string[] klasse = (s.Split('/', ',')[s.Split('/', ',').Length - 1]).Split('-');
                         aKlasse acKlasse = new Klasse(klasse[0].Trim(' '));
@@ -132,7 +143,7 @@ namespace Prowo
                 {
 
                     sw.WriteLine(@"\documentclass[a4paper,12pt]{article}");
-                    sw.WriteLine(@"\usepackage{babel}");
+                    sw.WriteLine(@"\usepackage[ngerman]{babel}");
                     sw.WriteLine(@"\usepackage[utf8]{inputenc}");
                     sw.WriteLine(@"\usepackage{fancyhdr}");
                     sw.WriteLine(@"\usepackage{longtable}");
@@ -307,7 +318,7 @@ namespace Prowo
                 using (var sw = new StreamWriter(Path))
                 {
                     sw.WriteLine(@"\documentclass[a4paper,12pt]{article}");
-                    sw.WriteLine(@"\usepackage{babel}");
+                    sw.WriteLine(@"\usepackage[ngerman]{babel}");
                     sw.WriteLine(@"\usepackage[utf8]{inputenc}");
                     sw.WriteLine(@"\usepackage{fancyhdr}");
                     sw.WriteLine(@"\usepackage{longtable}");
@@ -389,7 +400,7 @@ namespace Prowo
                 using (var sw = new StreamWriter(Path))
                 {
                     sw.WriteLine(@"\documentclass[a4paper,10pt,landscape]{article}");
-                    sw.WriteLine(@"\usepackage{babel}");
+                    sw.WriteLine(@"\usepackage[ngerman]{babel}");
                     sw.WriteLine(@"\usepackage[utf8]{inputenc}");
                     sw.WriteLine(@"\usepackage{fancyhdr}");
                     sw.WriteLine(@"\usepackage{longtable}");
@@ -517,7 +528,7 @@ namespace Prowo
                 using (var sw = new StreamWriter(Path))
                 {
                     sw.WriteLine(@"\documentclass[a4paper,10pt,landscape]{article}");
-                    sw.WriteLine(@"\usepackage{babel}");
+                    sw.WriteLine(@"\usepackage[ngerman]{babel}");
                     sw.WriteLine(@"\usepackage[utf8]{inputenc}");
                     sw.WriteLine(@"\usepackage{fancyhdr}");
                     sw.WriteLine(@"\usepackage{longtable}");
