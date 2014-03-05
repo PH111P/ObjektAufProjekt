@@ -339,9 +339,9 @@
             this.panel3.Controls.Add(this.button5);
             this.panel3.Controls.Add(this.button4);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(293, 16);
+            this.panel3.Location = new System.Drawing.Point(337, 16);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(444, 110);
+            this.panel3.Size = new System.Drawing.Size(400, 110);
             this.panel3.TabIndex = 22;
             // 
             // button10
@@ -405,7 +405,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(3, 16);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(290, 110);
+            this.panel4.Size = new System.Drawing.Size(334, 110);
             this.panel4.TabIndex = 23;
             // 
             // checkBox4
@@ -424,7 +424,7 @@
             this.textBox4.BackColor = System.Drawing.Color.GhostWhite;
             this.textBox4.Location = new System.Drawing.Point(135, 0);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(146, 20);
+            this.textBox4.Size = new System.Drawing.Size(196, 20);
             this.textBox4.TabIndex = 2;
             // 
             // Offen
@@ -454,15 +454,13 @@
             this.checkedListBox1.BackColor = System.Drawing.Color.Snow;
             this.checkedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.checkedListBox1.CheckOnClick = true;
-            this.checkedListBox1.ColumnWidth = 35;
+            this.checkedListBox1.ColumnWidth = 50;
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.HorizontalScrollbar = true;
-            this.checkedListBox1.Items.AddRange(new object[] {
-            "7"});
             this.checkedListBox1.Location = new System.Drawing.Point(135, 78);
             this.checkedListBox1.MultiColumn = true;
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(146, 30);
+            this.checkedListBox1.Size = new System.Drawing.Size(196, 30);
             this.checkedListBox1.TabIndex = 17;
             // 
             // label18
@@ -484,7 +482,7 @@
             0,
             0});
             this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Size = new System.Drawing.Size(146, 20);
+            this.numericUpDown5.Size = new System.Drawing.Size(196, 20);
             this.numericUpDown5.TabIndex = 16;
             this.numericUpDown5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDown5.Value = new decimal(new int[] {
@@ -507,7 +505,7 @@
             this.numericUpDown4.BackColor = System.Drawing.Color.GhostWhite;
             this.numericUpDown4.Location = new System.Drawing.Point(135, 26);
             this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(146, 20);
+            this.numericUpDown4.Size = new System.Drawing.Size(196, 20);
             this.numericUpDown4.TabIndex = 15;
             this.numericUpDown4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 

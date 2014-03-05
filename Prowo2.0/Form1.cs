@@ -204,6 +204,8 @@ namespace Prowo
             for (; !beenden; )
             {
                 Random rnd = new Random();
+
+                Schritte.Clear();
                 for (int i = 0; i < 5000; i++)
                 {
                     int b = rnd.Next(1, schüler.Count * (int)SchHWunsch[0].Value);
@@ -218,78 +220,84 @@ namespace Prowo
 
                 while (bewerte(out ANZMIN, out ANZMAX, out ANZCMISS)
                         * (ANZMIN > 0 ? (numericUpDown2.Value / 100) : 1) * (ANZMAX > 0 ? (numericUpDown3.Value / 100) : 1)
-                        * (ANZCMISS > 0 ? 0 : 1) < schüler.Count * (int)SchHWunsch[0].Value && !beenden)
+                        * (ANZCMISS > 0 ? 0 : 1) <= schüler.Count * (int)SchHWunsch[0].Value && !beenden)
                 {
                     Application.DoEvents();
-
                     decimal BewertungOld = (bewerte(out ANZMIN, out ANZMAX, out ANZCMISS)
-                        * (ANZMIN > 0 ? (numericUpDown2.Value / 100) : 1) * (ANZMAX > 0 ? (numericUpDown3.Value / 100) : 1)
-                        * (ANZCMISS > 0 ? 0 : 1));
-
-                    if (Temperaturfolge.Count == 0 || (BewertungOld == 0 && (rnd.Next(1, schüler.Count * (int)SchHWunsch[0].Value) > Temperaturfolge.Last())))
-                        break;
-                    if (SchrittCounter > Temperaturfolge.Last())
-                    {
-                        SchrittCounter = 0;
-                        Temperaturfolge.Remove(Temperaturfolge.Last());
-                    }
-
-                    #region Austausch zweier Schüler
-                    int ZufProj1 = rnd.Next(0, Projekte.Count);
-                    while (!Projekte[ZufProj1].editable || Projekte[ZufProj1].TeilnehmerCount == 0)
-                        ZufProj1 = rnd.Next(0, Projekte.Count);
-                    int ZufProj2 = rnd.Next(0, Projekte.Count);
-                    while (ZufProj1 == ZufProj2 || !Projekte[ZufProj2].editable || Projekte[ZufProj2].TeilnehmerCount == 0)
-                        ZufProj2 = rnd.Next(0, Projekte.Count);
-
-                    bool Prj1CanBeEmpty = Projekte[ZufProj1].TeilnehmerCount < Projekte[ZufProj1].MaxAnz;
-
-                    int ZufSchüler1 = rnd.Next(0, Projekte[ZufProj1].Length + (Prj1CanBeEmpty ? 1 : 0));
-                    bool isMax = ZufSchüler1 == Projekte[ZufProj1].Length;
-                    while (!isMax && Projekte[ZufProj1][ZufSchüler1].isLeiter)
-                    {
-                        ZufSchüler1 = rnd.Next(0, Projekte[ZufProj1].Length + (Prj1CanBeEmpty ? 1 : 0));
-                        isMax = ZufSchüler1 == Projekte[ZufProj1].Length;
-                    }
-
-                    int ZufSchüler2 = rnd.Next(0, Projekte[ZufProj2].Length);
-                    while (Projekte[ZufProj2][ZufSchüler2].isLeiter)
-                        ZufSchüler2 = rnd.Next(0, Projekte[ZufProj2].Length);
-
-                    Objekt Z1 = null, Z2 = new Objekt(Projekte[ZufProj2][ZufSchüler2]);
-                    if (!isMax)
-                        Z1 = new Objekt(Projekte[ZufProj1][ZufSchüler1]);
-
-                    if (!isMax)
-                        Projekte[ZufProj2].Add(Z1);
-                    Projekte[ZufProj1].Add(Z2);
-                    Projekte[ZufProj2].Remove(Projekte[ZufProj2][ZufSchüler2]);
-                    if (!isMax)
-                        Projekte[ZufProj1].Remove(Projekte[ZufProj1][ZufSchüler1]);
-
-                    decimal BewertungNew = (bewerte(out ANZMIN, out ANZMAX, out ANZCMISS)
-                        * (ANZMIN > 0 ? (numericUpDown2.Value / 100) : 1) * (ANZMAX > 0 ? (numericUpDown3.Value / 100) : 1)
-                        * (ANZCMISS > 0 ? 0 : 1));
-
-                    if (BewertungNew <= BewertungOld && (rnd.Next(1, schüler.Count * (int)SchHWunsch[0].Value) < Temperaturfolge.Last()))
-                    {
-                        Projekte[ZufProj2].Add(new Objekt(Z2));
-                        Projekte[ZufProj1].Remove(Z2);
-                        if (!isMax)
-                        {
-                            Projekte[ZufProj1].Add(new Objekt(Z1));
-                            Projekte[ZufProj2].Remove(Z1);
-                        }
-                        SchrittCounter++;
-                    }
-
-                    #endregion
-
-                    decimal B2 = BewertungOld > BewertungNew ? BewertungOld : BewertungNew;
+                            * (ANZMIN > 0 ? (numericUpDown2.Value / 100) : 1) * (ANZMAX > 0 ? (numericUpDown3.Value / 100) : 1)
+                            * (ANZCMISS > 0 ? 0 : 1));;
+                    decimal B2 = BewertungOld;
                     int Quality = 66;
-                    try
-                    { Quality = (int)numericUpDown1.Value; }//Convert.ToInt32(textBox12.Text); }
-                    catch (Exception) { }
+
+                    if (bewerte(out ANZMIN, out ANZMAX, out ANZCMISS)
+                        * (ANZMIN > 0 ? (numericUpDown2.Value / 100) : 1) * (ANZMAX > 0 ? (numericUpDown3.Value / 100) : 1)
+                        * (ANZCMISS > 0 ? 0 : 1) < schüler.Count * (int)SchHWunsch[0].Value && !beenden)
+                    {
+                        if (Temperaturfolge.Count == 0 || (BewertungOld == 0 && (rnd.Next(1, schüler.Count * (int)SchHWunsch[0].Value) > Temperaturfolge.Last())))
+                            break;
+                        if (SchrittCounter > Temperaturfolge.Last())
+                        {
+                            SchrittCounter = 0;
+                            Temperaturfolge.Remove(Temperaturfolge.Last());
+                        }
+
+                        #region Austausch zweier Schüler
+                        int ZufProj1 = rnd.Next(0, Projekte.Count);
+                        while (!Projekte[ZufProj1].editable || Projekte[ZufProj1].TeilnehmerCount == 0)
+                            ZufProj1 = rnd.Next(0, Projekte.Count);
+                        int ZufProj2 = rnd.Next(0, Projekte.Count);
+                        while (ZufProj1 == ZufProj2 || !Projekte[ZufProj2].editable || Projekte[ZufProj2].TeilnehmerCount == 0)
+                            ZufProj2 = rnd.Next(0, Projekte.Count);
+
+                        bool Prj1CanBeEmpty = Projekte[ZufProj1].TeilnehmerCount < Projekte[ZufProj1].MaxAnz;
+
+                        int ZufSchüler1 = rnd.Next(0, Projekte[ZufProj1].Length + (Prj1CanBeEmpty ? 1 : 0));
+                        bool isMax = ZufSchüler1 == Projekte[ZufProj1].Length;
+                        while (!isMax && Projekte[ZufProj1][ZufSchüler1].isLeiter)
+                        {
+                            ZufSchüler1 = rnd.Next(0, Projekte[ZufProj1].Length + (Prj1CanBeEmpty ? 1 : 0));
+                            isMax = ZufSchüler1 == Projekte[ZufProj1].Length;
+                        }
+
+                        int ZufSchüler2 = rnd.Next(0, Projekte[ZufProj2].Length);
+                        while (Projekte[ZufProj2][ZufSchüler2].isLeiter)
+                            ZufSchüler2 = rnd.Next(0, Projekte[ZufProj2].Length);
+
+                        Objekt Z1 = null, Z2 = new Objekt(Projekte[ZufProj2][ZufSchüler2]);
+                        if (!isMax)
+                            Z1 = new Objekt(Projekte[ZufProj1][ZufSchüler1]);
+
+                        if (!isMax)
+                            Projekte[ZufProj2].Add(Z1);
+                        Projekte[ZufProj1].Add(Z2);
+                        Projekte[ZufProj2].Remove(Projekte[ZufProj2][ZufSchüler2]);
+                        if (!isMax)
+                            Projekte[ZufProj1].Remove(Projekte[ZufProj1][ZufSchüler1]);
+
+                        decimal BewertungNew = (bewerte(out ANZMIN, out ANZMAX, out ANZCMISS)
+                            * (ANZMIN > 0 ? (numericUpDown2.Value / 100) : 1) * (ANZMAX > 0 ? (numericUpDown3.Value / 100) : 1)
+                            * (ANZCMISS > 0 ? 0 : 1));
+
+                        if (BewertungNew <= BewertungOld && (rnd.Next(1, schüler.Count * (int)SchHWunsch[0].Value) < Temperaturfolge.Last()))
+                        {
+                            Projekte[ZufProj2].Add(new Objekt(Z2));
+                            Projekte[ZufProj1].Remove(Z2);
+                            if (!isMax)
+                            {
+                                Projekte[ZufProj1].Add(new Objekt(Z1));
+                                Projekte[ZufProj2].Remove(Z1);
+                            }
+                            SchrittCounter++;
+                        }
+
+                        #endregion
+
+                        B2 = BewertungOld > BewertungNew ? BewertungOld : BewertungNew;
+                        Quality = 66;
+                        try
+                        { Quality = (int)numericUpDown1.Value; }//Convert.ToInt32(textBox12.Text); }
+                        catch (Exception) { }
+                    }
                     if ((B2 * 100) / (schüler.Count * (int)SchHWunsch[0].Value) >= Quality && B2 > aktBestSolValue)
                     {
                         if (B2 > aktBestSolValue)

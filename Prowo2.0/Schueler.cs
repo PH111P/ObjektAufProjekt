@@ -43,7 +43,7 @@ namespace Prowo
             this.Name = name;
             this.Vorname = vorname;
 
-            if (wishes.Data.Count > 0)
+            if (wishes.Data.Count >= 0)
                 this.Wünsche = wishes;
             this.WishesSet = wishes.Data.Count > 0;
             this.wasLeiter = this.isLeiter = leiter;
