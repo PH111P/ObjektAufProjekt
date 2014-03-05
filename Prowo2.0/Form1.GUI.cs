@@ -84,6 +84,10 @@ namespace Prowo
         public bool openSchüler(const_type<string> Path)
         {
             schüler.Clear();
+            foreach (var item in Projekte)
+            {
+                item.reset();
+            }
             try
             {
                 using (StreamReader sr = new StreamReader(Path))
@@ -94,14 +98,18 @@ namespace Prowo
                         if (s.Length == 0) continue;
                         List<int> Wünsche = new List<int>();
 
-                        for (int i = 2; i < s.Split('/', ',').Length - 1; ++i){
+                        for (int i = 2; i < s.Split('/', ',').Length - 1; ++i)
+                        {
                             var ac = s.Split('/', ',')[i];
-                            try{
+                            try
+                            {
                                 Wünsche.Add(Convert.ToInt32(ac));
                             }
-                            catch(FormatException){
-                                for(int j = 0; j < Projekte.Count; ++j)
-                                    if(Projekte[j].Projektname == ac){
+                            catch (FormatException)
+                            {
+                                for (int j = 0; j < Projekte.Count; ++j)
+                                    if (Projekte[j].Projektname == ac)
+                                    {
                                         Wünsche.Add(j);
                                         break;
                                     }
@@ -114,8 +122,12 @@ namespace Prowo
                             acKlasse = new KlasseDecorator(acKlasse, klasse[i].Trim(' '));
 
                         if (s.StartsWith("@"))
-                            schüler.Add(new Objekt(s.Split('/', ',')[0].Remove(0, 1), s.Split('/', ',')[1],
-                                acKlasse, Wünsche, true));
+                        {
+                            Objekt s2 = new Objekt(s.Split('/', ',')[0].Remove(0, 1), s.Split('/', ',')[1],
+                                acKlasse, Wünsche, true);
+                            Projekte[Wünsche[0]].Add(s2);
+                            schüler.Add(s2);
+                        }
                         else
                             schüler.Add(new Objekt(s.Split('/', ',')[0], s.Split('/', ',')[1],
                                 acKlasse, Wünsche));
@@ -341,17 +353,32 @@ namespace Prowo
                     sw.WriteLine(@"\begin{document}");
                     sw.WriteLine(@"\subsection*{Projekte}");
 
-                    sw.WriteLine(@"\begin{longtable}{p{3cm}|p{5cm}|*{7}{|p{0.25cm}|}|p{3cm}}");
-                    sw.WriteLine(@"\textbf{Name} (Forts.) & \textbf{Projekt's leader} (cont.) & 5 & 6 & 7 & 8 & 9 & 10 & 11 & \textbf{Description}  \\ \hline \hline");
+                    int colcnt = Klasse.ID_rev.Count + 3;
+
+                    sw.WriteLine(@"\begin{longtable}{p{5cm}|p{3cm}|*{" + Klasse.ID_rev.Count + @"}{|p{0.25cm}|}|p{3cm}}");
+
+                    string klnames = "";
+
+                    for (int i = 0; i < Klasse.ID_rev.Count; i++)
+                    {
+                        if (i != 0)
+                            klnames += " & ";
+                        klnames += Klasse.ID_rev[i].ToString();
+                    }
+
+                    sw.WriteLine(@"\textbf{Name} (cont.) & \textbf{Projekt's leader} (cont.) & " + klnames + @" & \textbf{Description}  \\ \hline \hline");
                     sw.WriteLine(@"\endhead");
-                    sw.WriteLine(@"\textbf{Name} & \textbf{Projekt's leader} & 5 & 6 & 7 & 8 & 9 & 10 & 11 & \textbf{Description} \\ \hline \hline");
+                    sw.WriteLine(@"\textbf{Name} & \textbf{Projekt's leader} & " + klnames + @" & \textbf{Description} \\ \hline \hline");
                     sw.WriteLine(@"\endfirsthead");
-                    sw.WriteLine(@"\multicolumn{10}{r}{To be continued on the following page.}");
+                    sw.WriteLine(@"\multicolumn{" + colcnt + @"}{r}{To be continued on the following page.}");
                     sw.WriteLine(@"\endfoot");
-                    sw.WriteLine(@"\multicolumn{10}{l}{\mbox{}}");
+                    sw.WriteLine(@"\multicolumn{" + colcnt + @"}{l}{\mbox{}}");
                     sw.WriteLine(@"\endlastfoot");
 
-                    foreach (Projekt P in Projekte)
+                    var pro = new List<Projekt>();
+                    pro.AddRange(Projekte);
+                    pro.Sort();
+                    foreach (Projekt P in pro)
                     {
                         if (P.MaxAnz == 0)
                             continue;
@@ -555,7 +582,8 @@ namespace Prowo
 
                     List<Tuple<Objekt, bool>> schler = new List<Tuple<Objekt, bool>>();
                     foreach (Objekt S in schüler)
-                        schler.Add(new Tuple<Objekt, bool>(new Objekt(S), false));
+                        if(!S.isLeiter)
+                            schler.Add(new Tuple<Objekt, bool>(new Objekt(S), false));
                     foreach (Projekt P in Projekte)
                         foreach (Objekt S in P.GetLeiterList())
                             schler.Add(new Tuple<Objekt, bool>(new Objekt(S), true));
@@ -566,11 +594,21 @@ namespace Prowo
                         projekte.Add(new Tuple<Projekt, int>(new Projekt(Projekte[i]), i));
                     projekte.Sort(new TupleCmp<Projekt, int>());
 
-                    foreach (var s in Klasse.ID_rev)
+                    HashSet<string> allKlassen = new HashSet<string>();
+                    List<aKlasse> a = new List<aKlasse>();
+
+                    foreach (var s in schler)
+                        if (!allKlassen.Contains(s.Item1.Klasse.Data.GetName()))
+                        {
+                            allKlassen.Add(s.Item1.Klasse.Data.GetName());
+                            a.Add(s.Item1.Klasse);
+                        }
+
+                    foreach (var s in a)
                     {
                         int cnt = 0;
                         foreach (var P in projekte)
-                            if (P.Item1.AllowedKlassen[Klasse.ID[s]])
+                            if (P.Item1.AllowedKlassen[Klasse.ID[(Klasse)s.Base()]])
                                 cnt++;
                         if (cnt == 0)
                             continue;
@@ -581,11 +619,11 @@ namespace Prowo
                         for (int i = 0; i < inds.Length; ++i)
                             inds[i] = -1;
 
-                        sw.WriteLine(@"\chead{" + s + @"}");
+                        sw.WriteLine(@"\chead{" + s.GetName() + @"}");
                         string S = @"\textbf{Name} ";
                         cnt = 0;
                         foreach (var P in projekte)
-                            if (P.Item1.AllowedKlassen[Klasse.ID[s]])
+                            if (P.Item1.AllowedKlassen[Klasse.ID[(Klasse)s.Base()]])
                             {
                                 S += @" & \begin{sideways}" + P.Item1.Projektname + @" \end{sideways} ";
                                 inds[P.Item2] = cnt++;
@@ -602,14 +640,19 @@ namespace Prowo
                         sw.WriteLine(@"\endlastfoot");
                         foreach (var Sch in schler)
                         {
-                            if (Klasse.ID_rev[Sch.Item1.GetKlasse()] != s)
+                            if (Sch.Item1.Klasse.Data.GetName() != s.GetName())
+                            {
+                                System.Diagnostics.Debug.WriteLine(Sch.Item1.Klasse.Data.GetName() + " != " + s.GetName());
                                 continue;
+                            }
                             int[] indices = new int[cnt];
                             if (Sch.Item2)
                             {
-                                if (inds[Sch.Item1.Wünsche[0]] != -1)
-                                    indices[inds[Sch.Item1.Wünsche[0]]] = -1;
+                                //if (inds[Sch.Item1.Wünsche[0]] != -1)
+                                indices[inds[Sch.Item1.Wünsche[0]]] = -1;
                             }
+                            else if (!Projekte[Sch.Item1.Wünsche[0]].editable)
+                                indices[inds[Sch.Item1.Wünsche[0]]] = -2;
                             else
                                 if (inds[Sch.Item1.Wünsche[0]] != -1)
                                     indices[inds[Sch.Item1.Wünsche[0]]] = 1;
@@ -621,6 +664,8 @@ namespace Prowo
                             for (int i = 0; i < indices.Length; i++)
                                 if (indices[i] == -1)
                                     S += @" & \textsf{PL}";
+                                else if (indices[i] == -2)
+                                    S += @" & \textsf{X}";
                                 else if (drawWishes && indices[i] != 0)
                                     S += " & " + indices[i];
                                 else
@@ -902,19 +947,26 @@ namespace Prowo
             try
             {
                 SelectedSchüler = Convert.ToInt32(listView2.Items[listView2.SelectedIndices[0]].SubItems[3].Text);
-                for (int i = 0; i < TabPages.Count; i++)
-                {
-                    ((ComboBox)(TabPages[i].Controls[0])).SelectedIndex =
-                        schüler[SelectedSchüler].Wünsche[i];
-
-                    ((Label)(TabPages[i].Controls[1])).Text =
-                        Projekte[schüler[SelectedSchüler].Wünsche[i]].Description;
-                }
                 textBox7.Text = schüler[SelectedSchüler].Name;
                 textBox8.Text = schüler[SelectedSchüler].Vorname;
                 textBox6.Text = schüler[SelectedSchüler].Klasse.Data.GetName();
-                checkBox1.Checked = false;
+                checkBox1.Checked = schüler[SelectedSchüler].isLeiter;
                 button13.Enabled = button8.Enabled = true;
+                for (int i = 0; i < TabPages.Count; i++)
+                {
+                    try
+                    {
+                        ((ComboBox)(TabPages[i].Controls[0])).SelectedIndex =
+                            schüler[SelectedSchüler].Wünsche[i];
+
+                        ((Label)(TabPages[i].Controls[1])).Text =
+                            Projekte[schüler[SelectedSchüler].Wünsche[i]].Description;
+                    }
+                    catch (Exception)
+                    {
+                        break;
+                    }
+                }
             }
             catch (Exception)
             {
@@ -929,11 +981,11 @@ namespace Prowo
                 for (int i = 0; i < TabPages.Count; ++i)
                     if (((ComboBox)TabPages[i].Controls[0]).SelectedIndex != -1)
                         inds.Add(((ComboBox)TabPages[i].Controls[0]).SelectedIndex);
-                    else
-                    {
-                        MessageBox.Show("Fill in all the fields!", "ERROR");
-                        return;
-                    }
+                    //else
+                    //{
+                    //    MessageBox.Show("Fill in all the fields!", "ERROR");
+                    //    return;
+                    //}
                 fill_LV4(Projekte);
             }
             catch (Exception eg)
@@ -953,7 +1005,7 @@ namespace Prowo
             int selLine = SelectedSchüler;
             var Lines = File.ReadAllLines(textBox2.Text);
             for (int i = 0; i <= selLine; i++)
-                if (Lines[i].Length == 0 || Lines[i].StartsWith("*") || Lines[i].StartsWith("@"))
+                if (Lines[i].Length == 0 || Lines[i].StartsWith("*"))
                     selLine++;
             string out_ = "";
             if (checkBox1.Checked)
@@ -1022,7 +1074,7 @@ namespace Prowo
                     checkedListBox1.SetItemChecked(i, false);
                 Offen.Checked = true;
                 checkBox4.Checked = false;
-                textBox5.Lines = new string[]{"A description of this Projekt goes here."};
+                textBox5.Lines = new string[] { "A description of this Projekt goes here." };
             }
         }
 
