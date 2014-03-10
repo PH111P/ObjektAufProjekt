@@ -268,6 +268,8 @@ namespace Prowo
                 return false;
             }
         }
+
+        [Obsolete("Tex-Output should be preferred for readability")]
         public bool writeFile(const_type<string> Path)
         {
             try
@@ -561,6 +563,7 @@ namespace Prowo
                     sw.WriteLine(@"\usepackage{longtable}");
                     sw.WriteLine(@"\usepackage{rotating}");
                     sw.WriteLine(@"\usepackage{geometry}");
+                    sw.WriteLine(@"\usepackage[table]{xcolor}");
                     sw.WriteLine(@"\usepackage{array}");
 
                     sw.WriteLine(@"\setlength{\textwidth}{26cm}");
@@ -583,7 +586,7 @@ namespace Prowo
 
                     List<Tuple<Objekt, bool>> schler = new List<Tuple<Objekt, bool>>();
                     foreach (Objekt S in schüler)
-                        if(!S.isLeiter)
+                        if (!S.isLeiter)
                             schler.Add(new Tuple<Objekt, bool>(new Objekt(S), false));
                     foreach (Projekt P in Projekte)
                         foreach (Objekt S in P.GetLeiterList())
@@ -623,12 +626,15 @@ namespace Prowo
                         sw.WriteLine(@"\chead{" + s.GetName() + @"}");
                         string S = @"\textbf{Name} ";
                         cnt = 0;
+
+                        bool[] b = new bool[projekte.Count];
                         foreach (var P in projekte)
                             if (P.Item1.AllowedKlassen[Klasse.ID[(Klasse)s.Base()]])
                             {
                                 S += @" & \begin{sideways}" + P.Item1.Projektname + @" \end{sideways} ";
                                 inds[P.Item2] = cnt++;
                                 Names[P.Item1.Projektname] = inds[P.Item2];
+                                b[cnt - 1] = P.Item1.editable;
                             }
                         S += @"\\ \hline \hline";
                         sw.WriteLine(S);
@@ -646,22 +652,28 @@ namespace Prowo
                                 System.Diagnostics.Debug.WriteLine(Sch.Item1.Klasse.Data.GetName() + " != " + s.GetName());
                                 continue;
                             }
+
+                            bool allM2 = false;
+
                             int[] indices = new int[cnt];
                             if (Sch.Item2)
                             {
                                 if (Sch.Item1.Wünsche.Count > 0 && inds[Sch.Item1.Wünsche[0]] != -1)
-                                indices[inds[Sch.Item1.Wünsche[0]]] = -1;
+                                    indices[inds[Sch.Item1.Wünsche[0]]] = -1;
                             }
                             else if (Sch.Item1.Wünsche.Count > 0 && inds[Sch.Item1.Wünsche[0]] != -1 && !Projekte[Sch.Item1.Wünsche[0]].editable)
+                            {
                                 indices[inds[Sch.Item1.Wünsche[0]]] = -2;
+                                allM2 = true;
+                            }
                             else
                                 if (Sch.Item1.Wünsche.Count > 0 && inds[Sch.Item1.Wünsche[0]] != -1)
                                     indices[inds[Sch.Item1.Wünsche[0]]] = 1;
                             for (int i = 1; i < Sch.Item1.Wünsche.Count; ++i)
-                                if (inds[Sch.Item1.Wünsche[i]] != -1)
+                                if (inds[Sch.Item1.Wünsche[i]] > -1)
                                     if (indices[inds[Sch.Item1.Wünsche[i]]] == 0)
                                         indices[inds[Sch.Item1.Wünsche[i]]] = (i + 1);
-                            S = Sch.Item1.Name + ", " + Sch.Item1.Vorname;
+                                                        S = Sch.Item1.Name + ", " + Sch.Item1.Vorname;
                             for (int i = 0; i < indices.Length; i++)
                                 if (indices[i] == -1)
                                     S += @" & {\small{\textbf{\textsf{PL}}}}";
@@ -669,6 +681,8 @@ namespace Prowo
                                     S += @" & {\textsf{X}}";
                                 else if (drawWishes && indices[i] != 0)
                                     S += " & " + indices[i];
+                                else if (allM2 || !b[i])
+                                    S += @" & \cellcolor{black!75}\mbox{}";
                                 else
                                     S += @" & ";
                             S += @"\\ \hline";
@@ -894,13 +908,13 @@ namespace Prowo
                 for (int i = 0; i < TabPages.Count; ++i)
                     if (((ComboBox)TabPages[i].Controls[0]).SelectedIndex != -1)
                         inds.Add(((ComboBox)TabPages[i].Controls[0]).SelectedIndex);
-                    //else if (i == 0)
-                    //{
-                    //    MessageBox.Show("Fill in all the fields!\n(Specify wishes!)", "ERROR");
-                    //    return;
-                    //}
-                    //else
-                    //    inds.Add(inds.Last());
+                //else if (i == 0)
+                //{
+                //    MessageBox.Show("Fill in all the fields!\n(Specify wishes!)", "ERROR");
+                //    return;
+                //}
+                //else
+                //    inds.Add(inds.Last());
             }
             catch (Exception eg)
             {
@@ -985,11 +999,11 @@ namespace Prowo
                 for (int i = 0; i < TabPages.Count; ++i)
                     if (((ComboBox)TabPages[i].Controls[0]).SelectedIndex != -1)
                         inds.Add(((ComboBox)TabPages[i].Controls[0]).SelectedIndex);
-                    //else
-                    //{
-                    //    MessageBox.Show("Fill in all the fields!", "ERROR");
-                    //    return;
-                    //}
+                //else
+                //{
+                //    MessageBox.Show("Fill in all the fields!", "ERROR");
+                //    return;
+                //}
                 fill_LV4(Projekte);
             }
             catch (Exception eg)
