@@ -246,9 +246,11 @@ namespace Prowo
                         while (!Projekte[ZufProj1].editable || Projekte[ZufProj1].TeilnehmerCount == 0)
                             ZufProj1 = rnd.Next(0, Projekte.Count);
                         int ZufProj2 = rnd.Next(0, Projekte.Count);
-                        while (ZufProj1 == ZufProj2 || !Projekte[ZufProj2].editable || Projekte[ZufProj2].TeilnehmerCount == 0)
+                        while ((ZufProj1 == ZufProj2 || !Projekte[ZufProj2].editable || Projekte[ZufProj2].TeilnehmerCount == 0 )&& !beenden)
+                        {
                             ZufProj2 = rnd.Next(0, Projekte.Count);
-
+                            Application.DoEvents();
+                        }
                         bool Prj1CanBeEmpty = Projekte[ZufProj1].TeilnehmerCount < Projekte[ZufProj1].MaxAnz;
 
                         int ZufSchüler1 = rnd.Next(0, Projekte[ZufProj1].Length + (Prj1CanBeEmpty ? 1 : 0));

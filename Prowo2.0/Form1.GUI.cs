@@ -550,7 +550,7 @@ namespace Prowo
         }
         private bool writeTEXWishList(const_type<string> Path, const_type<bool> drawWishes)
         {
-            try
+            //try
             {
                 using (var sw = new StreamWriter(Path))
                 {
@@ -561,6 +561,7 @@ namespace Prowo
                     sw.WriteLine(@"\usepackage{longtable}");
                     sw.WriteLine(@"\usepackage{rotating}");
                     sw.WriteLine(@"\usepackage{geometry}");
+                    sw.WriteLine(@"\usepackage{array}");
 
                     sw.WriteLine(@"\setlength{\textwidth}{26cm}");
                     sw.WriteLine(@"\setlength{\textheight}{19cm}");
@@ -612,7 +613,7 @@ namespace Prowo
                                 cnt++;
                         if (cnt == 0)
                             continue;
-                        sw.WriteLine(@"\begin{longtable}{l|*{" + cnt + @"}{|p{0.2cm}}|}");
+                        sw.WriteLine(@"\begin{longtable}{l|*{" + cnt + @"}{|b{0.2cm}}|}");
 
                         Dictionary<string, int> Names = new Dictionary<string, int>();
                         int[] inds = new int[projekte.Count];
@@ -634,7 +635,7 @@ namespace Prowo
                         sw.WriteLine(@"\endhead");
                         sw.WriteLine(S);
                         sw.WriteLine(@"\endfirsthead");
-                        sw.WriteLine(@"\multicolumn{" + cnt + @"}{r}{To be continued on the following page.}");
+                        sw.WriteLine(@"\multicolumn{" + cnt + @"}{r}{Fortsetung auf der nächsten Seite}");
                         sw.WriteLine(@"\endfoot");
                         sw.WriteLine(@"\multicolumn{" + cnt + @"}{l}{\mbox{}}");
                         sw.WriteLine(@"\endlastfoot");
@@ -648,13 +649,13 @@ namespace Prowo
                             int[] indices = new int[cnt];
                             if (Sch.Item2)
                             {
-                                //if (inds[Sch.Item1.Wünsche[0]] != -1)
+                                if (Sch.Item1.Wünsche.Count > 0 && inds[Sch.Item1.Wünsche[0]] != -1)
                                 indices[inds[Sch.Item1.Wünsche[0]]] = -1;
                             }
-                            else if (!Projekte[Sch.Item1.Wünsche[0]].editable)
+                            else if (Sch.Item1.Wünsche.Count > 0 && inds[Sch.Item1.Wünsche[0]] != -1 && !Projekte[Sch.Item1.Wünsche[0]].editable)
                                 indices[inds[Sch.Item1.Wünsche[0]]] = -2;
                             else
-                                if (inds[Sch.Item1.Wünsche[0]] != -1)
+                                if (Sch.Item1.Wünsche.Count > 0 && inds[Sch.Item1.Wünsche[0]] != -1)
                                     indices[inds[Sch.Item1.Wünsche[0]]] = 1;
                             for (int i = 1; i < Sch.Item1.Wünsche.Count; ++i)
                                 if (inds[Sch.Item1.Wünsche[i]] != -1)
@@ -663,9 +664,9 @@ namespace Prowo
                             S = Sch.Item1.Name + ", " + Sch.Item1.Vorname;
                             for (int i = 0; i < indices.Length; i++)
                                 if (indices[i] == -1)
-                                    S += @" & \textsf{PL}";
+                                    S += @" & {\small{\textbf{\textsf{PL}}}}";
                                 else if (indices[i] == -2)
-                                    S += @" & \textsf{X}";
+                                    S += @" & {\textsf{X}}";
                                 else if (drawWishes && indices[i] != 0)
                                     S += " & " + indices[i];
                                 else
@@ -680,10 +681,10 @@ namespace Prowo
                 }
                 return true;
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            //catch (Exception)
+            //{
+            //    return false;
+            //}
         }
         #region EventHandler
         private void SetProData(object sender, EventArgs e)
@@ -893,13 +894,13 @@ namespace Prowo
                 for (int i = 0; i < TabPages.Count; ++i)
                     if (((ComboBox)TabPages[i].Controls[0]).SelectedIndex != -1)
                         inds.Add(((ComboBox)TabPages[i].Controls[0]).SelectedIndex);
-                    else if (i == 0)
-                    {
-                        MessageBox.Show("Fill in all the fields!\n(Specify wishes!)", "ERROR");
-                        return;
-                    }
-                    else
-                        inds.Add(inds.Last());
+                    //else if (i == 0)
+                    //{
+                    //    MessageBox.Show("Fill in all the fields!\n(Specify wishes!)", "ERROR");
+                    //    return;
+                    //}
+                    //else
+                    //    inds.Add(inds.Last());
             }
             catch (Exception eg)
             {
@@ -921,18 +922,21 @@ namespace Prowo
             for (int i = 1; i < txt.Length; ++i)
                 acKlasse = new KlasseDecorator(acKlasse, txt[i].Trim(' '));
 
-            Objekt S = new Objekt(textBox7.Text, textBox8.Text, acKlasse, inds, !checkBox1.Checked);
+            Objekt S = new Objekt(textBox7.Text, textBox8.Text, acKlasse, inds, checkBox1.Checked);
             string out_ = "";
 
+            if (checkBox1.Checked)
+                Projekte[inds[0]].Add(S);
             schüler.Add(S);
+
             listView2.Items.Add(S.AsItem(button7.BackColor, schüler.Count - 1));
 
-            if (!checkBox1.Checked)
+            if (checkBox1.Checked)
                 out_ += "@";
 
             out_ += textBox7.Text + "/" + textBox8.Text;
             foreach (var ind in inds)
-                out_ += "/" + ind;
+                out_ += "/" + Projekte[ind].Projektname;
             out_ += "/" + acKlasse.GetName();
             sw.WriteLine(out_);
             sw.Close();
@@ -1012,7 +1016,7 @@ namespace Prowo
                 out_ += "@";
             out_ += textBox7.Text + "/" + textBox8.Text;
             foreach (var ind in inds)
-                out_ += "/" + ind;
+                out_ += "/" + Projekte[ind].Projektname;
             out_ += "/" + acKlasse.GetName();
             Lines[selLine] = out_;
             File.WriteAllLines(textBox2.Text, Lines);
