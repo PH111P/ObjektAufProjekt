@@ -134,7 +134,7 @@ namespace Prowo
                     }
                 int cnt = 0;
                 foreach (var s in schüler)
-                    listView2.Items.Add(s.AsItem(button7.BackColor, cnt++));
+                    listView2.Items.Add(s.AsItem(GetColor(s),button7.BackColor, cnt++));
             }
             catch (Exception o)
             {
@@ -283,7 +283,7 @@ namespace Prowo
                         sr.WriteLine(Solution[i].Projektname + ": ");
                         foreach (var item in Solution[i].GetLeiterList())
                         {
-                            var Item = item.AsItem(button7.BackColor, cnt, i);
+                            var Item = item.AsItem(GetColor(item),button7.BackColor, cnt, i);
                             Item.Group = listView3.Groups[i];
 
                             Item.BackColor = button7.BackColor;
@@ -293,7 +293,7 @@ namespace Prowo
                         int cnt2 = 0;
                         foreach (var item in Solution[i].GetList())
                         {
-                            var Item = item.AsItem(button7.BackColor, cnt, i, cnt2++);
+                            var Item = item.AsItem(GetColor(item), button7.BackColor, cnt, i, cnt2++);
                             Item.Group = listView3.Groups[i];
                             if (!Solution[i].AllowedKlassen[item.GetKlasse()])
                                 Item.ForeColor = Color.Red;
@@ -552,7 +552,7 @@ namespace Prowo
         }
         private bool writeTEXWishList(const_type<string> Path, const_type<bool> drawWishes)
         {
-            //try
+            try
             {
                 using (var sw = new StreamWriter(Path))
                 {
@@ -695,10 +695,10 @@ namespace Prowo
                 }
                 return true;
             }
-            //catch (Exception)
-            //{
-            //    return false;
-            //}
+            catch (Exception)
+            {
+                return false;
+            }
         }
         #region EventHandler
         private void SetProData(object sender, EventArgs e)
@@ -943,7 +943,7 @@ namespace Prowo
                 Projekte[inds[0]].Add(S);
             schüler.Add(S);
 
-            listView2.Items.Add(S.AsItem(button7.BackColor, schüler.Count - 1));
+            listView2.Items.Add(S.AsItem(GetColor(S), button7.BackColor, schüler.Count - 1));
 
             if (checkBox1.Checked)
                 out_ += "@";
@@ -982,7 +982,7 @@ namespace Prowo
                     }
                     catch (Exception)
                     {
-                        break;
+                        ((ComboBox)(TabPages[i].Controls[0])).SelectedIndex = -1;
                     }
                 }
             }
@@ -1018,7 +1018,7 @@ namespace Prowo
                 acKlasse = new KlasseDecorator(acKlasse, txt[i].Trim(' '));
 
             schüler[SelectedSchüler] = new Objekt(textBox7.Text, textBox8.Text, acKlasse, inds);
-            listView2.Items[listView2.SelectedIndices[0]] = schüler[SelectedSchüler].AsItem(button7.BackColor, SelectedSchüler);
+            listView2.Items[listView2.SelectedIndices[0]] = schüler[SelectedSchüler].AsItem(GetColor(schüler[SelectedSchüler]), button7.BackColor, SelectedSchüler);
 
             int selLine = SelectedSchüler;
             var Lines = File.ReadAllLines(textBox2.Text);
@@ -1205,7 +1205,7 @@ namespace Prowo
                 int cnt2 = 0;
                 foreach (var item in Solution[i].GetList().Union(Solution[i].GetLeiterList()))
                 {
-                    var Item = item.AsItem(button7.BackColor, cnt, i, cnt2++);
+                    var Item = item.AsItem(GetColor(item), button7.BackColor, cnt, i, cnt2++);
                     Item.Group = listView3.Groups[i];
                     if (!Solution[i].AllowedKlassen[item.GetKlasse()])
                         Item.ForeColor = Color.Red;
@@ -1448,7 +1448,7 @@ namespace Prowo
 
     public static class SCH_ERW
     {
-        public static ListViewItem AsItem(this Objekt S, const_type<Color> PRColor, const_type<int> index, int index2 = (-1), int index3 = -1)
+        public static ListViewItem AsItem(this Objekt S, const_type<Color> DefColor, const_type<Color> PRColor, const_type<int> index, int index2 = (-1), int index3 = -1)
         {
             List<string> data = new List<string>();
             data.Add(S.Name);
@@ -1461,7 +1461,9 @@ namespace Prowo
             ListViewItem _ret = new ListViewItem(data.ToArray());
             if (S.isLeiter)
                 _ret.BackColor = PRColor;
-
+            else
+                _ret.BackColor = DefColor;
+            
             return _ret;
         }
 

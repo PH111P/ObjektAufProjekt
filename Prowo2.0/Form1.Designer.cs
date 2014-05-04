@@ -97,6 +97,8 @@
             this.checkedListBox2 = new System.Windows.Forms.CheckedListBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.button14 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
@@ -536,6 +538,7 @@
             // listView2
             // 
             this.listView2.BackColor = System.Drawing.Color.GhostWhite;
+            this.listView2.BackgroundImageTiled = true;
             this.listView2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
@@ -880,10 +883,10 @@
             this.groupBox9.Controls.Add(this.textBox3);
             this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox9.Enabled = false;
-            this.groupBox9.Location = new System.Drawing.Point(3, 299);
+            this.groupBox9.Location = new System.Drawing.Point(3, 328);
             this.groupBox9.MinimumSize = new System.Drawing.Size(740, 132);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(740, 191);
+            this.groupBox9.Size = new System.Drawing.Size(740, 162);
             this.groupBox9.TabIndex = 4;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "ADDITIONAL SCORING RULES";
@@ -895,7 +898,7 @@
             this.checkedListBox2.FormattingEnabled = true;
             this.checkedListBox2.Location = new System.Drawing.Point(3, 36);
             this.checkedListBox2.Name = "checkedListBox2";
-            this.checkedListBox2.Size = new System.Drawing.Size(734, 152);
+            this.checkedListBox2.Size = new System.Drawing.Size(734, 123);
             this.checkedListBox2.TabIndex = 0;
             // 
             // textBox3
@@ -910,6 +913,8 @@
             // groupBox3
             // 
             this.groupBox3.AutoSize = true;
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.button14);
             this.groupBox3.Controls.Add(this.button7);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.button3);
@@ -921,10 +926,30 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(3, 187);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(740, 112);
+            this.groupBox3.Size = new System.Drawing.Size(740, 141);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "COLOR SETTINGS";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(448, 104);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(118, 13);
+            this.label11.TabIndex = 9;
+            this.label11.Text = "BG for blocked Objekte";
+            // 
+            // button14
+            // 
+            this.button14.BackColor = System.Drawing.Color.DarkTurquoise;
+            this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button14.Location = new System.Drawing.Point(641, 99);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(64, 23);
+            this.button14.TabIndex = 8;
+            this.button14.Text = "Anpassen";
+            this.button14.UseVisualStyleBackColor = false;
             // 
             // button7
             // 
@@ -1438,5 +1463,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.NumericUpDown numericUpDown6;
         private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button button14;
     }
 }

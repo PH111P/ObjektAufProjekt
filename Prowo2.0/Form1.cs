@@ -44,8 +44,8 @@ namespace Prowo
                 bool aBool = true;
                 for (int i = 0; i < TabPages.Count; ++i)
                 {
-                    try { s.Wünsche[i] = s.Wünsche[i]; }
-                    catch (Exception) { continue; }
+                    if (i >= s.Wünsche.Count)
+                        continue;
 
                     if (Start[s.Wünsche[i]].TeilnehmerCount < Start[s.Wünsche[i]].MaxAnz || s.isLeiter)
                     {
@@ -82,15 +82,15 @@ namespace Prowo
             }
             return Rest;
         }
-        public void init(const_type<bool> blind,const_type<bool> remUseLess)
+        public void init(const_type<bool> blind, const_type<bool> remUseLess)
         {
             List<Objekt> Rest;
             Start = Projekte;
+            schüler.Sort((Objekt a, Objekt b) => new Random().Next(-1, 2));
             if (blind)
                 Rest = calcBlind();
             else
                 Rest = calc();
-
             if (remUseLess)
                 Rest.AddRange(remUselessProj(Start));
 
@@ -131,7 +131,7 @@ namespace Prowo
         {
             List<Objekt> ret = new List<Objekt>();
             for (int i = 0; i < Projekte.Count; ++i)
-                if (!Projekte[i].erhaltenswert && getE_Wert(i,Projekte) < numericUpDown6.Value)
+                if (!Projekte[i].erhaltenswert && getE_Wert(i, Projekte) < numericUpDown6.Value)
                     ret.AddRange(Projekte[i].kill());
             return ret;
         }
@@ -225,7 +225,7 @@ namespace Prowo
                     Application.DoEvents();
                     decimal BewertungOld = (bewerte(out ANZMIN, out ANZMAX, out ANZCMISS)
                             * (ANZMIN > 0 ? (numericUpDown2.Value / 100) : 1) * (ANZMAX > 0 ? (numericUpDown3.Value / 100) : 1)
-                            * (ANZCMISS > 0 ? 0 : 1));;
+                            * (ANZCMISS > 0 ? 0 : 1)); ;
                     decimal B2 = BewertungOld;
                     int Quality = 66;
 
@@ -243,10 +243,13 @@ namespace Prowo
 
                         #region Austausch zweier Schüler
                         int ZufProj1 = rnd.Next(0, Projekte.Count);
-                        while (!Projekte[ZufProj1].editable || Projekte[ZufProj1].TeilnehmerCount == 0)
+                        while ((!Projekte[ZufProj1].editable || Projekte[ZufProj1].TeilnehmerCount == 0) && !beenden)
+                        {
                             ZufProj1 = rnd.Next(0, Projekte.Count);
+                            Application.DoEvents();
+                        }
                         int ZufProj2 = rnd.Next(0, Projekte.Count);
-                        while ((ZufProj1 == ZufProj2 || !Projekte[ZufProj2].editable || Projekte[ZufProj2].TeilnehmerCount == 0 )&& !beenden)
+                        while ((ZufProj1 == ZufProj2 || !Projekte[ZufProj2].editable || Projekte[ZufProj2].TeilnehmerCount == 0) && !beenden)
                         {
                             ZufProj2 = rnd.Next(0, Projekte.Count);
                             Application.DoEvents();
@@ -267,10 +270,10 @@ namespace Prowo
 
                         Objekt Z1 = null, Z2 = new Objekt(Projekte[ZufProj2][ZufSchüler2]);
                         if (!isMax)
+                        {
                             Z1 = new Objekt(Projekte[ZufProj1][ZufSchüler1]);
-
-                        if (!isMax)
                             Projekte[ZufProj2].Add(Z1);
+                        }
                         Projekte[ZufProj1].Add(Z2);
                         Projekte[ZufProj2].Remove(Projekte[ZufProj2][ZufSchüler2]);
                         if (!isMax)
@@ -297,7 +300,7 @@ namespace Prowo
                         B2 = BewertungOld > BewertungNew ? BewertungOld : BewertungNew;
                         Quality = 66;
                         try
-                        { Quality = (int)numericUpDown1.Value; }//Convert.ToInt32(textBox12.Text); }
+                        { Quality = (int)numericUpDown1.Value; }
                         catch (Exception) { }
                     }
                     if ((B2 * 100) / (schüler.Count * (int)SchHWunsch[0].Value) >= Quality && B2 > aktBestSolValue)
@@ -324,7 +327,7 @@ namespace Prowo
                             int cnt2 = 0;
                             foreach (var item in Projekte[i].GetList().Union(Projekte[i].GetLeiterList()))
                             {
-                                var Item = item.AsItem(button7.BackColor, cnt, i, cnt2++);
+                                var Item = item.AsItem(GetColor(item), button7.BackColor, cnt, i, cnt2++);
                                 Item.Group = listView3.Groups[i];
                                 if (!Projekte[i].AllowedKlassen[item.GetKlasse()])
                                     Item.ForeColor = Color.Red;
@@ -347,7 +350,16 @@ namespace Prowo
                 }
             }
             setSettings(true);
-            }
+        }
+
+        public Color GetColor(Objekt item)
+        {
+            Color DefColor = listView1.BackColor;
+            if (item.Wünsche.Count > 0)
+                if (!Projekte[item.Wünsche[0]].editable)
+                    DefColor = button14.BackColor;
+            return DefColor;
+        }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
