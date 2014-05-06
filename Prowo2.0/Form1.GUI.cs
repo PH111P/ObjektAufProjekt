@@ -226,7 +226,7 @@ namespace Prowo
               sw.WriteLine (@"\begin{tabular}{l|c}");
               sw.WriteLine (@"\textbf{Name} & \textbf{Klasse} \\ \hline \hline");
               foreach ( Objekt S in cpy )
-                sw.WriteLine (S.Name + ", " + S.Vorname + " & " + S.GetKlasse ( ) + @"\\");
+                sw.WriteLine (S.Name + ", " + S.Vorname + " & " + S.Klasse.Data.GetName ( ) + @"\\");
               sw.WriteLine (@"\end{tabular}");
               // sw.WriteLine(@"\end{center}");
             }
@@ -240,7 +240,7 @@ namespace Prowo
               sw.WriteLine (@"\textbf{Name} & \textbf{Klasse} \\ \hline \hline");
               foreach ( Objekt S in cpy )
               {
-                sw.WriteLine (S.Name + ", " + S.Vorname + " & " + S.GetKlasse ( ) + @"\\");
+                sw.WriteLine (S.Name + ", " + S.Vorname + " & " + S.Klasse.Data.GetName ( ) + @"\\");
                 schler.Add (new Tuple<Objekt, string> (new Objekt (S), P.Projektname));
               }
               sw.WriteLine (@"\end{tabular}");
@@ -405,148 +405,11 @@ namespace Prowo
     /// <returns><c>true</c>, if TEX wish list was writed, <c>false</c> otherwise.</returns>
     /// <param name="Path">Path.</param>
     /// <param name="drawWishes">Draw wishes.</param>
-    /// <param name="markSol">Mark sol.</param>
     private bool writeTEXWishList ( const_type<string> Path, const_type<bool> drawWishes, const_type<bool> markSol )
     {
       if ( markSol && Solution == null )
         return false;
-      if ( !markSol )
-        return writeTEXWishList (Path, drawWishes);
-      try
-      {
-        using ( var sw = new StreamWriter (Path) )
-        {
-          sw.WriteLine (@"\documentclass[a4paper,10pt,landscape]{article}");
-          sw.WriteLine (@"\usepackage[ngerman]{babel}");
-          sw.WriteLine (@"\usepackage[utf8]{inputenc}");
-          sw.WriteLine (@"\usepackage{fancyhdr}");
-          sw.WriteLine (@"\usepackage{longtable}");
-          sw.WriteLine (@"\usepackage{rotating}");
-          sw.WriteLine (@"\usepackage{geometry}");
-          sw.WriteLine (@"\usepackage[table]{xcolor}");
-
-          sw.WriteLine (@"\setlength{\textwidth}{26cm}");
-          sw.WriteLine (@"\setlength{\textheight}{19cm}");
-          sw.WriteLine (@"\setlength{\topmargin}{-2cm}");
-          sw.WriteLine (@"\setlength{\evensidemargin}{-7mm}");
-          sw.WriteLine (@"\setlength{\oddsidemargin}{-7mm}");
-          sw.WriteLine (@"\parskip 6pt plus 1pt minus 1pt");
-          sw.WriteLine (@"\parindent0pt");
-          sw.WriteLine (@"\pagestyle{fancy}");
-
-          sw.WriteLine (@"\lhead{ObjektAufProjekt}");
-          sw.WriteLine (@"\chead{}");
-          sw.WriteLine (@"\rhead{Wishlist}");
-          sw.WriteLine (@"\lfoot{}");
-          sw.WriteLine (@"\cfoot{}");
-          sw.WriteLine (@"\rfoot{}");
-
-          sw.WriteLine (@"\begin{document}");
-
-          List<Tuple<Objekt, string>> schler = new List<Tuple<Objekt, string>> ( );
-          foreach ( Projekt P in Solution )
-          {
-            foreach ( Objekt S in P.GetLeiterList ( ) )
-              schler.Add (new Tuple<Objekt, string> (new Objekt (S), P.Projektname + "@"));
-            foreach ( Objekt S in P.GetList ( ) )
-              schler.Add (new Tuple<Objekt, string> (new Objekt (S), P.Projektname));
-          }
-          schler.Sort (new TupleCmp<Objekt, string> ( ));
-
-          List<Tuple<Projekt, int>> projekte = new List<Tuple<Projekt, int>> ( );
-          for ( int i = 0; i < Projekte.Count; ++i )
-            projekte.Add (new Tuple<Projekt, int> (new Projekt (Projekte[ i ]), i));
-          projekte.Sort (new TupleCmp<Projekt, int> ( ));
-
-          foreach ( var s in Klasse.ID_rev )
-          {
-            int cnt = 0;
-            foreach ( var P in projekte )
-              if ( P.Item1.AllowedKlassen[ Klasse.ID[ s ] ] )
-                cnt++;
-            if ( cnt == 0 )
-              continue;
-            sw.WriteLine (@"\begin{longtable}{l|*{" + cnt + @"}{|p{0.2cm}}|}");
-
-            Dictionary<string, int> Names = new Dictionary<string, int> ( );
-            int[] inds = new int[ projekte.Count ];
-            for ( int i = 0; i < inds.Length; ++i )
-              inds[ i ] = -1;
-
-            sw.WriteLine (@"\chead{" + s + @"}");
-            string S = @"\textbf{Name} ";
-            cnt = 0;
-            foreach ( var P in projekte )
-              if ( P.Item1.AllowedKlassen[ Klasse.ID[ s ] ] )
-              {
-                S += @" & \begin{sideways}" + P.Item1.Projektname + @" \end{sideways} ";
-                inds[ P.Item2 ] = cnt++;
-                Names[ P.Item1.Projektname ] = inds[ P.Item2 ];
-              }
-            S += @"\\ \hline \hline";
-            sw.WriteLine (S);
-            sw.WriteLine (@"\endhead");
-            sw.WriteLine (S);
-            sw.WriteLine (@"\endfirsthead");
-            sw.WriteLine (@"\multicolumn{" + cnt + @"}{r}{To be continued on the following page.}");
-            sw.WriteLine (@"\endfoot");
-            sw.WriteLine (@"\multicolumn{" + cnt + @"}{l}{\mbox{}}");
-            sw.WriteLine (@"\endlastfoot");
-            foreach ( var Sch in schler )
-            {
-              if ( Klasse.ID_rev[ Sch.Item1.GetKlasse ( ) ] != s )
-                continue;
-              int[] indices = new int[ cnt ];
-              if ( Sch.Item2.EndsWith ("@") )
-              {
-                if ( inds[ Sch.Item1.Wünsche[ 0 ] ] != -1 )
-                  indices[ inds[ Sch.Item1.Wünsche[ 0 ] ] ] = -1;
-              }
-              else if ( inds[ Sch.Item1.Wünsche[ 0 ] ] != -1 )
-                indices[ inds[ Sch.Item1.Wünsche[ 0 ] ] ] = 1;
-              for ( int i = 1; i < Sch.Item1.Wünsche.Count; ++i )
-                if ( inds[ Sch.Item1.Wünsche[ i ] ] != -1 )
-                  if ( indices[ inds[ Sch.Item1.Wünsche[ i ] ] ] == 0 )
-                    indices[ inds[ Sch.Item1.Wünsche[ i ] ] ] = ( i + 1 );
-              S = Sch.Item1.Name + ", " + Sch.Item1.Vorname;
-              for ( int i = 0; i < indices.Length; i++ )
-              {
-                if ( indices[ i ] == -1 )
-                {
-                  S += @" & \cellcolor{blue!25}\textsf{PL}";
-                  continue;
-                }
-                S += " & ";
-                if ( !Sch.Item2.EndsWith ("@") && i == Names[ Sch.Item2 ] )
-                  S += @"\cellcolor{blue!25}\mbox{}";
-                if ( drawWishes && indices[ i ] != 0 )
-                  S += indices[ i ];
-              }
-              S += @"\\ \hline";
-              sw.WriteLine (S);
-            }
-            sw.WriteLine (@"\end{longtable}");
-            sw.WriteLine (@"\newpage");
-          }
-          sw.WriteLine (@"\end{document}");
-        }
-        return true;
-      }
-      catch ( Exception )
-      {
-        return false;
-      }
-    }
-
-    /// <summary>
-    /// Writes the TEX wish list.
-    /// </summary>
-    /// <returns><c>true</c>, if TEX wish list was writed, <c>false</c> otherwise.</returns>
-    /// <param name="Path">Path.</param>
-    /// <param name="drawWishes">Draw wishes.</param>
-    private bool writeTEXWishList ( const_type<string> Path, const_type<bool> drawWishes )
-    {
-      try
+      //try
       {
         using ( var sw = new StreamWriter (Path) )
         {
@@ -559,6 +422,7 @@ namespace Prowo
           sw.WriteLine (@"\usepackage{geometry}");
           sw.WriteLine (@"\usepackage[table]{xcolor}");
           sw.WriteLine (@"\usepackage{array}");
+          sw.WriteLine (@"\usepackage{ulem}");
 
           sw.WriteLine (@"\setlength{\textwidth}{26cm}");
           sw.WriteLine (@"\setlength{\textheight}{19cm}");
@@ -578,14 +442,26 @@ namespace Prowo
 
           sw.WriteLine (@"\begin{document}");
 
-          List<Tuple<Objekt, bool>> schler = new List<Tuple<Objekt, bool>> ( );
-          foreach ( Objekt S in schüler )
-            if ( !S.isLeiter )
-              schler.Add (new Tuple<Objekt, bool> (new Objekt (S), false));
-          foreach ( Projekt P in Projekte )
-            foreach ( Objekt S in P.GetLeiterList ( ) )
-              schler.Add (new Tuple<Objekt, bool> (new Objekt (S), true));
-          schler.Sort (new TupleCmp<Objekt, bool> ( ));
+          List<Tuple<Objekt, string>> schler = new List<Tuple<Objekt, string>> ( );
+
+          if ( markSol )
+            foreach ( Projekt P in Solution )
+            {
+              foreach ( Objekt S in P.GetLeiterList ( ) )
+                schler.Add (new Tuple<Objekt, string> (new Objekt (S), P.Projektname + "@"));
+              foreach ( Objekt S in P.GetList ( ) )
+                schler.Add (new Tuple<Objekt, string> (new Objekt (S), P.Projektname + ( S.wasLeiter ? "@" : "")));
+            }
+          else
+          {
+            foreach ( Objekt S in schüler )
+              if ( !S.isLeiter )
+                schler.Add (new Tuple<Objekt, string> (new Objekt (S), S.wasLeiter ? "@" : ""));
+            foreach ( Projekt P in Projekte )
+              foreach ( Objekt S in P.GetLeiterList ( ) )
+                schler.Add (new Tuple<Objekt, string> (new Objekt (S),"@"));
+          }
+          schler.Sort (new TupleCmp<Objekt, string> ( ));
 
           List<Tuple<Projekt, int>> projekte = new List<Tuple<Projekt, int>> ( );
           for ( int i = 0; i < Projekte.Count; ++i )
@@ -625,7 +501,8 @@ namespace Prowo
             foreach ( var P in projekte )
               if ( P.Item1.AllowedKlassen[ Klasse.ID[ (Klasse)s.Base ( ) ] ] )
               {
-                S += @" & \begin{sideways}" + P.Item1.Projektname + @" \end{sideways} ";
+                S += @" & \begin{sideways}" + ( P.Item1.TeilnehmerCount == 0 ? "\\sout{" : "" ) + P.Item1.Projektname +
+                  ( P.Item1.TeilnehmerCount == 0 ? "}" : "" ) + @" \end{sideways} ";
                 inds[ P.Item2 ] = cnt++;
                 Names[ P.Item1.Projektname ] = inds[ P.Item2 ];
                 b[ cnt - 1 ] = P.Item1.editable;
@@ -650,7 +527,7 @@ namespace Prowo
               bool allM2 = false;
 
               int[] indices = new int[ cnt ];
-              if ( Sch.Item2 )
+              if ( Sch.Item2.EndsWith("@") )
               {
                 if ( Sch.Item1.Wünsche.Count > 0 && inds[ Sch.Item1.Wünsche[ 0 ] ] != -1 )
                   indices[ inds[ Sch.Item1.Wünsche[ 0 ] ] ] = -1;
@@ -668,16 +545,26 @@ namespace Prowo
                     indices[ inds[ Sch.Item1.Wünsche[ i ] ] ] = ( i + 1 );
               S = Sch.Item1.Name + ", " + Sch.Item1.Vorname;
               for ( int i = 0; i < indices.Length; i++ )
+              {
+                S += @" & {";
+                bool colorSet = false;
+                if (markSol && Names.ContainsKey( Sch.Item2.TrimEnd('@') ) &&  i == Names[ Sch.Item2.TrimEnd('@') ] )
+                {
+                  S += @"\cellcolor{blue!25}";
+                  colorSet = true;
+                }
+
                 if ( indices[ i ] == -1 )
-                  S += @" & {\small{\textbf{\textsf{PL}}}}";
+                  S += @"\small{\textbf{\textsf{PL}}}";
                 else if ( indices[ i ] == -2 )
-                  S += @" & {\textsf{X}}";
+                  S += @"\textsf{X}";
                 else if ( drawWishes && indices[ i ] != 0 )
-                  S += " & " + indices[ i ];
-                else if ( allM2 || !b[ i ] )
-                  S += @" & \cellcolor{black!75}\mbox{}";
-                else
-                  S += @" & ";
+                  S += indices[ i ];
+                else if ( !colorSet && ( allM2 || !b[ i ] ) )
+                  S += @"\cellcolor{black!75}";
+
+                S += "}";
+              }
               S += @"\\ \hline";
               sw.WriteLine (S);
             }
@@ -688,10 +575,10 @@ namespace Prowo
         }
         return true;
       }
-      catch ( Exception )
-      {
-        return false;
-      }
+      //catch ( Exception )
+      //{
+      //  return false;
+      //}
     }
 
     #region EventHandler
@@ -816,9 +703,9 @@ namespace Prowo
         sfd.Filter += "|TeX file (including wishes and solution) (*.tex)|*.tex";
       if ( sfd.ShowDialog ( ) == System.Windows.Forms.DialogResult.OK )
         if ( sfd.FilterIndex == 1 )
-          writeTEXWishList (sfd.FileName, false);
+          writeTEXWishList (sfd.FileName, false, false);
         else if ( sfd.FilterIndex == 2 )
-          writeTEXWishList (sfd.FileName, true);
+          writeTEXWishList (sfd.FileName, true, false);
         else if ( sfd.FilterIndex == 3 )
           writeTEXWishList (sfd.FileName, true, true);
         else
