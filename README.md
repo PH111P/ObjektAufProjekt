@@ -65,3 +65,4 @@ Planned Features
 * Directly export `.pdf` files
 * Adjust the exported pages' header (and footer) directly
 * Explicit scoring rules
+* `.csv` import
