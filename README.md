@@ -42,7 +42,7 @@ Last_name/First_name/[No. or Name]_of_wish_1/[...]/[No. or Name]_of_wish_MAXWISH
 
 Let the program read those files and start calculating.
 
-If you think the ObjektAufProjekt program has been calculating enough, you may stop the calculation and export the result  to a `*.tex` document. See proper tutorials or instructions of your choice if you don't know how to compile (La)TeX files into PDF documents.
+If you think the ObjektAufProjekt program has been calculating enough, you may stop the calculation and export the result  to a `*.tex` document. See proper tutorials or instruction manuals of your choice if you don't know how to compile (La)TeX files into PDF documents.
 
 Features
 --------
