@@ -20,6 +20,11 @@ Then it randomly swaps two "Objekte" and checks whether the score increased. If 
 
 At anytime you can stop the process and view the most recent solution and may use it.
 
+Building
+--------
+
+First, clone the repo or just download the `*.zip` file. Then just open the `Prowo.sln` file located at `Prowo2.0/Prowo.sln` in MS Visual Studio or MonoDevelop (or the C# IDE of your choice) and build.
+
 Usage
 -----
 
@@ -37,6 +42,8 @@ Last_name/First_name/[No. or Name]_of_wish_1/[...]/[No. or Name]_of_wish_MAXWISH
 
 Let the program read those files and start calculating.
 
+If you think the ObjektAufProjekt program has been calculating enough, you may stop the calculation and export the result  to a `*.tex` document. See proper tutorials or instructions of your choice if you don't know how to compile (La)TeX files into PDF documents.
+
 Features
 --------
 * Specify a certain minimum score (as a percentage from the maximum score) for solutions to have at least.
@@ -52,3 +59,9 @@ Features
   * including lists for "Objekte" to specify their wishs.
   * including lists of "Projekte" with thier participants.
 * A colorful GUI.
+
+Planned Features
+----------------
+* Directly export *.pdf files
+* Adjust the exported pages' header (and footer) directly
+* Explicit scoring rules
