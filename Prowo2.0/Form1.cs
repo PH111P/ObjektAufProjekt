@@ -205,7 +205,6 @@ namespace Prowo
     public void calculate ( )
     {
       setSettings (false);
-      int ANZMIN, ANZMAX, ANZCMISS;
       if ( Start == null )
         init (checkBox2.Checked, checkBox3.Checked);
       for ( ; !beenden; )
@@ -225,7 +224,7 @@ namespace Prowo
 
         Application.DoEvents ( );
 
-        while ( bewerte (out ANZMIN, out ANZMAX, out ANZCMISS)
+        while ( bewerte (out int ANZMIN, out int ANZMAX, out int ANZCMISS)
                           * (BigInteger)( ANZMIN > 0 ? ( numericUpDown2.Value / 100 ) : 1 ) * (BigInteger)( ANZMAX > 0 ? ( numericUpDown3.Value / 100 ) : 1 )
                           * (BigInteger)( ANZCMISS > 0 ? 0 : 1 ) <= schüler.Count * (BigInteger)SchHWunsch[ 0 ].Value && !beenden )
         {
@@ -330,8 +329,8 @@ namespace Prowo
             aktBestSolValue = B2;
             numericUpDown1.Value = (decimal)( ( aktBestSolValue * 100 ) / ( (BigInteger)SchHWunsch[ 0 ].Value * (BigInteger)schüler.Count ) );
 
-            label1.Text = "Current solution's score is " + (int)( ( B2 * 100 ) / ( (BigInteger)schüler.Count * (BigInteger)SchHWunsch[ 0 ].Value ) )
-            + "%. (Score: " + B2 + ")";
+            label1.Text = "Güte der aktuellen Lösung ist " + (int)( ( B2 * 100 ) / ( (BigInteger)schüler.Count * (BigInteger)SchHWunsch[ 0 ].Value ) )
+            + "%. (Bewertung: " + B2 + ")";
             label1.Visible = true;
 
             Solution = new List<Projekt> ( );

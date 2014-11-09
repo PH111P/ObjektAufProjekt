@@ -75,7 +75,7 @@ namespace Prowo {
                     }
                 }
             } catch (Exception o) {
-                MessageBox.Show( o.Message + " - Could not load file.", "ERROR" );
+                MessageBox.Show( o.Message + " - Konnte die Datei nicht öffnen.", "FEHLER" );
                 textBox1.Text = "";
                 button11.Enabled = false;
                 listView1.Items.Clear( );
@@ -169,7 +169,7 @@ namespace Prowo {
                     }
                 }
             } catch (Exception o) {
-                MessageBox.Show( o.Message + " - Could not load file.", "ERROR" );
+                MessageBox.Show( o.Message + " - Konnte die Datei nicht öffnen.", "FEHLER" );
                 textBox1.Text = "";
                 button11.Enabled = false;
                 listView1.Items.Clear( );
@@ -215,7 +215,7 @@ namespace Prowo {
                                     }
                                 if( Wünsche.Count > 0 )
                                     continue;
-                                throw new FormatException( s + " is corrupted" );
+                                throw new FormatException( s + " ist beschädigt" );
                             }
                         }
 
@@ -237,7 +237,7 @@ namespace Prowo {
                 foreach( var s in schüler )
                     listView2.Items.Add( s.AsItem( GetColor( s ), button7.BackColor, cnt++ ) );
             } catch (Exception o) {
-                MessageBox.Show( o.Message + " - Could not load file.", "ERROR" );
+                MessageBox.Show( o.Message + " - Konnte die Datei nicht öffnen.", "FEHLER" );
                 textBox2.Text = "";
                 listView2.Items.Clear( );
                 listView4.Items.Clear( );
@@ -284,7 +284,7 @@ namespace Prowo {
                                     }
                                 if( Wünsche.Count > 0 )
                                     continue;
-                                throw new FormatException( s + " is corrupted" );
+                                throw new FormatException( s + " ist beschädigt" );
                             }
                         }
 
@@ -305,8 +305,14 @@ namespace Prowo {
                 int cnt = 0;
                 foreach( var s in schüler )
                     listView2.Items.Add( s.AsItem( GetColor( s ), button7.BackColor, cnt++ ) );
+            } catch (IndexOutOfRangeException o) {
+                MessageBox.Show( o.Message + " (Fehlt vielleicht ein Projekt?) - Konnte die Datei nicht öffnen.", "FEHLER" );
+                textBox2.Text = "";
+                listView2.Items.Clear( );
+                listView4.Items.Clear( );
+                return false;
             } catch (Exception o) {
-                MessageBox.Show( o.Message + " - Could not load file.", "ERROR" );
+                MessageBox.Show( o.Message + " - Konnte die Datei nicht öffnen.", "FEHLER" );
                 textBox2.Text = "";
                 listView2.Items.Clear( );
                 listView4.Items.Clear( );
@@ -703,13 +709,13 @@ namespace Prowo {
             while( listView3.Groups.Count > 0 )
                 listView3.Groups.RemoveAt( 0 );
             OpenFileDialog dlg = new OpenFileDialog ( );
-            dlg.Filter = "File containing Projekte's data|*.prd;*.txt;*.csv";
+            dlg.Filter = "Datei mit den Projektinformationen|*.prd;*.txt;*.csv";
             if( dlg.ShowDialog( ) == DialogResult.OK ) {
                 try {
                     textBox1.Text = dlg.FileName;
                     button11.Enabled = true;
                 } catch (Exception ed) {
-                    MessageBox.Show( ed.Message + " - Could not load file.", "ERROR" );
+                    MessageBox.Show( ed.Message + " - Konnte die Datei nicht öffnen.", "FEHLER" );
                     return;
                 }
             } else
@@ -732,18 +738,18 @@ namespace Prowo {
         /// <param name="e">E.</param>
         private void SetSchData( object sender, EventArgs e ) {
             if( !button11.Enabled ) {
-                MessageBox.Show( "Specify a file with Projekte first!", "ERROR" );
+                MessageBox.Show( "Laden Sie zunächst eine Datei mit Projektinformationen!", "FEHLER" );
                 return;
             }
             listView2.Items.Clear( );
             OpenFileDialog dlg = new OpenFileDialog ( );
-            dlg.Filter = "File containing Objekte and their wishes|*.scd;*.txt;*.csv";
+            dlg.Filter = "Datei mit Informationen über Schüler und deren Projektwünsche|*.scd;*.txt;*.csv";
             if( dlg.ShowDialog( ) == DialogResult.OK ) {
                 try {
                     textBox2.Text = dlg.FileName;
                     button12.Enabled = true;
                 } catch (Exception ed) {
-                    MessageBox.Show( ed.Message + " - Could not load file.", "ERROR" );
+                    MessageBox.Show( ed.Message + " - Konnte die Datei nicht öffnen.", "FEHLER" );
                     return;
                 }
             } else
@@ -758,14 +764,14 @@ namespace Prowo {
         /// <param name="e">E.</param>
         private void button9_Click( object sender, EventArgs e ) {
             SaveFileDialog sfd = new SaveFileDialog ( );
-            sfd.Filter = "Raw text (*.txt)|*.txt|TeX file (*.tex)|*.tex|TeX file (without Anwesenheitstabellen) (*.tex)|*.tex";
+            sfd.Filter = "Roher Text (*.txt)|*.txt|TeX file (*.tex)|*.tex|TeX file (ohne Anwesenheitstabellen) (*.tex)|*.tex";
             if( sfd.ShowDialog( ) == System.Windows.Forms.DialogResult.OK )
                 if( sfd.FilterIndex == 2 )
                     writeTEXFile( sfd.FileName );
                 else if( sfd.FilterIndex == 3 )
                     writeTEXFile( sfd.FileName, false );
                 else {
-                    MessageBox.Show( "An error occured. Could not save file.", "ERROR" );
+                    MessageBox.Show( "Ein Fehler trat auf. Datei nicht gespeichert.", "FEHLER" );
                     return;
                 }
         }
@@ -789,9 +795,9 @@ namespace Prowo {
         /// <param name="e">E.</param>
         private void wishList_Click( object sender, EventArgs e ) {
             SaveFileDialog sfd = new SaveFileDialog ( );
-            sfd.Filter = "TeX file (*.tex)|*.tex|TeX file (including wishes) (*.tex)|*.tex";
+            sfd.Filter = "TeX file (*.tex)|*.tex|TeX file (mit Wünschen) (*.tex)|*.tex";
             if( Solution != null )
-                sfd.Filter += "|TeX file (including wishes and solution) (*.tex)|*.tex";
+                sfd.Filter += "|TeX file (mit Wünschen und Zuordnungen) (*.tex)|*.tex";
             if( sfd.ShowDialog( ) == System.Windows.Forms.DialogResult.OK )
                 if( sfd.FilterIndex == 1 )
                     writeTEXWishList( sfd.FileName, false, false );
@@ -800,7 +806,7 @@ namespace Prowo {
                 else if( sfd.FilterIndex == 3 )
                     writeTEXWishList( sfd.FileName, true, true );
                 else {
-                    MessageBox.Show( "An error occured. Could not save file.", "ERROR" );
+                    MessageBox.Show( "Ein Fehler trat auf. Datei nicht gespeichert.", "FEHLER" );
                     return;
                 }
         }
@@ -816,7 +822,7 @@ namespace Prowo {
         /// <param name="e">E.</param>
         private void berechnungStarten( object sender, EventArgs e ) {
             if( !button12.Enabled || !button11.Enabled ) {
-                MessageBox.Show( "Specify both input files first!", "ERROR" );
+                MessageBox.Show( "Laden zuerst sowohl Schüler- als auch Projektinformationen!", "FEHLER" );
                 return;
             }
             aktBestSolValue = -1;
@@ -844,18 +850,18 @@ namespace Prowo {
         /// <param name="e">E.</param>
         private void AddProjekt( object sender, EventArgs e ) {
             if( !button11.Enabled ) {
-                MessageBox.Show( "Specify a file with Projekte first!", "ERROR" );
+                MessageBox.Show( "Laden Sie zunächst eine Datei mit Projektinformationen!", "FEHLER" );
                 return;
             }
             if( textBox4.Text.Length == 0 ) {
-                MessageBox.Show( "Nameless Projekte are somewhat strange!", "ERROR" );
+                MessageBox.Show( "Nameless Projekte are somewhat strange!", "FEHLER" );
                 return;
             }
             StreamWriter sw = null;
             try {
                 sw = new StreamWriter( textBox1.Text, true );
             } catch (Exception w) {
-                MessageBox.Show( w.Message + " - Could not add Projekt.", "ERROR" );
+                MessageBox.Show( w.Message + " - Could not add Projekt.", "FEHLER" );
                 sw.Close( );
                 return;
             }
@@ -872,7 +878,7 @@ namespace Prowo {
                 }
             }
             if( numericUpDown4.Value > numericUpDown5.Value ) {
-                MessageBox.Show( "Wrong input!", "ERROR" );
+                MessageBox.Show( "Wrong input!", "FEHLER" );
                 sw.Close( );
                 return;
             }
@@ -901,11 +907,11 @@ namespace Prowo {
         /// <param name="e">E.</param>
         private void AddSchüler( object sender, EventArgs e ) {
             if( textBox7.Text.Length == 0 || textBox8.Text.Length == 0 ) {
-                MessageBox.Show( "Fill in all the fields!", "ERROR" );
+                MessageBox.Show( "Fill in all the fields!", "FEHLER" );
                 return;
             }
             if( !button11.Enabled ) {
-                MessageBox.Show( "Specify a file with Projekte first!", "ERROR" );
+                MessageBox.Show( "Laden Sie zunächst eine Datei mit Projektinformationen!", "FEHLER" );
                 return;
             }
             List<int> inds = new List<int> ( );
@@ -915,13 +921,13 @@ namespace Prowo {
                         inds.Add( ( (ComboBox) TabPages[ i ].Controls[ 0 ] ).SelectedIndex );
                 //else if (i == 0)
                 //{
-                //    MessageBox.Show("Fill in all the fields!\n(Specify wishes!)", "ERROR");
+                //    MessageBox.Show("Fill in all the fields!\n(Specify wishes!)", "FEHLER");
                 //    return;
                 //}
                 //else
                 //    inds.Add(inds.Last());
             } catch (Exception eg) {
-                MessageBox.Show( eg.Message + " - Could not add Objekt.", "ERROR" );
+                MessageBox.Show( eg.Message + " - Could not add Objekt.", "FEHLER" );
                 return;
             }
 
@@ -929,7 +935,7 @@ namespace Prowo {
             try {
                 sw = new StreamWriter( textBox2.Text, true );
             } catch (Exception es) {
-                MessageBox.Show( es.Message + " - Could not add Objekt.", "ERROR" );
+                MessageBox.Show( es.Message + " - Could not add Objekt.", "FEHLER" );
                 sw.Close( );
             }
 
@@ -1006,12 +1012,12 @@ namespace Prowo {
                         inds.Add( ( (ComboBox) TabPages[ i ].Controls[ 0 ] ).SelectedIndex );
                 //else
                 //{
-                //    MessageBox.Show("Fill in all the fields!", "ERROR");
+                //    MessageBox.Show("Fill in all the fields!", "FEHLER");
                 //    return;
                 //}
                 fill_LV4( Projekte );
             } catch (Exception eg) {
-                MessageBox.Show( eg.Message + " - Could not modify Objekt.", "ERROR" );
+                MessageBox.Show( eg.Message + " - Could not modify Objekt.", "FEHLER" );
                 return;
             }
 
@@ -1113,7 +1119,7 @@ namespace Prowo {
         /// <param name="e">E.</param>
         private void ChangeProjekt( object sender, EventArgs e ) {
             if( textBox4.Text.Length == 0 ) {
-                MessageBox.Show( "Nameless Projekte are somewhat strange!", "ERROR" );
+                MessageBox.Show( "Nameless Projekte are somewhat strange!", "FEHLER" );
                 return;
             }
             int selLine = SelectedProj;
@@ -1132,7 +1138,7 @@ namespace Prowo {
                 }
             }
             if( numericUpDown4.Value > numericUpDown5.Value ) {
-                MessageBox.Show( "Wrong input!", "ERROR" );
+                MessageBox.Show( "Wrong input!", "FEHLER" );
                 return;
             }
 
@@ -1260,14 +1266,14 @@ namespace Prowo {
         private void button7_Click( object sender, EventArgs e ) {
             flag = !flag;
             if( !flag ) {
-                toolStripButton2.ToolTipText = "Pause calculation.";
-                toolStripButton2.Text = "PAUSE CALCULATION";
+                toolStripButton2.ToolTipText = "Hält die Berechnung an, um eine Bearbeitung der aktuellen Lösung zu ermöglichen.";
+                toolStripButton2.Text = "BERECHNUNG PAUSIEREN";
                 setSettings( false );
                 setSave( false );
             }
             if( flag ) {
-                toolStripButton2.ToolTipText = "Resume calculation";
-                toolStripButton2.Text = "RESUME CALCULATION";
+                toolStripButton2.ToolTipText = "Berechnung fortsetzen.";
+                toolStripButton2.Text = "BERECHNUNG FORTSETZEN";
                 setSettings( true );
                 if( Solution != null )
                     setSave( true );
@@ -1282,8 +1288,8 @@ namespace Prowo {
         private void button8_Click( object sender, EventArgs e ) {
             this.beenden = true;
             this.flag = false;
-            toolStripButton2.ToolTipText = "Pause calculation.";
-            toolStripButton2.Text = "PAUSE CALCULATION";
+            toolStripButton2.ToolTipText = "Hält die Berechnung an, um eine Bearbeitung der aktuellen Lösung zu ermöglichen.";
+            toolStripButton2.Text = "BERECHNUNG PAUSIEREN";
             setSettings( true );
 
             setSave( true, Solution != null );
@@ -1295,7 +1301,8 @@ namespace Prowo {
                 num = null;
             else if( ( (ListView) sender ).Columns[ e.Column ].Text.Contains( "#" )
                      || ( (ListView) sender ).Columns[ e.Column ].Text.Contains( "AS" )
-                     || ( (ListView) sender ).Columns[ e.Column ].Text.Contains( "ALWAYS" ) )
+                     || ( (ListView) sender ).Columns[ e.Column ].Text.Contains( "ALWAYS" )
+                     || ( (ListView) sender ).Columns[ e.Column ].Text.Contains( "ANZ" ) )
                 num = true;
 
             bool PatternFilter = false;
@@ -1371,11 +1378,11 @@ namespace Prowo {
             groupBox3.Controls.AddRange( cpy.ToArray( ) );
             tabControl2.TabPages.Clear( );
             listView4.Columns.Clear( );
-            listView4.Columns.Add( "PROJEKT's NAME" );
+            listView4.Columns.Add( "PROJEKTNAME" );
             listView4.Columns[ 0 ].Width = 120;
 
             for( int i = 0; i < (int) numericUpDown7.Value; i++ ) {
-                TabPage T = new TabPage ("wish #" + ( i + 1 ));
+                TabPage T = new TabPage (( i + 1 ) + ". Wunsch");
                 tabControl2.TabPages.Add( T );
                 TabPages.Add( T );
 
@@ -1391,7 +1398,7 @@ namespace Prowo {
                 L.Dock = DockStyle.Bottom;
                 TabPages[ i ].Controls.Add( L );
 
-                M.Text = "Objekte's color that got matched to their wish #" + ( i + 1 ) + ".";
+                M.Text = "Farbe der Schüler, die ihren " + ( i + 1 ) + ". erhielten";
                 M.Location = new Point( label5.Location.X, label5.Location.Y + ( i + 1 ) * 30 );
                 M.AutoSize = true;
                 M.Tag = 42;
@@ -1399,7 +1406,7 @@ namespace Prowo {
                 groupBox3.Controls.Add( B );
                 groupBox3.Controls.Add( M );
                 B.FlatStyle = FlatStyle.Flat;
-                B.Text = "Adjust";
+                B.Text = "Anpassen";
                 B.Size = button1.Size;
                 B.Location = new Point( button1.Location.X, button1.Location.Y + ( i + 1 ) * 30 );
                 B.BackColor = Color.FromArgb( 255, 0, ( 4003 - ( i * 40 ) ) % 256, 0 );
@@ -1407,7 +1414,7 @@ namespace Prowo {
                 B.Tag = 42;
                 ColorButtons.Add( B );
 
-                N.Text = "Score of a fulfilled wish #" + ( i + 1 ) + ".";
+                N.Text = "Bewertung eines Erfüllten " + ( i + 1 ) + ". Wunsches";
                 N.Location = new Point( label2.Location.X, label2.Location.Y + ( 30 * i ) );
                 N.AutoSize = true;
                 groupBox4.Controls.Add( N );
@@ -1423,10 +1430,10 @@ namespace Prowo {
                 SchHWunsch.Add( NUD );
                 groupBox4.Controls.Add( NUD );
 
-                listView4.Columns.Add( "AS WISH #" + ( i + 1 ), 60, HorizontalAlignment.Center );
+                listView4.Columns.Add( "ALS " + ( i + 1 ) + ". WUNSCH", 60, HorizontalAlignment.Center );
 
             }
-            listView4.Columns.Add( "ALWAYS SURVIVING", 60, HorizontalAlignment.Center );
+            listView4.Columns.Add( "ERHALTENSWERT", 60, HorizontalAlignment.Center );
         }
 
         void CB_SelectedIndexChanged( object sender, EventArgs e ) {
