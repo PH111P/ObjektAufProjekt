@@ -882,10 +882,10 @@
             this.groupBox9.Controls.Add(this.textBox3);
             this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox9.Enabled = false;
-            this.groupBox9.Location = new System.Drawing.Point(3, 342);
+            this.groupBox9.Location = new System.Drawing.Point(3, 328);
             this.groupBox9.MinimumSize = new System.Drawing.Size(740, 132);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(740, 148);
+            this.groupBox9.Size = new System.Drawing.Size(740, 162);
             this.groupBox9.TabIndex = 4;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "WEITERE BEWERTUNGSREGELN";
@@ -897,7 +897,7 @@
             this.checkedListBox2.FormattingEnabled = true;
             this.checkedListBox2.Location = new System.Drawing.Point(3, 36);
             this.checkedListBox2.Name = "checkedListBox2";
-            this.checkedListBox2.Size = new System.Drawing.Size(734, 109);
+            this.checkedListBox2.Size = new System.Drawing.Size(734, 123);
             this.checkedListBox2.TabIndex = 0;
             // 
             // textBox3
@@ -923,7 +923,7 @@
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox3.Location = new System.Drawing.Point(3, 201);
+            this.groupBox3.Location = new System.Drawing.Point(3, 187);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(740, 141);
             this.groupBox3.TabIndex = 1;
@@ -1045,7 +1045,7 @@
             this.groupBox7.Controls.Add(this.numericUpDown7);
             this.groupBox7.Controls.Add(this.checkBox2);
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox7.Location = new System.Drawing.Point(3, 122);
+            this.groupBox7.Location = new System.Drawing.Point(3, 108);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(740, 79);
             this.groupBox7.TabIndex = 3;
@@ -1120,7 +1120,7 @@
             this.numericUpDown7.TabIndex = 7;
             this.numericUpDown7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDown7.Value = new decimal(new int[] {
-            10,
+            3,
             0,
             0,
             0});
@@ -1142,7 +1142,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox4.Location = new System.Drawing.Point(3, 103);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(740, 19);
+            this.groupBox4.Size = new System.Drawing.Size(740, 5);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "BEWERTUNGSERMITTLUNG";
@@ -1195,7 +1195,7 @@
             this.numericUpDown1.TabIndex = 4;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDown1.Value = new decimal(new int[] {
-            66,
+            60,
             0,
             0,
             0});

@@ -1302,7 +1302,8 @@ namespace Prowo {
             else if( ( (ListView) sender ).Columns[ e.Column ].Text.Contains( "#" )
                      || ( (ListView) sender ).Columns[ e.Column ].Text.Contains( "AS" )
                      || ( (ListView) sender ).Columns[ e.Column ].Text.Contains( "ALWAYS" )
-                     || ( (ListView) sender ).Columns[ e.Column ].Text.Contains( "ANZ" ) )
+                     || ( (ListView) sender ).Columns[ e.Column ].Text.Contains( "ANZ" )
+                     || ( (ListView) sender ).Columns[ e.Column ].Text.Contains( "WERT" ) )
                 num = true;
 
             bool PatternFilter = false;
@@ -1363,7 +1364,7 @@ namespace Prowo {
         /// </summary>
         /// <param name="anzW">Number of maximum wishes</param>
         public void initGUI( int anzW ) {
-            const int power = 2;
+            const int power = 10;
 
             var MAX = BigInteger.Pow (power, (int)numericUpDown7.Value - 1);
             TabPages.Clear( );
