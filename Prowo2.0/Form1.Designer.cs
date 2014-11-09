@@ -518,6 +518,7 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(740, 20);
             this.textBox1.TabIndex = 0;
+            this.textBox1.Text = "Hier klicken, um eine Datei zu öffnen";
             this.textBox1.Click += new System.EventHandler(this.SetProData);
             // 
             // tabPage3
@@ -729,6 +730,7 @@
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(740, 20);
             this.textBox2.TabIndex = 4;
+            this.textBox2.Text = "Hier klicken, um eine Datei zu öffnen.";
             this.textBox2.Click += new System.EventHandler(this.SetSchData);
             // 
             // tabPage1
@@ -818,7 +820,7 @@
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(268, 25);
             this.button12.TabIndex = 1;
-            this.button12.Text = "Liste von Schülern and deren Wünschen exportieren";
+            this.button12.Text = "Liste von Schülern und deren Wünschen exportieren";
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.wishList_Click);
             // 

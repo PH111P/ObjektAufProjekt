@@ -346,12 +346,12 @@ namespace Prowo {
                     sw.WriteLine( @"\parindent0pt" );
                     sw.WriteLine( @"\pagestyle{fancy}" );
 
-                    sw.WriteLine( @"\lhead{ObjektAufProjekt}" );
+                    sw.WriteLine( @"\lhead{Projektwoche}" );
                     sw.WriteLine( @"\chead{}" );
-                    sw.WriteLine( @"\rhead{Matchings}" );
-                    sw.WriteLine( @"\lfoot{}" );
+                    sw.WriteLine( @"\rhead{Zuteilungen}" );
+                    sw.WriteLine( @"\lfoot{ObjektAufProjekt}" );
                     sw.WriteLine( @"\cfoot{}" );
-                    sw.WriteLine( @"\rfoot{}" );
+                    sw.WriteLine( @"\rfoot{https://github.com/PH111P/ObjektAufProjekt}" );
 
                     sw.WriteLine( @"\begin{document}" );
 
@@ -365,7 +365,7 @@ namespace Prowo {
                             List<Objekt> cpy = new List<Objekt> (P.GetLeiterList ( ));
                             cpy.Sort( );
 
-                            sw.WriteLine( @"\subsubsection*{Projekt's leader}" );
+                            sw.WriteLine( @"\subsubsection*{Projektleiter}" );
                             // sw.WriteLine(@"\begin{center}");
                             sw.WriteLine( @"\begin{tabular}{l|c}" );
                             sw.WriteLine( @"\textbf{Name} & \textbf{Klasse} \\ \hline \hline" );
@@ -378,7 +378,7 @@ namespace Prowo {
                             List<Objekt> cpy = new List<Objekt> (P.GetList ( ));
                             cpy.Sort( );
 
-                            sw.WriteLine( @"\subsubsection*{Participants}" );
+                            sw.WriteLine( @"\subsubsection*{Teilnehmer}" );
                             //   sw.WriteLine(@"\begin{center}");
                             sw.WriteLine( @"\begin{tabular}{l|c}" );
                             sw.WriteLine( @"\textbf{Name} & \textbf{Klasse} \\ \hline \hline" );
@@ -417,12 +417,12 @@ namespace Prowo {
                             continue;
                         sw.WriteLine( @"\subsection*{Klasse " + s + "}" );
                         sw.WriteLine( @"\begin{longtable}{l|l}" );
-                        sw.WriteLine( @"\textbf{Name} (cont.) & \textbf{Projekt} (cont.) \\ \hline \hline" );
+                        sw.WriteLine( @"\textbf{Name} (Forts.) & \textbf{Projekt} (Forts.) \\ \hline \hline" );
                         sw.WriteLine( @"\endhead" );
 
                         sw.WriteLine( @"\textbf{Name} & \textbf{Projekt} \\ \hline \hline" );
                         sw.WriteLine( @"\endfirsthead" );
-                        sw.WriteLine( @"\multicolumn{2}{r}{To be continued on the following page.}" );
+                        sw.WriteLine( @"\multicolumn{2}{r}{Fortsetzung auf der nächsten Seite.}" );
                         sw.WriteLine( @"\endfoot" );
                         sw.WriteLine( @"\multicolumn{2}{l}{\mbox{}}" );
                         sw.WriteLine( @"\endlastfoot" );
@@ -462,12 +462,12 @@ namespace Prowo {
                     sw.WriteLine( @"\parindent0pt" );
                     sw.WriteLine( @"\pagestyle{fancy}" );
 
-                    sw.WriteLine( @"\lhead{ObjektAufProjekt}" );
+                    sw.WriteLine( @"\lhead{Projektwoche}" );
                     sw.WriteLine( @"\chead{}" );
                     sw.WriteLine( @"\rhead{Projekte}" );
-                    sw.WriteLine( @"\lfoot{}" );
+                    sw.WriteLine( @"\lfoot{ObjektAufProjekt}" );
                     sw.WriteLine( @"\cfoot{}" );
-                    sw.WriteLine( @"\rfoot{}" );
+                    sw.WriteLine( @"\rfoot{https://github.com/PH111P/ObjektAufProjekt}" );
 
                     sw.WriteLine( @"\begin{document}" );
                     sw.WriteLine( @"\subsection*{Projekte}" );
@@ -484,11 +484,11 @@ namespace Prowo {
                         klnames += Klasse.ID_rev[ i ].ToString( );
                     }
 
-                    sw.WriteLine( @"\textbf{Name} (cont.) & \textbf{Projekt's leader} (cont.) & " + klnames + @" & \textbf{Description}  \\ \hline \hline" );
+                    sw.WriteLine( @"\textbf{Name} (cont.) & \textbf{Projektleiter} (cont.) & " + klnames + @" & \textbf{Projektbeschreibung}  \\ \hline \hline" );
                     sw.WriteLine( @"\endhead" );
-                    sw.WriteLine( @"\textbf{Name} & \textbf{Projekt's leader} & " + klnames + @" & \textbf{Description} \\ \hline \hline" );
+                    sw.WriteLine( @"\textbf{Name} & \textbf{Projektleiter} & " + klnames + @" & \textbf{Projektbeschreibung} \\ \hline \hline" );
                     sw.WriteLine( @"\endfirsthead" );
-                    sw.WriteLine( @"\multicolumn{" + colcnt + @"}{r}{To be continued on the following page.}" );
+                    sw.WriteLine( @"\multicolumn{" + colcnt + @"}{r}{Fortsetzung auf der nächsten Seite.}" );
                     sw.WriteLine( @"\endfoot" );
                     sw.WriteLine( @"\multicolumn{" + colcnt + @"}{l}{\mbox{}}" );
                     sw.WriteLine( @"\endlastfoot" );
@@ -565,9 +565,9 @@ namespace Prowo {
                     sw.WriteLine( @"\lhead{Projektwoche}" );
                     sw.WriteLine( @"\chead{}" );
                     sw.WriteLine( @"\rhead{Wunschtabelle}" );
-                    sw.WriteLine( @"\lfoot{}" );
+                    sw.WriteLine( @"\lfoot{ObjektAufProjekt}" );
                     sw.WriteLine( @"\cfoot{}" );
-                    sw.WriteLine( @"\rfoot{}" );
+                    sw.WriteLine( @"\rfoot{https://github.com/PH111P/ObjektAufProjekt}" );
 
                     sw.WriteLine( @"\begin{document}" );
 
@@ -635,7 +635,7 @@ namespace Prowo {
                         sw.WriteLine( @"\endhead" );
                         sw.WriteLine( S );
                         sw.WriteLine( @"\endfirsthead" );
-                        sw.WriteLine( @"\multicolumn{" + cnt + @"}{r}{Fortsetung auf der nächsten Seite}" );
+                        sw.WriteLine( @"\multicolumn{" + cnt + @"}{r}{Fortsetzung auf der nächsten Seite.}" );
                         sw.WriteLine( @"\endfoot" );
                         sw.WriteLine( @"\multicolumn{" + cnt + @"}{l}{\mbox{}}" );
                         sw.WriteLine( @"\endlastfoot" );
