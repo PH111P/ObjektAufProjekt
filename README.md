@@ -59,10 +59,10 @@ Features
   * including lists for “Objekte” to specify their wishs.
   * including lists of “Projekte” with thier participants.
 * A colorful GUI.
+* basic `.csv` import: No headline, values have to have the same order as they would have had in a `.scd` or `.prd` file.
 
 Planned Features
 ----------------
 * Directly export `.pdf` files
 * Adjust the exported pages' header (and footer) directly
 * Explicit scoring rules
-* `.csv` import
