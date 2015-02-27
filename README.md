@@ -23,6 +23,8 @@ At anytime you can stop the process and view the most recent solution and may us
 Building
 --------
 
+You can skip building by using the compiled binaries for windows.
+
 First, clone the repo or just download the `.zip` file. Then just open the `Prowo.sln` file located at `Prowo2.0/Prowo.sln` in MS Visual Studio or MonoDevelop (or the C# IDE of your choice) and build.
 
 Usage
