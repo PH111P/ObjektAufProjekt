@@ -226,19 +226,19 @@ namespace Prowo
 
         while ( bewerte (out int ANZMIN, out int ANZMAX, out int ANZCMISS)
                           * (BigInteger)( ANZMIN > 0 ? ( numericUpDown2.Value / 100 ) : 1 ) * (BigInteger)( ANZMAX > 0 ? ( numericUpDown3.Value / 100 ) : 1 )
-                          * (BigInteger)( ANZCMISS > 0 ? 0 : 1 ) <= schüler.Count * (BigInteger)SchHWunsch[ 0 ].Value && !beenden )
+                          * (BigInteger)( ANZCMISS > 5 ? 0 : 1 ) <= schüler.Count * (BigInteger)SchHWunsch[ 0 ].Value && !beenden )
         {
           Application.DoEvents ( );
           BigInteger BewertungOld = ( bewerte (out ANZMIN, out ANZMAX, out ANZCMISS)
                                               * (BigInteger)( ANZMIN > 0 ? ( numericUpDown2.Value / 100 ) : 1 ) * (BigInteger)( ANZMAX > 0 ? ( numericUpDown3.Value / 100 ) : 1 )
-                                              * (BigInteger)( ANZCMISS > 0 ? 0 : 1 ) );
+                                              * (BigInteger)( ANZCMISS > 5 ? 0 : 1 ) );
           ;
           BigInteger B2 = BewertungOld;
           int Quality = 66;
 
           if ( bewerte (out ANZMIN, out ANZMAX, out ANZCMISS)
                            * (BigInteger)( ANZMIN > 0 ? ( numericUpDown2.Value / 100 ) : 1 ) * (BigInteger)( ANZMAX > 0 ? ( numericUpDown3.Value / 100 ) : 1 )
-                           * (BigInteger)( ANZCMISS > 0 ? 0 : 1 ) < schüler.Count * (BigInteger)SchHWunsch[ 0 ].Value && !beenden )
+                           * (BigInteger)( ANZCMISS > 5 ? 0 : 1 ) < schüler.Count * (BigInteger)SchHWunsch[ 0 ].Value && !beenden )
           {
             if ( Temperaturfolge.Count == 0 || ( BewertungOld == 0 && ( rnd.Next (1, schüler.Count * (int)SchHWunsch[ 0 ].Value) > Temperaturfolge.Last ( ) ) ) )
               break;
@@ -292,7 +292,7 @@ namespace Prowo
 
             BigInteger BewertungNew = ( bewerte (out ANZMIN, out ANZMAX, out ANZCMISS)
                                                   * (BigInteger)( ANZMIN > 0 ? ( numericUpDown2.Value / 100 ) : 1 ) * (BigInteger)( ANZMAX > 0 ? ( numericUpDown3.Value / 100 ) : 1 )
-                                                  * (BigInteger)( ANZCMISS > 0 ? 0 : 1 ) );
+                                                  * (BigInteger)( ANZCMISS > 5 ? 0 : 1 ) );
 
             if ( BewertungNew <= BewertungOld && ( rnd.Next (1, schüler.Count * (int)SchHWunsch[ 0 ].Value) < Temperaturfolge.Last ( ) ) )
             {
