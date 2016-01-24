@@ -162,11 +162,13 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dateiToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1308, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1635, 30);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.Visible = false;
@@ -176,14 +178,14 @@
             this.dateiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.schließenToolStripMenuItem});
             this.dateiToolStripMenuItem.Name = "dateiToolStripMenuItem";
-            this.dateiToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.dateiToolStripMenuItem.Size = new System.Drawing.Size(61, 26);
             this.dateiToolStripMenuItem.Text = "&DATEI";
             // 
             // schließenToolStripMenuItem
             // 
             this.schließenToolStripMenuItem.Name = "schließenToolStripMenuItem";
             this.schließenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.schließenToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.schließenToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.schließenToolStripMenuItem.Text = "Schlie&ßen";
             this.schließenToolStripMenuItem.Click += new System.EventHandler(this.schließenToolStripMenuItem_Click);
             // 
@@ -199,8 +201,9 @@
             this.listView3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView3.FullRowSelect = true;
             this.listView3.Location = new System.Drawing.Point(0, 0);
+            this.listView3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listView3.Name = "listView3";
-            this.listView3.Size = new System.Drawing.Size(460, 411);
+            this.listView3.Size = new System.Drawing.Size(575, 519);
             this.listView3.TabIndex = 16;
             this.listView3.UseCompatibleStateImageBehavior = false;
             this.listView3.View = System.Windows.Forms.View.Details;
@@ -224,24 +227,25 @@
             // 
             // contextMenuStrip1
             // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripComboBox1,
             this.toolStripMenuItem1});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(182, 53);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(188, 62);
             this.contextMenuStrip1.Text = "Schüler verschieben nach";
             // 
             // toolStripComboBox1
             // 
             this.toolStripComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
+            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 28);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Enabled = false;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(187, 26);
             this.toolStripMenuItem1.Text = "Verschieben";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
@@ -252,10 +256,11 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 22);
+            this.tabControl1.Location = new System.Drawing.Point(0, 27);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(754, 519);
+            this.tabControl1.Size = new System.Drawing.Size(942, 649);
             this.tabControl1.TabIndex = 5;
             // 
             // tabPage2
@@ -265,10 +270,11 @@
             this.tabPage2.Controls.Add(this.listView1);
             this.tabPage2.Controls.Add(this.groupBox6);
             this.tabPage2.Controls.Add(this.textBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(746, 493);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Size = new System.Drawing.Size(934, 620);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "PROJEKTE";
             // 
@@ -284,10 +290,11 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.FullRowSelect = true;
             this.listView1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.listView1.Location = new System.Drawing.Point(3, 152);
+            this.listView1.Location = new System.Drawing.Point(4, 187);
+            this.listView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(740, 338);
+            this.listView1.Size = new System.Drawing.Size(926, 429);
             this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -325,9 +332,11 @@
             this.groupBox6.Controls.Add(this.panel4);
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox6.Location = new System.Drawing.Point(3, 23);
+            this.groupBox6.Location = new System.Drawing.Point(4, 26);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(740, 129);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox6.Size = new System.Drawing.Size(926, 161);
             this.groupBox6.TabIndex = 2;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "PROJEKT ABÄNDERN / HINZUFÜGEN";
@@ -340,9 +349,10 @@
             this.panel3.Controls.Add(this.button5);
             this.panel3.Controls.Add(this.button4);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(337, 16);
+            this.panel3.Location = new System.Drawing.Point(422, 19);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(400, 110);
+            this.panel3.Size = new System.Drawing.Size(500, 138);
             this.panel3.TabIndex = 22;
             // 
             // button10
@@ -350,9 +360,10 @@
             this.button10.AutoSize = true;
             this.button10.Enabled = false;
             this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button10.Location = new System.Drawing.Point(239, 78);
+            this.button10.Location = new System.Drawing.Point(299, 98);
+            this.button10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(112, 25);
+            this.button10.Size = new System.Drawing.Size(161, 36);
             this.button10.TabIndex = 21;
             this.button10.Text = "Projekt entfernen";
             this.button10.UseVisualStyleBackColor = true;
@@ -361,9 +372,10 @@
             // 
             this.textBox5.BackColor = System.Drawing.Color.GhostWhite;
             this.textBox5.Location = new System.Drawing.Point(0, 0);
+            this.textBox5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(351, 72);
+            this.textBox5.Size = new System.Drawing.Size(438, 89);
             this.textBox5.TabIndex = 19;
             this.textBox5.Text = "Hier kommt die Projektbeschreibung hin.";
             // 
@@ -371,9 +383,10 @@
             // 
             this.button5.AutoSize = true;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Location = new System.Drawing.Point(0, 78);
+            this.button5.Location = new System.Drawing.Point(0, 98);
+            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(115, 25);
+            this.button5.Size = new System.Drawing.Size(172, 36);
             this.button5.TabIndex = 14;
             this.button5.Text = "Projekt hinzufügen";
             this.button5.UseVisualStyleBackColor = true;
@@ -384,9 +397,10 @@
             this.button4.AutoSize = true;
             this.button4.Enabled = false;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(121, 78);
+            this.button4.Location = new System.Drawing.Point(151, 98);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(112, 25);
+            this.button4.Size = new System.Drawing.Size(161, 36);
             this.button4.TabIndex = 20;
             this.button4.Text = "Projekt abändern";
             this.button4.UseVisualStyleBackColor = true;
@@ -404,18 +418,20 @@
             this.panel4.Controls.Add(this.label19);
             this.panel4.Controls.Add(this.numericUpDown4);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel4.Location = new System.Drawing.Point(3, 16);
+            this.panel4.Location = new System.Drawing.Point(4, 19);
+            this.panel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(334, 110);
+            this.panel4.Size = new System.Drawing.Size(418, 138);
             this.panel4.TabIndex = 23;
             // 
             // checkBox4
             // 
             this.checkBox4.AutoSize = true;
             this.checkBox4.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBox4.Location = new System.Drawing.Point(48, 76);
+            this.checkBox4.Location = new System.Drawing.Point(60, 95);
+            this.checkBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(75, 31);
+            this.checkBox4.Size = new System.Drawing.Size(98, 38);
             this.checkBox4.TabIndex = 22;
             this.checkBox4.Text = "Erhaltenswert";
             this.checkBox4.UseVisualStyleBackColor = true;
@@ -423,9 +439,10 @@
             // textBox4
             // 
             this.textBox4.BackColor = System.Drawing.Color.GhostWhite;
-            this.textBox4.Location = new System.Drawing.Point(135, 0);
+            this.textBox4.Location = new System.Drawing.Point(169, 0);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(196, 20);
+            this.textBox4.Size = new System.Drawing.Size(244, 22);
             this.textBox4.TabIndex = 2;
             // 
             // Offen
@@ -434,9 +451,10 @@
             this.Offen.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.Offen.Checked = true;
             this.Offen.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.Offen.Location = new System.Drawing.Point(5, 76);
+            this.Offen.Location = new System.Drawing.Point(6, 95);
+            this.Offen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Offen.Name = "Offen";
-            this.Offen.Size = new System.Drawing.Size(37, 31);
+            this.Offen.Size = new System.Drawing.Size(47, 38);
             this.Offen.TabIndex = 21;
             this.Offen.Text = "Offen";
             this.Offen.UseVisualStyleBackColor = true;
@@ -444,9 +462,10 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(2, 3);
+            this.label17.Location = new System.Drawing.Point(2, 4);
+            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(69, 13);
+            this.label17.Size = new System.Drawing.Size(91, 17);
             this.label17.TabIndex = 0;
             this.label17.Text = "Projektname:";
             // 
@@ -458,32 +477,35 @@
             this.checkedListBox1.ColumnWidth = 50;
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.HorizontalScrollbar = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(135, 78);
+            this.checkedListBox1.Location = new System.Drawing.Point(169, 98);
+            this.checkedListBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkedListBox1.MultiColumn = true;
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(196, 30);
+            this.checkedListBox1.Size = new System.Drawing.Size(245, 34);
             this.checkedListBox1.TabIndex = 17;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(1, 29);
+            this.label18.Location = new System.Drawing.Point(1, 36);
+            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(113, 13);
+            this.label18.Size = new System.Drawing.Size(151, 17);
             this.label18.TabIndex = 1;
             this.label18.Text = "Min Teilnehmeranzahl:";
             // 
             // numericUpDown5
             // 
             this.numericUpDown5.BackColor = System.Drawing.Color.GhostWhite;
-            this.numericUpDown5.Location = new System.Drawing.Point(135, 52);
+            this.numericUpDown5.Location = new System.Drawing.Point(169, 65);
+            this.numericUpDown5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown5.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Size = new System.Drawing.Size(196, 20);
+            this.numericUpDown5.Size = new System.Drawing.Size(245, 22);
             this.numericUpDown5.TabIndex = 16;
             this.numericUpDown5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDown5.Value = new decimal(new int[] {
@@ -495,28 +517,31 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(2, 54);
+            this.label19.Location = new System.Drawing.Point(2, 68);
+            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(116, 13);
+            this.label19.Size = new System.Drawing.Size(154, 17);
             this.label19.TabIndex = 4;
             this.label19.Text = "Max Teilnehmeranzahl:";
             // 
             // numericUpDown4
             // 
             this.numericUpDown4.BackColor = System.Drawing.Color.GhostWhite;
-            this.numericUpDown4.Location = new System.Drawing.Point(135, 26);
+            this.numericUpDown4.Location = new System.Drawing.Point(169, 32);
+            this.numericUpDown4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(196, 20);
+            this.numericUpDown4.Size = new System.Drawing.Size(245, 22);
             this.numericUpDown4.TabIndex = 15;
             this.numericUpDown4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox1
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBox1.Location = new System.Drawing.Point(3, 3);
+            this.textBox1.Location = new System.Drawing.Point(4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(740, 20);
+            this.textBox1.Size = new System.Drawing.Size(926, 22);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "Hier klicken, um eine Datei zu öffnen";
             this.textBox1.Click += new System.EventHandler(this.SetProData);
@@ -528,10 +553,11 @@
             this.tabPage3.Controls.Add(this.listView2);
             this.tabPage3.Controls.Add(this.groupBox8);
             this.tabPage3.Controls.Add(this.textBox2);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(746, 493);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage3.Size = new System.Drawing.Size(934, 620);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "OBJEKTE";
             // 
@@ -546,10 +572,11 @@
             this.columnHeader6});
             this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView2.FullRowSelect = true;
-            this.listView2.Location = new System.Drawing.Point(3, 154);
+            this.listView2.Location = new System.Drawing.Point(4, 190);
+            this.listView2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listView2.MultiSelect = false;
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(740, 336);
+            this.listView2.Size = new System.Drawing.Size(926, 426);
             this.listView2.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView2.TabIndex = 0;
             this.listView2.UseCompatibleStateImageBehavior = false;
@@ -579,9 +606,11 @@
             this.groupBox8.Controls.Add(this.panel2);
             this.groupBox8.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox8.Location = new System.Drawing.Point(3, 23);
+            this.groupBox8.Location = new System.Drawing.Point(4, 26);
+            this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(740, 131);
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox8.Size = new System.Drawing.Size(926, 164);
             this.groupBox8.TabIndex = 1;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "SCHÜLER ABÄNDERN / HINZUFÜGEN";
@@ -591,9 +620,11 @@
             this.groupBox1.Controls.Add(this.tabControl2);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox1.Location = new System.Drawing.Point(349, 16);
+            this.groupBox1.Location = new System.Drawing.Point(436, 19);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(388, 112);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(486, 141);
             this.groupBox1.TabIndex = 20;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "WUNSCHLISTE";
@@ -601,10 +632,11 @@
             // tabControl2
             // 
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl2.Location = new System.Drawing.Point(3, 16);
+            this.tabControl2.Location = new System.Drawing.Point(4, 19);
+            this.tabControl2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(382, 93);
+            this.tabControl2.Size = new System.Drawing.Size(478, 118);
             this.tabControl2.TabIndex = 0;
             // 
             // panel2
@@ -620,26 +652,29 @@
             this.panel2.Controls.Add(this.button6);
             this.panel2.Controls.Add(this.label25);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel2.Location = new System.Drawing.Point(3, 16);
+            this.panel2.Location = new System.Drawing.Point(4, 19);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(346, 112);
+            this.panel2.Size = new System.Drawing.Size(432, 141);
             this.panel2.TabIndex = 24;
             // 
             // textBox6
             // 
             this.textBox6.BackColor = System.Drawing.Color.GhostWhite;
-            this.textBox6.Location = new System.Drawing.Point(59, 54);
+            this.textBox6.Location = new System.Drawing.Point(74, 68);
+            this.textBox6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(170, 20);
+            this.textBox6.Size = new System.Drawing.Size(212, 22);
             this.textBox6.TabIndex = 26;
             // 
             // button13
             // 
             this.button13.Enabled = false;
             this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button13.Location = new System.Drawing.Point(235, 81);
+            this.button13.Location = new System.Drawing.Point(294, 101);
+            this.button13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(103, 23);
+            this.button13.Size = new System.Drawing.Size(129, 29);
             this.button13.TabIndex = 25;
             this.button13.Text = "Schüler entfernen";
             this.button13.UseVisualStyleBackColor = true;
@@ -648,18 +683,20 @@
             // textBox7
             // 
             this.textBox7.BackColor = System.Drawing.Color.GhostWhite;
-            this.textBox7.Location = new System.Drawing.Point(59, 3);
+            this.textBox7.Location = new System.Drawing.Point(74, 4);
+            this.textBox7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(279, 20);
+            this.textBox7.Size = new System.Drawing.Size(348, 22);
             this.textBox7.TabIndex = 1;
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.CheckAlign = System.Drawing.ContentAlignment.TopRight;
-            this.checkBox1.Location = new System.Drawing.Point(257, 56);
+            this.checkBox1.Location = new System.Drawing.Point(321, 70);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(81, 17);
+            this.checkBox1.Size = new System.Drawing.Size(105, 21);
             this.checkBox1.TabIndex = 23;
             this.checkBox1.Text = "Projektleiter";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -667,9 +704,10 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(1, 6);
+            this.label15.Location = new System.Drawing.Point(1, 8);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(38, 13);
+            this.label15.Size = new System.Drawing.Size(49, 17);
             this.label15.TabIndex = 0;
             this.label15.Text = "Name:";
             // 
@@ -677,9 +715,10 @@
             // 
             this.button8.Enabled = false;
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button8.Location = new System.Drawing.Point(126, 81);
+            this.button8.Location = new System.Drawing.Point(158, 101);
+            this.button8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(103, 23);
+            this.button8.Size = new System.Drawing.Size(129, 29);
             this.button8.TabIndex = 22;
             this.button8.Text = "Schüler abändern";
             this.button8.UseVisualStyleBackColor = true;
@@ -688,26 +727,29 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(1, 32);
+            this.label21.Location = new System.Drawing.Point(1, 40);
+            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(52, 13);
+            this.label21.Size = new System.Drawing.Size(69, 17);
             this.label21.TabIndex = 2;
             this.label21.Text = "Vorname:";
             // 
             // textBox8
             // 
             this.textBox8.BackColor = System.Drawing.Color.GhostWhite;
-            this.textBox8.Location = new System.Drawing.Point(59, 29);
+            this.textBox8.Location = new System.Drawing.Point(74, 36);
+            this.textBox8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(279, 20);
+            this.textBox8.Size = new System.Drawing.Size(348, 22);
             this.textBox8.TabIndex = 3;
             // 
             // button6
             // 
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Location = new System.Drawing.Point(4, 81);
+            this.button6.Location = new System.Drawing.Point(5, 101);
+            this.button6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(116, 23);
+            this.button6.Size = new System.Drawing.Size(145, 29);
             this.button6.TabIndex = 12;
             this.button6.Text = "Schüler hinzufügen";
             this.button6.UseVisualStyleBackColor = true;
@@ -716,19 +758,21 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(1, 57);
+            this.label25.Location = new System.Drawing.Point(1, 71);
+            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(41, 13);
+            this.label25.Size = new System.Drawing.Size(54, 17);
             this.label25.TabIndex = 10;
             this.label25.Text = "Klasse:";
             // 
             // textBox2
             // 
             this.textBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBox2.Location = new System.Drawing.Point(3, 3);
+            this.textBox2.Location = new System.Drawing.Point(4, 4);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(740, 20);
+            this.textBox2.Size = new System.Drawing.Size(926, 22);
             this.textBox2.TabIndex = 4;
             this.textBox2.Text = "Hier klicken, um eine Datei zu öffnen.";
             this.textBox2.Click += new System.EventHandler(this.SetSchData);
@@ -740,10 +784,11 @@
             this.tabPage1.Controls.Add(this.splitContainer1);
             this.tabPage1.Controls.Add(this.groupBox5);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(746, 493);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Size = new System.Drawing.Size(934, 620);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "AUSGABE";
             // 
@@ -751,7 +796,8 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 79);
+            this.splitContainer1.Location = new System.Drawing.Point(4, 97);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -761,8 +807,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.listView4);
-            this.splitContainer1.Size = new System.Drawing.Size(740, 411);
-            this.splitContainer1.SplitterDistance = 460;
+            this.splitContainer1.Size = new System.Drawing.Size(926, 519);
+            this.splitContainer1.SplitterDistance = 575;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 19;
             // 
             // panel1
@@ -770,8 +817,9 @@
             this.panel1.Controls.Add(this.listView3);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(460, 411);
+            this.panel1.Size = new System.Drawing.Size(575, 519);
             this.panel1.TabIndex = 17;
             // 
             // listView4
@@ -783,8 +831,9 @@
             this.listView4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView4.FullRowSelect = true;
             this.listView4.Location = new System.Drawing.Point(0, 0);
+            this.listView4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listView4.Name = "listView4";
-            this.listView4.Size = new System.Drawing.Size(276, 411);
+            this.listView4.Size = new System.Drawing.Size(346, 519);
             this.listView4.TabIndex = 0;
             this.listView4.UseCompatibleStateImageBehavior = false;
             this.listView4.View = System.Windows.Forms.View.Details;
@@ -803,9 +852,11 @@
             this.groupBox5.Controls.Add(this.button9);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox5.Location = new System.Drawing.Point(3, 16);
+            this.groupBox5.Location = new System.Drawing.Point(4, 21);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(740, 63);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox5.Size = new System.Drawing.Size(926, 76);
             this.groupBox5.TabIndex = 18;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "AKTIONEN";
@@ -816,9 +867,10 @@
             this.button12.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button12.Enabled = false;
             this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button12.Location = new System.Drawing.Point(293, 19);
+            this.button12.Location = new System.Drawing.Point(366, 24);
+            this.button12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(268, 25);
+            this.button12.Size = new System.Drawing.Size(352, 29);
             this.button12.TabIndex = 1;
             this.button12.Text = "Liste von Schülern und deren Wünschen exportieren";
             this.button12.UseVisualStyleBackColor = true;
@@ -830,9 +882,10 @@
             this.button11.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button11.Enabled = false;
             this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button11.Location = new System.Drawing.Point(162, 19);
+            this.button11.Location = new System.Drawing.Point(202, 24);
+            this.button11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(125, 25);
+            this.button11.Size = new System.Drawing.Size(164, 29);
             this.button11.TabIndex = 0;
             this.button11.Text = "Projektliste exportieren";
             this.button11.UseVisualStyleBackColor = true;
@@ -844,9 +897,10 @@
             this.button9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button9.Enabled = false;
             this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Location = new System.Drawing.Point(6, 19);
+            this.button9.Location = new System.Drawing.Point(8, 24);
+            this.button9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(150, 25);
+            this.button9.Size = new System.Drawing.Size(196, 29);
             this.button9.TabIndex = 0;
             this.button9.Text = "Aktuelle Lösung exportieren";
             this.button9.UseVisualStyleBackColor = true;
@@ -856,9 +910,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Location = new System.Drawing.Point(3, 3);
+            this.label1.Location = new System.Drawing.Point(4, 4);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 13);
+            this.label1.Size = new System.Drawing.Size(0, 17);
             this.label1.TabIndex = 17;
             this.label1.Visible = false;
             // 
@@ -871,10 +926,11 @@
             this.tabPage8.Controls.Add(this.groupBox7);
             this.tabPage8.Controls.Add(this.groupBox4);
             this.tabPage8.Controls.Add(this.groupBox2);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Location = new System.Drawing.Point(4, 25);
+            this.tabPage8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(746, 493);
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage8.Size = new System.Drawing.Size(934, 620);
             this.tabPage8.TabIndex = 3;
             this.tabPage8.Text = "EINSTELLUNGEN";
             // 
@@ -884,10 +940,12 @@
             this.groupBox9.Controls.Add(this.textBox3);
             this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox9.Enabled = false;
-            this.groupBox9.Location = new System.Drawing.Point(3, 328);
-            this.groupBox9.MinimumSize = new System.Drawing.Size(740, 132);
+            this.groupBox9.Location = new System.Drawing.Point(4, 407);
+            this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox9.MinimumSize = new System.Drawing.Size(925, 165);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(740, 162);
+            this.groupBox9.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox9.Size = new System.Drawing.Size(926, 209);
             this.groupBox9.TabIndex = 4;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "WEITERE BEWERTUNGSREGELN";
@@ -897,17 +955,19 @@
             // 
             this.checkedListBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.checkedListBox2.FormattingEnabled = true;
-            this.checkedListBox2.Location = new System.Drawing.Point(3, 36);
+            this.checkedListBox2.Location = new System.Drawing.Point(4, 41);
+            this.checkedListBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkedListBox2.Name = "checkedListBox2";
-            this.checkedListBox2.Size = new System.Drawing.Size(734, 123);
+            this.checkedListBox2.Size = new System.Drawing.Size(918, 164);
             this.checkedListBox2.TabIndex = 0;
             // 
             // textBox3
             // 
             this.textBox3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBox3.Location = new System.Drawing.Point(3, 16);
+            this.textBox3.Location = new System.Drawing.Point(4, 19);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(734, 20);
+            this.textBox3.Size = new System.Drawing.Size(918, 22);
             this.textBox3.TabIndex = 1;
             this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
@@ -925,9 +985,11 @@
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox3.Location = new System.Drawing.Point(3, 187);
+            this.groupBox3.Location = new System.Drawing.Point(4, 231);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(740, 141);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Size = new System.Drawing.Size(926, 176);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "FARBEINSTELLUNGEN";
@@ -935,9 +997,10 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(448, 104);
+            this.label11.Location = new System.Drawing.Point(560, 130);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(184, 13);
+            this.label11.Size = new System.Drawing.Size(244, 17);
             this.label11.TabIndex = 9;
             this.label11.Text = "Hintergrundfarbe von block. Schülern";
             // 
@@ -945,9 +1008,10 @@
             // 
             this.button14.BackColor = System.Drawing.Color.DarkTurquoise;
             this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button14.Location = new System.Drawing.Point(641, 99);
+            this.button14.Location = new System.Drawing.Point(801, 124);
+            this.button14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(64, 23);
+            this.button14.Size = new System.Drawing.Size(80, 29);
             this.button14.TabIndex = 8;
             this.button14.Text = "Anpassen";
             this.button14.UseVisualStyleBackColor = false;
@@ -957,9 +1021,10 @@
             // 
             this.button7.BackColor = System.Drawing.Color.SkyBlue;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Location = new System.Drawing.Point(641, 70);
+            this.button7.Location = new System.Drawing.Point(801, 88);
+            this.button7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(64, 23);
+            this.button7.Size = new System.Drawing.Size(80, 29);
             this.button7.TabIndex = 7;
             this.button7.Text = "Anpassen";
             this.button7.UseVisualStyleBackColor = false;
@@ -968,9 +1033,10 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(448, 75);
+            this.label8.Location = new System.Drawing.Point(560, 94);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(171, 13);
+            this.label8.Size = new System.Drawing.Size(230, 17);
             this.label8.TabIndex = 6;
             this.label8.Text = "Hintergrundfarbe von Projektleitern";
             // 
@@ -978,9 +1044,10 @@
             // 
             this.button3.BackColor = System.Drawing.Color.SkyBlue;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(641, 41);
+            this.button3.Location = new System.Drawing.Point(801, 51);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(64, 23);
+            this.button3.Size = new System.Drawing.Size(80, 29);
             this.button3.TabIndex = 5;
             this.button3.Text = "Anpassen";
             this.button3.UseVisualStyleBackColor = false;
@@ -990,9 +1057,10 @@
             // 
             this.button2.BackColor = System.Drawing.Color.SkyBlue;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(641, 11);
+            this.button2.Location = new System.Drawing.Point(801, 14);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(64, 23);
+            this.button2.Size = new System.Drawing.Size(80, 29);
             this.button2.TabIndex = 4;
             this.button2.Text = "Anpassen";
             this.button2.UseVisualStyleBackColor = false;
@@ -1001,18 +1069,20 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(448, 46);
+            this.label7.Location = new System.Drawing.Point(560, 58);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(177, 13);
+            this.label7.Size = new System.Drawing.Size(240, 17);
             this.label7.TabIndex = 3;
             this.label7.Text = "Hintergrundfarbe überfüllter Projekte";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(448, 16);
+            this.label6.Location = new System.Drawing.Point(560, 20);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(180, 13);
+            this.label6.Size = new System.Drawing.Size(244, 17);
             this.label6.TabIndex = 2;
             this.label6.Text = "Hintergrundfarbe unterfüllter Projekte";
             // 
@@ -1020,9 +1090,10 @@
             // 
             this.button1.BackColor = System.Drawing.Color.SkyBlue;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(368, 11);
+            this.button1.Location = new System.Drawing.Point(460, 14);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(64, 23);
+            this.button1.Size = new System.Drawing.Size(80, 29);
             this.button1.TabIndex = 1;
             this.button1.Text = "Anpassen";
             this.button1.UseVisualStyleBackColor = false;
@@ -1031,9 +1102,10 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 16);
+            this.label5.Location = new System.Drawing.Point(8, 20);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(325, 13);
+            this.label5.Size = new System.Drawing.Size(437, 17);
             this.label5.TabIndex = 0;
             this.label5.Text = "Farbe von Schülern in einem Projekt falscher erlaubter Klassenstufe";
             // 
@@ -1047,9 +1119,11 @@
             this.groupBox7.Controls.Add(this.numericUpDown7);
             this.groupBox7.Controls.Add(this.checkBox2);
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox7.Location = new System.Drawing.Point(3, 108);
+            this.groupBox7.Location = new System.Drawing.Point(4, 136);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(740, 79);
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox7.Size = new System.Drawing.Size(926, 95);
             this.groupBox7.TabIndex = 3;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "WEITERE EINSTELLUNGEN";
@@ -1057,16 +1131,18 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(448, 42);
+            this.label10.Location = new System.Drawing.Point(560, 52);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(170, 13);
+            this.label10.Size = new System.Drawing.Size(226, 17);
             this.label10.TabIndex = 11;
             this.label10.Text = "Min. Wert, um Projekte zu erhalten";
             // 
             // numericUpDown6
             // 
             this.numericUpDown6.BackColor = System.Drawing.Color.GhostWhite;
-            this.numericUpDown6.Location = new System.Drawing.Point(641, 40);
+            this.numericUpDown6.Location = new System.Drawing.Point(801, 50);
+            this.numericUpDown6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown6.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -1078,7 +1154,7 @@
             0,
             -2147483648});
             this.numericUpDown6.Name = "numericUpDown6";
-            this.numericUpDown6.Size = new System.Drawing.Size(64, 20);
+            this.numericUpDown6.Size = new System.Drawing.Size(80, 22);
             this.numericUpDown6.TabIndex = 10;
             this.numericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -1087,9 +1163,10 @@
             this.checkBox3.AutoSize = true;
             this.checkBox3.Checked = true;
             this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(134, 19);
+            this.checkBox3.Location = new System.Drawing.Point(168, 24);
+            this.checkBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(327, 17);
+            this.checkBox3.Size = new System.Drawing.Size(438, 21);
             this.checkBox3.TabIndex = 9;
             this.checkBox3.Text = "Unterfüllte Projekte zerstören, sofern sie nicht erhaltenswert sind";
             this.checkBox3.UseVisualStyleBackColor = true;
@@ -1097,16 +1174,18 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 42);
+            this.label9.Location = new System.Drawing.Point(8, 52);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(163, 13);
+            this.label9.Size = new System.Drawing.Size(216, 17);
             this.label9.TabIndex = 8;
             this.label9.Text = "Anzahl der Wünsche pro Schüler";
             // 
             // numericUpDown7
             // 
             this.numericUpDown7.BackColor = System.Drawing.Color.GhostWhite;
-            this.numericUpDown7.Location = new System.Drawing.Point(368, 40);
+            this.numericUpDown7.Location = new System.Drawing.Point(460, 50);
+            this.numericUpDown7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown7.Maximum = new decimal(new int[] {
             31,
             0,
@@ -1118,7 +1197,7 @@
             0,
             0});
             this.numericUpDown7.Name = "numericUpDown7";
-            this.numericUpDown7.Size = new System.Drawing.Size(64, 20);
+            this.numericUpDown7.Size = new System.Drawing.Size(80, 22);
             this.numericUpDown7.TabIndex = 7;
             this.numericUpDown7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDown7.Value = new decimal(new int[] {
@@ -1131,9 +1210,10 @@
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(6, 19);
+            this.checkBox2.Location = new System.Drawing.Point(8, 24);
+            this.checkBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(122, 17);
+            this.checkBox2.Size = new System.Drawing.Size(160, 21);
             this.checkBox2.TabIndex = 7;
             this.checkBox2.Text = "Zufällige Startlösung";
             this.checkBox2.UseVisualStyleBackColor = true;
@@ -1142,9 +1222,11 @@
             // 
             this.groupBox4.AutoSize = true;
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox4.Location = new System.Drawing.Point(3, 103);
+            this.groupBox4.Location = new System.Drawing.Point(4, 129);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(740, 5);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Size = new System.Drawing.Size(926, 7);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "BEWERTUNGSERMITTLUNG";
@@ -1158,9 +1240,11 @@
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox2.Location = new System.Drawing.Point(3, 3);
+            this.groupBox2.Location = new System.Drawing.Point(4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(740, 100);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Size = new System.Drawing.Size(926, 125);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "LÖSUNGSQUALITÄT";
@@ -1168,18 +1252,20 @@
             // numericUpDown3
             // 
             this.numericUpDown3.BackColor = System.Drawing.Color.GhostWhite;
-            this.numericUpDown3.Location = new System.Drawing.Point(368, 66);
+            this.numericUpDown3.Location = new System.Drawing.Point(460, 82);
+            this.numericUpDown3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(64, 20);
+            this.numericUpDown3.Size = new System.Drawing.Size(80, 22);
             this.numericUpDown3.TabIndex = 6;
             this.numericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // numericUpDown2
             // 
             this.numericUpDown2.BackColor = System.Drawing.Color.GhostWhite;
-            this.numericUpDown2.Location = new System.Drawing.Point(368, 40);
+            this.numericUpDown2.Location = new System.Drawing.Point(460, 50);
+            this.numericUpDown2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(64, 20);
+            this.numericUpDown2.Size = new System.Drawing.Size(80, 22);
             this.numericUpDown2.TabIndex = 5;
             this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDown2.Value = new decimal(new int[] {
@@ -1191,9 +1277,10 @@
             // numericUpDown1
             // 
             this.numericUpDown1.BackColor = System.Drawing.Color.GhostWhite;
-            this.numericUpDown1.Location = new System.Drawing.Point(368, 14);
+            this.numericUpDown1.Location = new System.Drawing.Point(460, 18);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(64, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(80, 22);
             this.numericUpDown1.TabIndex = 4;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDown1.Value = new decimal(new int[] {
@@ -1205,18 +1292,20 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 68);
+            this.label4.Location = new System.Drawing.Point(8, 85);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(210, 13);
+            this.label4.Size = new System.Drawing.Size(282, 17);
             this.label4.TabIndex = 2;
             this.label4.Text = "Bewertungsfaktor für überfüllte Projekte [%]";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 42);
+            this.label3.Location = new System.Drawing.Point(8, 52);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(213, 13);
+            this.label3.Size = new System.Drawing.Size(286, 17);
             this.label3.TabIndex = 1;
             this.label3.Text = "Bewertungsfaktor für unterfüllte Projekte [%]";
             // 
@@ -1224,15 +1313,17 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 16);
+            this.label2.Location = new System.Drawing.Point(8, 20);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(147, 13);
+            this.label2.Size = new System.Drawing.Size(198, 17);
             this.label2.TabIndex = 0;
             this.label2.Text = "Minimale Güte der Lösung [%]";
             // 
             // toolStrip1
             // 
             this.toolStrip1.BackColor = System.Drawing.Color.GhostWhite;
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
             this.toolStripButton2,
@@ -1242,7 +1333,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(754, 22);
+            this.toolStrip1.Size = new System.Drawing.Size(942, 27);
             this.toolStrip1.TabIndex = 15;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -1251,7 +1342,7 @@
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(148, 19);
+            this.toolStripButton1.Size = new System.Drawing.Size(185, 24);
             this.toolStripButton1.Text = "BERECHNUNG BEGINNEN";
             this.toolStripButton1.ToolTipText = "Berechnung starten";
             this.toolStripButton1.Click += new System.EventHandler(this.berechnungStarten);
@@ -1261,7 +1352,7 @@
             this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(151, 19);
+            this.toolStripButton2.Size = new System.Drawing.Size(188, 24);
             this.toolStripButton2.Text = "BERECHNUNG PAUSIEREN";
             this.toolStripButton2.ToolTipText = "Berechnung anhalten";
             this.toolStripButton2.Visible = false;
@@ -1272,7 +1363,7 @@
             this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(284, 19);
+            this.toolStripButton4.Size = new System.Drawing.Size(353, 24);
             this.toolStripButton4.Text = "BERECHNUNG mit geänderter Lösung FORTSETZEN";
             this.toolStripButton4.ToolTipText = "Berechnung mit den manuell vorgenommenen Vertauschungen fortsetzen";
             this.toolStripButton4.Visible = false;
@@ -1283,7 +1374,7 @@
             this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(158, 19);
+            this.toolStripButton3.Size = new System.Drawing.Size(197, 24);
             this.toolStripButton3.Text = "BERECHNUNG ABBRECHEN";
             this.toolStripButton3.ToolTipText = "Berechnung beenden";
             this.toolStripButton3.Visible = false;
@@ -1296,15 +1387,16 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.GhostWhite;
-            this.ClientSize = new System.Drawing.Size(754, 541);
+            this.ClientSize = new System.Drawing.Size(942, 676);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Objekt auf Projekt";
